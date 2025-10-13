@@ -1,0 +1,13 @@
+# AI:OS Git Ignore - System and build files only
+.DS_Store
+__pycache__/
+*.pyc
+.pytest_cache/
+*.egg-info/
+node_modules/
+.env
+.vscode/
+.idea/
+*.log
+build/
+dist/

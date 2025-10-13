@@ -1,0 +1,176 @@
+# AI:OS Git-Crypt Configuration
+# Encrypts proprietary algorithms and core OS code
+# Keeps configuration, documentation, and dependency files readable
+
+# =============================================================================
+# ENCRYPTED: Core AI:OS Code & Proprietary Algorithms
+# =============================================================================
+
+# All Python code in aios/ is encrypted by default
+aios/**/*.py filter=git-crypt diff=git-crypt
+aios/**/*.pyx filter=git-crypt diff=git-crypt
+aios/**/*.pxd filter=git-crypt diff=git-crypt
+
+# Encrypt Jupyter notebooks containing algorithms
+aios/**/*.ipynb filter=git-crypt diff=git-crypt
+
+# Encrypt compiled code
+aios/**/*.so filter=git-crypt diff=git-crypt
+aios/**/*.dylib filter=git-crypt diff=git-crypt
+aios/**/*.dll filter=git-crypt diff=git-crypt
+
+# Encrypt quantum algorithms and ML models
+aios/ml_algorithms.py filter=git-crypt diff=git-crypt
+aios/quantum_ml_algorithms.py filter=git-crypt diff=git-crypt
+aios/autonomous_discovery.py filter=git-crypt diff=git-crypt
+aios/probabilistic_core.py filter=git-crypt diff=git-crypt
+aios/probabilistic_suite.py filter=git-crypt diff=git-crypt
+aios/ultrafast_discovery.py filter=git-crypt diff=git-crypt
+aios/quantum_connectors.py filter=git-crypt diff=git-crypt
+
+# Encrypt core runtime and agents
+aios/runtime.py filter=git-crypt diff=git-crypt
+aios/agents/**/*.py filter=git-crypt diff=git-crypt
+
+# Encrypt security toolkit
+aios/tools/**/*.py filter=git-crypt diff=git-crypt
+
+# Encrypt Oracle and forecasting engines
+aios/oracle.py filter=git-crypt diff=git-crypt
+oracle_of_light/**/*.py filter=git-crypt diff=git-crypt
+
+# Encrypt GAVL Suite proprietary modules
+TheGAVLSuite/**/*.py filter=git-crypt diff=git-crypt
+TheGAVLSuite/**/*.ipynb filter=git-crypt diff=git-crypt
+
+# Encrypt quantum computing implementations
+qiskit/**/*.py filter=git-crypt diff=git-crypt
+qiskit/**/*.rs filter=git-crypt diff=git-crypt
+QuLab2.0/**/*.py filter=git-crypt diff=git-crypt
+real_quantum_teleportation/**/*.py filter=git-crypt diff=git-crypt
+
+# Encrypt patent and business proprietary code
+patent-monster/**/*.py filter=git-crypt diff=git-crypt
+Blank_Business_Builder/**/*.py filter=git-crypt diff=git-crypt
+
+# Encrypt any trained models or weights
+**/*.pkl filter=git-crypt diff=git-crypt
+**/*.pth filter=git-crypt diff=git-crypt
+**/*.h5 filter=git-crypt diff=git-crypt
+**/*.ckpt filter=git-crypt diff=git-crypt
+**/*.safetensors filter=git-crypt diff=git-crypt
+
+# Encrypt database files
+**/*.db filter=git-crypt diff=git-crypt
+**/*.sqlite filter=git-crypt diff=git-crypt
+**/*.sqlite3 filter=git-crypt diff=git-crypt
+
+# =============================================================================
+# READABLE: Configuration, Documentation, Build Files
+# =============================================================================
+
+# Documentation always readable (override)
+*.md !filter !diff
+**/*.md !filter !diff
+CLAUDE.md !filter !diff
+README.md !filter !diff
+docs/**/*.md !filter !diff
+
+# Requirements and dependency files readable
+requirements.txt !filter !diff
+requirements-dev.txt !filter !diff
+**/requirements*.txt !filter !diff
+pyproject.toml !filter !diff
+setup.py !filter !diff
+setup.cfg !filter !diff
+Pipfile !filter !diff
+Pipfile.lock !filter !diff
+poetry.lock !filter !diff
+package.json !filter !diff
+package-lock.json !filter !diff
+yarn.lock !filter !diff
+
+# Configuration files readable
+*.yml !filter !diff
+*.yaml !filter !diff
+*.toml !filter !diff
+*.ini !filter !diff
+*.conf !filter !diff
+.gitignore !filter !diff
+.gitattributes !filter !diff
+.editorconfig !filter !diff
+.prettierrc !filter !diff
+.eslintrc !filter !diff
+
+# Docker and container configs readable
+Dockerfile !filter !diff
+docker-compose.yml !filter !diff
+docker-compose.yaml !filter !diff
+.dockerignore !filter !diff
+k8s/**/*.yaml !filter !diff
+k8s/**/*.yml !filter !diff
+
+# CI/CD configs readable
+.github/**/*.yml !filter !diff
+.github/**/*.yaml !filter !diff
+.gitlab-ci.yml !filter !diff
+.circleci/**/*.yml !filter !diff
+
+# License and legal files readable
+LICENSE !filter !diff
+LICENSE.* !filter !diff
+COPYING !filter !diff
+NOTICE !filter !diff
+
+# Build and script configs readable (but not the scripts themselves)
+Makefile !filter !diff
+CMakeLists.txt !filter !diff
+build.gradle !filter !diff
+pom.xml !filter !diff
+
+# Test configuration readable (but not test code)
+pytest.ini !filter !diff
+.coveragerc !filter !diff
+tox.ini !filter !diff
+
+# Git configuration readable
+.gitmodules !filter !diff
+
+# =============================================================================
+# EXCEPTIONS: Specific files that should remain readable
+# =============================================================================
+
+# Config and manifest files (contain no code)
+aios/config.py !filter !diff
+aios/settings.py !filter !diff
+aios/model.py !filter !diff
+aios/__init__.py !filter !diff
+
+# Example manifests (configuration only)
+aios/examples/**/*.json !filter !diff
+
+# =============================================================================
+# SENSITIVE: Credentials and Secrets (always encrypted)
+# =============================================================================
+
+# Environment files with secrets
+.env filter=git-crypt diff=git-crypt
+.env.* filter=git-crypt diff=git-crypt
+**/secrets.yaml filter=git-crypt diff=git-crypt
+**/secrets.yml filter=git-crypt diff=git-crypt
+
+# Key files
+**/*.key filter=git-crypt diff=git-crypt
+**/*.pem filter=git-crypt diff=git-crypt
+**/*.p12 filter=git-crypt diff=git-crypt
+**/*.pfx filter=git-crypt diff=git-crypt
+**/*.keystore filter=git-crypt diff=git-crypt
+
+# SSH and GPG keys
+.ssh/** filter=git-crypt diff=git-crypt
+**/*.pub filter=git-crypt diff=git-crypt
+**/*.gpg filter=git-crypt diff=git-crypt
+
+# Credential files
+credentials.json filter=git-crypt diff=git-crypt
+**/credentials*.json filter=git-crypt diff=git-crypt
