@@ -1,7 +1,7 @@
-# Ai:oS - Agentic Intelligence Operating System
+# Ai|oS - Agentic Intelligence Operating System
 
 ```
-    ▄▄▄       ██▓    ▒█████    ██████
+    ▄▄▄       ██▓    ▒█████   ███████
    ▒████▄    ▓██▒   ▒██▒  ██▒▒██    ▒
    ▒██  ▀█▄  ▒██▒   ▒██░  ██▒░ ▓██▄
    ░██▄▄▄▄██ ░██░   ▒██   ██░  ▒   ██▒
@@ -14,7 +14,7 @@
 
 **The world's first Agentic Intelligence Operating System**
 
-Ai:oS is a next-generation operating system where autonomous meta-agents coordinate system operations through probabilistic reasoning, quantum-enhanced algorithms, and self-directed learning.
+Ai|oS is a next-generation operating system where autonomous meta-agents coordinate system operations through probabilistic reasoning, quantum-enhanced algorithms, and self-directed learning.
 
 ---
 
@@ -80,7 +80,7 @@ python -m tools.aurorascan --json
 
 ```bash
 # Clone the repository
-git clone https://github.com/yourusername/aios.git
+git clone https://github.com/aios-project/aios.git
 cd aios
 
 # Install dependencies
@@ -98,7 +98,7 @@ python aios/aios -v boot
 
 ## 🏗️ Architecture
 
-Ai:oS is built on a unique **declarative meta-agent architecture**:
+Ai|oS is built on a unique **declarative meta-agent architecture**:
 
 ```
 ┌─────────────────────────────────────────┐
@@ -107,7 +107,7 @@ Ai:oS is built on a unique **declarative meta-agent architecture**:
 └────────────────┬────────────────────────┘
                  │
         ┌────────▼────────┐
-        │   Ai:oS Runtime │
+        │   Ai|oS Runtime │
         │  (Orchestrator)  │
         └────────┬────────┘
                  │
@@ -177,9 +177,9 @@ git-crypt unlock ~/aios-git-crypt.key
 
 ---
 
-## 🌟 Why Ai:oS?
+## 🌟 Why Ai|oS?
 
-Traditional operating systems coordinate hardware resources. **Ai:oS coordinates autonomous agents** that reason probabilistically, learn continuously, and adapt to system conditions in real-time.
+Traditional operating systems coordinate hardware resources. **Ai|oS coordinates autonomous agents** that reason probabilistically, learn continuously, and adapt to system conditions in real-time.
 
 ### Key Innovations:
 
@@ -194,7 +194,7 @@ Traditional operating systems coordinate hardware resources. **Ai:oS coordinates
 
 ## 🤝 Contributing
 
-Ai:oS is currently a private research project. Contributions are by invitation only.
+Ai|oS (pronounced "aios") is currently a private research project. Contributions are by invitation only.
 
 ---
 
@@ -223,7 +223,7 @@ Built with:
 
 ---
 
-**Ai:oS** - Where Autonomous Agents Meet Operating Systems
+**Ai|oS** (pronounced "aios") - Where Autonomous Agents Meet Operating Systems
 
 *The future of computing is agentic, probabilistic, and quantum-ready.*
 

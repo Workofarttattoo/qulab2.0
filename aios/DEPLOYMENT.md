@@ -1,6 +1,6 @@
-# AI:OS Streaming Deployment Guide
+# Ai|oS Streaming Deployment Guide
 
-🚀 Deploy AI:OS dashboard to **any server** - Bluehost, VPS, AWS, GCP, Azure, or localhost
+🚀 Deploy Ai|oS dashboard to **any server** - Bluehost, VPS, AWS, GCP, Azure, or localhost
 
 ---
 
@@ -380,7 +380,7 @@ uvicorn.run(..., workers=4)
 
 ## 🔄 Updates & Maintenance
 
-### Update AI:OS
+### Update Ai|oS
 
 ```bash
 cd aios
@@ -424,6 +424,6 @@ See [LICENSE](LICENSE) for details.
 
 ---
 
-**🤖 AI:OS - Adaptive, Lightweight, Works Anywhere**
+**🤖 Ai|oS - Adaptive, Lightweight, Works Anywhere**
 
 *Powered by autonomous meta-agents with quantum-enhanced ML*

@@ -1,6 +1,6 @@
-# Quick Start: Deploy AI:OS to aios.is
+# Quick Start: Deploy Ai|oS to aios.is
 
-Get your AI:OS streaming dashboard live at https://aios.is in 10 minutes or less.
+Get your Ai|oS streaming dashboard live at https://aios.is in 10 minutes or less.
 
 ---
 
@@ -122,7 +122,7 @@ ps aux | grep streaming_server
 # Should show the python process
 
 curl http://localhost:8080/healthz
-# Should return: {"status":"ok","service":"AI:OS Streaming Server"}
+# Should return: {"status":"ok","service":"Ai|oS Streaming Server"}
 ```
 
 ---
@@ -232,7 +232,7 @@ ws.onmessage = (e) => console.log('Data:', JSON.parse(e.data));
 
 You should see:
 - ✅ Matrix-style green terminal interface
-- ✅ "AI:OS" logo
+- ✅ "Ai|oS" logo
 - ✅ Live streaming telemetry
 - ✅ CPU, Memory, Disk metrics updating every 2 seconds
 - ✅ WebSocket status: "Connected"
@@ -453,9 +453,11 @@ Now that you're live, consider:
 
 ---
 
-**🎉 Congratulations! Your AI:OS dashboard is live at https://aios.is**
+**🎉 Congratulations! Your Ai|oS dashboard is live at https://aios.is**
 
 The streaming server is now broadcasting real-time telemetry from your autonomous meta-agents. Welcome to the future of agentic computing!
+
+**Pronunciation**: Just say "aios" (rhymes with "iOS")
 
 ---
 
