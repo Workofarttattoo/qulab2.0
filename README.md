@@ -1,4 +1,4 @@
-# AI:OS - Agentic Intelligence Operating System
+# Ai:oS - Agentic Intelligence Operating System
 
 ```
     ▄▄▄       ██▓    ▒█████    ██████
@@ -14,7 +14,7 @@
 
 **The world's first Agentic Intelligence Operating System**
 
-AI:OS is a next-generation operating system where autonomous meta-agents coordinate system operations through probabilistic reasoning, quantum-enhanced algorithms, and self-directed learning.
+Ai:oS is a next-generation operating system where autonomous meta-agents coordinate system operations through probabilistic reasoning, quantum-enhanced algorithms, and self-directed learning.
 
 ---
 
@@ -90,7 +90,7 @@ pip install -r requirements-dev.txt
 # Run tests
 PYTHONPATH=. python -m unittest discover -s aios/tests
 
-# Boot AI:OS
+# Boot Ai:oS
 python aios/aios -v boot
 ```
 
@@ -98,7 +98,7 @@ python aios/aios -v boot
 
 ## 🏗️ Architecture
 
-AI:OS is built on a unique **declarative meta-agent architecture**:
+Ai:oS is built on a unique **declarative meta-agent architecture**:
 
 ```
 ┌─────────────────────────────────────────┐
@@ -107,7 +107,7 @@ AI:OS is built on a unique **declarative meta-agent architecture**:
 └────────────────┬────────────────────────┘
                  │
         ┌────────▼────────┐
-        │   AI:OS Runtime │
+        │   Ai:oS Runtime │
         │  (Orchestrator)  │
         └────────┬────────┘
                  │
@@ -165,15 +165,21 @@ git-crypt unlock ~/aios-git-crypt.key
 
 ## 🎓 Learn More
 
-- **Documentation**: See [CLAUDE.md](CLAUDE.md) for comprehensive development guide
+- **Live Dashboard**: Visit [https://aios.is](https://aios.is) for real-time telemetry
+- **Documentation**: See [CLAUDE.md](CLAUDE.md) for comprehensive development guide, plus:
+  - [DNS Setup Guide](aios/DNS_SETUP.md) for deployment instructions
+  - [Deployment Guide](aios/DEPLOYMENT.md) for various platforms
+  - [Ai:oS Messaging & Positioning Guide](docs/aios-brand-guide.md)
+  - [Ai:oS Technical Whitepaper](docs/aios-technical-whitepaper.md)
+  - [PDF exports](docs/) for shareable versions
 - **Examples**: Check `aios/examples/` for demonstrations
 - **Tests**: See `aios/tests/` for test suite
 
 ---
 
-## 🌟 Why AI:OS?
+## 🌟 Why Ai:oS?
 
-Traditional operating systems coordinate hardware resources. **AI:OS coordinates autonomous agents** that reason probabilistically, learn continuously, and adapt to system conditions in real-time.
+Traditional operating systems coordinate hardware resources. **Ai:oS coordinates autonomous agents** that reason probabilistically, learn continuously, and adapt to system conditions in real-time.
 
 ### Key Innovations:
 
@@ -188,7 +194,7 @@ Traditional operating systems coordinate hardware resources. **AI:OS coordinates
 
 ## 🤝 Contributing
 
-AI:OS is currently a private research project. Contributions are by invitation only.
+Ai:oS is currently a private research project. Contributions are by invitation only.
 
 ---
 
@@ -211,11 +217,13 @@ Built with:
 
 ## 📧 Contact
 
-For inquiries about AI:OS, please contact the maintainers.
+- **Website**: [https://aios.is](https://aios.is)
+- **Email**: admin@aios.is
+- **Support**: support@aios.is
 
 ---
 
-**AI:OS** - Where Autonomous Agents Meet Operating Systems
+**Ai:oS** - Where Autonomous Agents Meet Operating Systems
 
 *The future of computing is agentic, probabilistic, and quantum-ready.*
 
