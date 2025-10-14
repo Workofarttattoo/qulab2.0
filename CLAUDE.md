@@ -6,7 +6,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 This is a multi-project workspace containing several interconnected systems:
 
-1. **AI:OS** (formerly AgentaOS) - An agentic control-plane prototype that coordinates subsystem meta-agents through a declarative manifest
+1. **Ai:oS** (formerly AgentaOS) - An agentic control-plane prototype that coordinates subsystem meta-agents through a declarative manifest
 2. **TheGAVLSuite** - A suite of ritual, analysis, and advisory modules including the Boardroom of Light and Jiminy Cricket conscience helper
 3. **Sovereign Security Toolkit** - A collection of reimagined security assessment utilities with agent-friendly behavior
 4. **ML & Probabilistic Algorithms Suite** - State-of-the-art ML algorithms including Mamba/SSM, flow matching, MCTS, Bayesian inference, and more
@@ -15,7 +15,7 @@ This is a multi-project workspace containing several interconnected systems:
 
 ## Core Commands
 
-### AI:OS
+### Ai:oS
 
 ```bash
 # Boot the system
@@ -133,7 +133,7 @@ python -c "from aios.autonomous_discovery import check_autonomous_discovery_depe
 # Run autonomous discovery demonstration
 python aios/autonomous_discovery.py
 
-# Run AI:OS integration examples
+# Run Ai:oS integration examples
 python aios/examples/autonomous_discovery_example.py
 
 # Use in Python code:
@@ -160,7 +160,7 @@ knowledge_graph = agent.export_knowledge_graph()
 ### Testing
 
 ```bash
-# Run AI:OS tests
+# Run Ai:oS tests
 PYTHONPATH=. python -m unittest discover -s aios/tests
 
 # Run specific test
@@ -169,9 +169,9 @@ PYTHONPATH=. python -m unittest aios.tests.test_security_suite
 
 ## Architecture
 
-### AI:OS Runtime Architecture
+### Ai:oS Runtime Architecture
 
-AI:OS is built around a declarative manifest system that coordinates meta-agents:
+Ai:oS is built around a declarative manifest system that coordinates meta-agents:
 
 - **ML Algorithms Suite (`aios/ml_algorithms.py`)** - Advanced ML and probabilistic algorithms for meta-agents:
   - **Sequence Modeling**: AdaptiveStateSpace (Mamba), StructuredStateDuality (Mamba-2/SSD)
@@ -218,12 +218,12 @@ Located in `aios/tools/`, these utilities follow a common pattern:
 - Tools are registered in `tools/__init__.py::TOOL_REGISTRY`
 - All tools support `--json` for structured output and `--gui` for Tkinter interfaces
 - Health checks return status (`ok`/`warn`/`error`), summary, and details with latency metrics
-- Integrated with AI:OS via `SecurityAgent.sovereign_suite` action which runs health checks and publishes metadata
+- Integrated with Ai:oS via `SecurityAgent.sovereign_suite` action which runs health checks and publishes metadata
 
 ### Key Environment Variables
 
 ```bash
-# AI:OS Core
+# Ai:oS Core
 AGENTA_FORENSIC_MODE=1              # Enable read-only mode
 AGENTA_PROVIDER=docker,qemu         # Comma-separated provider list
 AGENTA_APPS_CONFIG=path/to/apps.json # Application supervisor config
@@ -476,7 +476,7 @@ Check availability: `python aios/ml_algorithms.py`
 
 ## Quantum-Enhanced ML Algorithms
 
-The quantum ML suite (`aios/quantum_ml_algorithms.py`) provides quantum computing algorithms for AI:OS:
+The quantum ML suite (`aios/quantum_ml_algorithms.py`) provides quantum computing algorithms for Ai:oS:
 
 ### Quantum Simulation Capabilities
 
@@ -498,7 +498,7 @@ The quantum ML suite (`aios/quantum_ml_algorithms.py`) provides quantum computin
    - Quantum chemistry and optimization
    - Use for: Ground state finding, molecular energy calculations
 
-### Integration with AI:OS
+### Integration with Ai:oS
 
 ```python
 from aios.quantum_ml_algorithms import QuantumStateEngine, QuantumVQE
@@ -557,7 +557,7 @@ results = benchmark_qubit_scaling(max_qubits=15)
 
 - Up to 20 qubits: Performance comparable to Qiskit Aer statevector
 - Beyond 25 qubits: Requires actual quantum hardware for exact results
-- This simulator is optimized for AI:OS integration and rapid prototyping
+- This simulator is optimized for Ai:oS integration and rapid prototyping
 - For production quantum ML, integrate with IBM Qiskit, Google Cirq, or AWS Braket
 
 ## Agent Development Guidelines
@@ -805,7 +805,7 @@ class TestSecurityAgent(unittest.TestCase):
 
 ## Autonomous Discovery System Integration
 
-The Autonomous Discovery System (`aios/autonomous_discovery.py`) enables meta-agents in AI:OS to learn and adapt autonomously based on the 2025 state-of-the-art in agentic AI.
+The Autonomous Discovery System (`aios/autonomous_discovery.py`) enables meta-agents in Ai:oS to learn and adapt autonomously based on the 2025 state-of-the-art in agentic AI.
 
 ### Autonomy Levels
 
@@ -840,7 +840,7 @@ The system defaults to **Level 4** for maximum autonomous capability.
    - Confidence scores track learning quality
    - Parent-child relationships form semantic hierarchy
    - Temporal tracking shows learning progression
-   - Export format compatible with AI:OS metadata
+   - Export format compatible with Ai:oS metadata
 
 ### Integration with Meta-Agents
 
@@ -970,7 +970,7 @@ knowledge = agent.export_knowledge_graph()
 4. **Adaptive Depth**: Agent decides when to go deeper vs broader autonomously
 5. **Knowledge Integration**: Automatically links related concepts into semantic graph
 6. **Superhuman Speed**: Distributed inference enables learning rates far beyond human capability
-7. **AI:OS Native**: Seamless integration with ExecutionContext and metadata system
+7. **Ai:oS Native**: Seamless integration with ExecutionContext and metadata system
 
 ### Best Practices
 

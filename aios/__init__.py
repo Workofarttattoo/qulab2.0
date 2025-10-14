@@ -7,8 +7,8 @@ default manifest or a user-provided configuration bundle.  The CLI entrypoint
 """
 
 # Branding
-DISPLAY_NAME = "AI:OS"
-DISPLAY_NAME_FULL = "AI:OS - Agentic Intelligence Operating System"
+DISPLAY_NAME = "Ai|oS"
+DISPLAY_NAME_FULL = "Ai|oS - Agentic Intelligence Operating System"
 VERSION = "0.1.0"
 
 from .config import load_manifest
