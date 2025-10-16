@@ -1,14 +1,26 @@
-<!DOCTYPE html>
+#!/usr/bin/env python3
+"""
+Update all documentation pages with modern Figma-style design.
+
+Copyright (c) 2025 Joshua Hendricks Cole (DBA: Corporation of Light).
+All Rights Reserved. PATENT PENDING.
+"""
+
+import re
+from pathlib import Path
+
+# Modern design template
+MODERN_TEMPLATE = '''<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PayloadForge - Documentation</title>
+    <title>{title}</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <style>
-        :root {
+        :root {{
             --primary: #6366f1;
             --primary-dark: #4f46e5;
             --secondary: #8b5cf6;
@@ -23,15 +35,15 @@
             --white: #ffffff;
             --gradient-1: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             --gradient-2: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
-        }
+        }}
 
-        * {
+        * {{
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-        }
+        }}
 
-        body {
+        body {{
             font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
             background: var(--dark);
             color: var(--white);
@@ -39,9 +51,9 @@
             min-height: 100vh;
             position: relative;
             overflow-x: hidden;
-        }
+        }}
 
-        body::before {
+        body::before {{
             content: '';
             position: fixed;
             top: 0;
@@ -54,22 +66,22 @@
                 radial-gradient(circle at 50% 50%, rgba(236, 72, 153, 0.1) 0%, transparent 50%);
             z-index: 0;
             animation: pulse 10s ease-in-out infinite;
-        }
+        }}
 
-        @keyframes pulse {
-            0%, 100% { opacity: 1; }
-            50% { opacity: 0.8; }
-        }
+        @keyframes pulse {{
+            0%, 100% {{ opacity: 1; }}
+            50% {{ opacity: 0.8; }}
+        }}
 
-        .container {
+        .container {{
             max-width: 900px;
             margin: 0 auto;
             padding: 40px 20px;
             position: relative;
             z-index: 1;
-        }
+        }}
 
-        .back-link {
+        .back-link {{
             display: inline-flex;
             align-items: center;
             gap: 8px;
@@ -83,24 +95,24 @@
             font-weight: 500;
             transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
             margin-bottom: 32px;
-        }
+        }}
 
-        .back-link:hover {
+        .back-link:hover {{
             background: rgba(99, 102, 241, 0.2);
             border-color: var(--primary);
             transform: translateX(-4px);
-        }
+        }}
 
-        .doc-card {
+        .doc-card {{
             background: rgba(255, 255, 255, 0.05);
             backdrop-filter: blur(10px);
             border: 1px solid rgba(255, 255, 255, 0.1);
             border-radius: 24px;
             padding: 48px;
             margin-top: 24px;
-        }
+        }}
 
-        h1 {
+        h1 {{
             font-size: 3rem;
             font-weight: 700;
             background: var(--gradient-1);
@@ -108,28 +120,28 @@
             -webkit-text-fill-color: transparent;
             background-clip: text;
             margin-bottom: 16px;
-        }
+        }}
 
-        .tagline {
+        .tagline {{
             font-size: 1.25rem;
             color: var(--gray-light);
             margin-bottom: 32px;
-        }
+        }}
 
-        .warning-box {
+        .warning-box {{
             background: rgba(239, 68, 68, 0.1);
             border-left: 4px solid var(--danger);
             padding: 20px;
             border-radius: 8px;
             margin: 32px 0;
-        }
+        }}
 
-        .warning-box strong {
+        .warning-box strong {{
             color: var(--danger);
             font-size: 1.1em;
-        }
+        }}
 
-        h2 {
+        h2 {{
             font-size: 1.75rem;
             font-weight: 600;
             color: var(--primary);
@@ -138,65 +150,65 @@
             display: flex;
             align-items: center;
             gap: 12px;
-        }
+        }}
 
-        p {
+        p {{
             color: var(--gray-light);
             margin-bottom: 16px;
-        }
+        }}
 
-        ul {
+        ul {{
             list-style: none;
             margin: 16px 0;
-        }
+        }}
 
-        ul li {
+        ul li {{
             color: var(--gray-light);
             padding: 8px 0;
             padding-left: 28px;
             position: relative;
-        }
+        }}
 
-        ul li::before {
+        ul li::before {{
             content: '▹';
             position: absolute;
             left: 8px;
             color: var(--primary);
             font-size: 1.2em;
-        }
+        }}
 
-        code {
+        code {{
             background: rgba(99, 102, 241, 0.2);
             color: var(--primary);
             padding: 4px 8px;
             border-radius: 6px;
             font-family: 'SF Mono', 'Monaco', 'Inconsolata', monospace;
             font-size: 0.9em;
-        }
+        }}
 
-        pre {
+        pre {{
             background: rgba(15, 23, 42, 0.8);
             border: 1px solid rgba(99, 102, 241, 0.3);
             border-radius: 12px;
             padding: 24px;
             overflow-x: auto;
             margin: 16px 0;
-        }
+        }}
 
-        pre code {
+        pre code {{
             background: none;
             color: var(--gray-light);
             padding: 0;
-        }
+        }}
 
-        .footer {
+        .footer {{
             text-align: center;
             margin-top: 48px;
             padding-top: 32px;
             border-top: 1px solid rgba(255, 255, 255, 0.1);
             color: var(--gray);
             font-size: 0.9em;
-        }
+        }}
     </style>
 </head>
 <body>
@@ -204,26 +216,12 @@
         <a href="../index.html" class="back-link">← Back to All Tools</a>
 
         <div class="doc-card">
-            <h1>⚔️ PayloadForge</h1>
-            <p class="tagline"><strong>Payload generation and encoding utility</strong></p>
+            <h1>{icon} {tool_name}</h1>
+            <p class="tagline"><strong>{tagline}</strong></p>
 
-            <div class="warning-box">
-            <strong>⚠️ AUTHORIZED USE ONLY</strong><br>
-            Only test systems you own or have explicit written permission to assess.
-        </div>
+            {warning}
 
-            <h2>📋 Overview</h2>
-        <p>PayloadForge generates security testing payloads with multiple encoding schemes and WAF bypasses.</p>
-        <h2>✨ Features</h2>
-        <ul><li>SQL/XSS/Command injection</li><li>Multiple encodings</li><li>WAF bypass techniques</li><li>Custom templates</li></ul>
-        <h2>🚀 Quick Start</h2>
-        <pre><code>python -m tools.payloadforge --type sqli --target mysql --bypass-waf</code></pre>
-        <h2>📊 Example Output</h2>
-        <pre><code>[PayloadForge] Generated 24 SQL injection payloads
-' UNION SELECT NULL,NULL--</code></pre>
-        <h2>🛡️ Legal & Ethical Use</h2>
-        <p><strong>PayloadForge</strong> must only be used for authorized security testing.</p>
-        
+            {content}
 
             <div class="footer">
                 Copyright © 2025 Joshua Hendricks Cole (DBA: Corporation of Light).<br>
@@ -233,3 +231,85 @@
     </div>
 </body>
 </html>
+'''
+
+def extract_content(html):
+    """Extract content sections from existing HTML."""
+    # Extract title
+    title_match = re.search(r'<title>(.*?)</title>', html)
+    title = title_match.group(1) if title_match else "Documentation"
+
+    # Extract h1 (with icon and name)
+    h1_match = re.search(r'<h1>(.*?)</h1>', html)
+    h1 = h1_match.group(1) if h1_match else ""
+
+    # Split icon and name
+    icon = ""
+    tool_name = ""
+    if h1:
+        parts = h1.split(None, 1)
+        if len(parts) == 2:
+            icon = parts[0]
+            tool_name = parts[1]
+        else:
+            tool_name = h1
+
+    # Extract tagline (first <p><strong>)
+    tagline_match = re.search(r'<p><strong>(.*?)</strong></p>', html)
+    tagline = tagline_match.group(1) if tagline_match else ""
+
+    # Extract warning box
+    warning_match = re.search(r'<div class="warning">(.*?)</div>', html, re.DOTALL)
+    warning = ""
+    if warning_match:
+        warning = f'<div class="warning-box">{warning_match.group(1)}</div>'
+
+    # Extract content sections (everything after warning until copyright)
+    content_match = re.search(
+        r'</div>\s*<h2>(.*?)<p style="margin-top: 40px',
+        html,
+        re.DOTALL
+    )
+    content = ""
+    if content_match:
+        content = "<h2>" + content_match.group(1)
+
+    return {
+        'title': title,
+        'icon': icon,
+        'tool_name': tool_name,
+        'tagline': tagline,
+        'warning': warning,
+        'content': content
+    }
+
+def update_doc_page(file_path):
+    """Update a single documentation page."""
+    print(f"Updating {file_path.name}...")
+
+    # Read original
+    original_html = file_path.read_text()
+
+    # Extract content
+    data = extract_content(original_html)
+
+    # Generate new HTML
+    new_html = MODERN_TEMPLATE.format(**data)
+
+    # Write updated version
+    file_path.write_text(new_html)
+    print(f"✓ Updated {file_path.name}")
+
+def main():
+    docs_dir = Path("/Users/noone/docs")
+    doc_files = sorted(docs_dir.glob("*.html"))
+
+    print(f"\nUpdating {len(doc_files)} documentation pages with modern design...\n")
+
+    for doc_file in doc_files:
+        update_doc_page(doc_file)
+
+    print(f"\n✓ Successfully updated all {len(doc_files)} documentation pages!\n")
+
+if __name__ == "__main__":
+    main()

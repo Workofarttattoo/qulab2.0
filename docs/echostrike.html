@@ -4,42 +4,215 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>EchoStrike - Documentation</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <style>
-        body {
-            font-family: 'Courier New', monospace;
-            background: linear-gradient(135deg, #0a0a0a 0%, #1a0000 100%);
-            color: #fff;
-            margin: 0;
-            padding: 20px;
+        :root {
+            --primary: #6366f1;
+            --primary-dark: #4f46e5;
+            --secondary: #8b5cf6;
+            --accent: #ec4899;
+            --danger: #ef4444;
+            --success: #10b981;
+            --warning: #f59e0b;
+            --dark: #0f172a;
+            --dark-light: #1e293b;
+            --gray: #64748b;
+            --gray-light: #cbd5e1;
+            --white: #ffffff;
+            --gradient-1: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            --gradient-2: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
         }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--dark);
+            color: var(--white);
+            line-height: 1.6;
+            min-height: 100vh;
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background:
+                radial-gradient(circle at 20% 80%, rgba(99, 102, 241, 0.15) 0%, transparent 50%),
+                radial-gradient(circle at 80% 20%, rgba(139, 92, 246, 0.15) 0%, transparent 50%),
+                radial-gradient(circle at 50% 50%, rgba(236, 72, 153, 0.1) 0%, transparent 50%);
+            z-index: 0;
+            animation: pulse 10s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.8; }
+        }
+
         .container {
             max-width: 900px;
             margin: 0 auto;
-            background: rgba(26, 0, 0, 0.9);
-            border: 2px solid #ff3333;
-            border-radius: 10px;
-            padding: 40px;
+            padding: 40px 20px;
+            position: relative;
+            z-index: 1;
         }
-        h1 { color: #ff6666; font-size: 2.5em; }
-        h2 { color: #ff9999; margin-top: 30px; }
-        code { background: #1a0000; padding: 3px 8px; border-radius: 4px; color: #00ff00; }
-        pre { background: #000; border: 1px solid #ff3333; padding: 20px; border-radius: 8px; overflow-x: auto; }
-        .warning { background: #330000; border-left: 5px solid #ff0000; padding: 15px; margin: 20px 0; }
-        a { color: #ff6666; text-decoration: none; }
-        .back { display: inline-block; margin-bottom: 20px; padding: 10px 20px; background: #ff3333; border-radius: 5px; }
-        ul { line-height: 2; }
+
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 12px 24px;
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 50px;
+            color: var(--white);
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            margin-bottom: 32px;
+        }
+
+        .back-link:hover {
+            background: rgba(99, 102, 241, 0.2);
+            border-color: var(--primary);
+            transform: translateX(-4px);
+        }
+
+        .doc-card {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 24px;
+            padding: 48px;
+            margin-top: 24px;
+        }
+
+        h1 {
+            font-size: 3rem;
+            font-weight: 700;
+            background: var(--gradient-1);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 16px;
+        }
+
+        .tagline {
+            font-size: 1.25rem;
+            color: var(--gray-light);
+            margin-bottom: 32px;
+        }
+
+        .warning-box {
+            background: rgba(239, 68, 68, 0.1);
+            border-left: 4px solid var(--danger);
+            padding: 20px;
+            border-radius: 8px;
+            margin: 32px 0;
+        }
+
+        .warning-box strong {
+            color: var(--danger);
+            font-size: 1.1em;
+        }
+
+        h2 {
+            font-size: 1.75rem;
+            font-weight: 600;
+            color: var(--primary);
+            margin-top: 40px;
+            margin-bottom: 16px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        p {
+            color: var(--gray-light);
+            margin-bottom: 16px;
+        }
+
+        ul {
+            list-style: none;
+            margin: 16px 0;
+        }
+
+        ul li {
+            color: var(--gray-light);
+            padding: 8px 0;
+            padding-left: 28px;
+            position: relative;
+        }
+
+        ul li::before {
+            content: '▹';
+            position: absolute;
+            left: 8px;
+            color: var(--primary);
+            font-size: 1.2em;
+        }
+
+        code {
+            background: rgba(99, 102, 241, 0.2);
+            color: var(--primary);
+            padding: 4px 8px;
+            border-radius: 6px;
+            font-family: 'SF Mono', 'Monaco', 'Inconsolata', monospace;
+            font-size: 0.9em;
+        }
+
+        pre {
+            background: rgba(15, 23, 42, 0.8);
+            border: 1px solid rgba(99, 102, 241, 0.3);
+            border-radius: 12px;
+            padding: 24px;
+            overflow-x: auto;
+            margin: 16px 0;
+        }
+
+        pre code {
+            background: none;
+            color: var(--gray-light);
+            padding: 0;
+        }
+
+        .footer {
+            text-align: center;
+            margin-top: 48px;
+            padding-top: 32px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            color: var(--gray);
+            font-size: 0.9em;
+        }
     </style>
 </head>
 <body>
     <div class="container">
-        <a href="../index.html" class="back">← Back to All Tools</a>
-        <h1>📢 EchoStrike</h1>
-        <p><strong>API endpoint discovery and testing framework</strong></p>
-        <div class="warning">
+        <a href="../index.html" class="back-link">← Back to All Tools</a>
+
+        <div class="doc-card">
+            <h1>📢 EchoStrike</h1>
+            <p class="tagline"><strong>API endpoint discovery and testing framework</strong></p>
+
+            <div class="warning-box">
             <strong>⚠️ AUTHORIZED USE ONLY</strong><br>
             Only test systems you own or have explicit written permission to assess.
         </div>
-        <h2>📋 Overview</h2>
+
+            <h2>📋 Overview</h2>
         <p>EchoStrike discovers and tests API endpoints, validates authentication, and identifies misconfigurations in REST/GraphQL APIs.</p>
         <h2>✨ Features</h2>
         <ul><li>API endpoint enumeration</li><li>Authentication testing</li><li>GraphQL introspection</li><li>Rate limit detection</li><li>OpenAPI spec generation</li></ul>
@@ -50,9 +223,13 @@
 3 authentication bypasses found</code></pre>
         <h2>🛡️ Legal & Ethical Use</h2>
         <p><strong>EchoStrike</strong> must only be used for authorized security testing.</p>
-        <p style="margin-top: 40px; text-align: center; opacity: 0.7;">
-            Copyright © 2025 Joshua Hendricks Cole (DBA: Corporation of Light). All Rights Reserved. PATENT PENDING.
-        </p>
+        
+
+            <div class="footer">
+                Copyright © 2025 Joshua Hendricks Cole (DBA: Corporation of Light).<br>
+                All Rights Reserved. PATENT PENDING.
+            </div>
+        </div>
     </div>
 </body>
 </html>
