@@ -1,0 +1,1109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Chrono-Walker - Corporation of Light</title>
+
+  <!-- Corporation of Light Design System -->
+  <link rel="stylesheet" href="/Users/noone/TheGAVLSuite/corporation-of-light.css" />
+
+  <style>
+    /* Copyright (c) 2025 Joshua Hendricks Cole (DBA: Corporation of Light). All Rights Reserved. PATENT PENDING. */
+
+    /* Chrono-Walker Specific: Temporal Nightmare Grid Theme */
+    body {
+      background: var(--nightmare-black);
+      position: relative;
+      overflow-x: hidden;
+    }
+
+    /* Temporal Grid Background - Crystallized Timeline */
+    .temporal-grid {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 0;
+      background-image:
+        linear-gradient(0deg, transparent 24%, rgba(168, 85, 247, 0.05) 25%, rgba(168, 85, 247, 0.05) 26%, transparent 27%, transparent 74%, rgba(168, 85, 247, 0.05) 75%, rgba(168, 85, 247, 0.05) 76%, transparent 77%, transparent),
+        linear-gradient(90deg, transparent 24%, rgba(236, 72, 153, 0.05) 25%, rgba(236, 72, 153, 0.05) 26%, transparent 27%, transparent 74%, rgba(236, 72, 153, 0.05) 75%, rgba(236, 72, 153, 0.05) 76%, transparent 77%, transparent);
+      background-size: 50px 50px;
+      animation: grid-flow 20s linear infinite;
+    }
+
+    @keyframes grid-flow {
+      0% { background-position: 0 0; }
+      100% { background-position: 50px 50px; }
+    }
+
+    /* Time Tear Effects */
+    .time-tear {
+      position: fixed;
+      width: 2px;
+      height: 100%;
+      background: linear-gradient(180deg,
+        transparent 0%,
+        var(--neon-purple) 30%,
+        var(--electric-pink) 50%,
+        var(--cyber-cyan) 70%,
+        transparent 100%);
+      animation: tear-pulse 4s ease-in-out infinite;
+      pointer-events: none;
+      z-index: 1;
+    }
+
+    .time-tear:nth-child(1) { left: 20%; animation-delay: 0s; }
+    .time-tear:nth-child(2) { left: 50%; animation-delay: 1.3s; }
+    .time-tear:nth-child(3) { left: 80%; animation-delay: 2.6s; }
+
+    @keyframes tear-pulse {
+      0%, 100% {
+        opacity: 0.3;
+        box-shadow: 0 0 10px currentColor;
+        transform: scaleY(0.8);
+      }
+      50% {
+        opacity: 0.8;
+        box-shadow: 0 0 30px currentColor;
+        transform: scaleY(1);
+      }
+    }
+
+    /* Main Content */
+    main {
+      position: relative;
+      z-index: 2;
+      max-width: 1600px;
+      margin: 0 auto;
+      padding: 2rem;
+    }
+
+    /* Header with Temporal Glitch */
+    .hero {
+      text-align: center;
+      margin-bottom: 3rem;
+      position: relative;
+    }
+
+    .hero h1 {
+      font-size: 3.5rem;
+      margin: 0 0 1rem 0;
+      background: linear-gradient(90deg,
+        var(--neon-purple) 0%,
+        var(--electric-pink) 50%,
+        var(--cyber-cyan) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      animation: glitch 3s infinite;
+      position: relative;
+      text-transform: uppercase;
+      letter-spacing: 0.15em;
+    }
+
+    .hero h1::before,
+    .hero h1::after {
+      content: 'CHRONO-WALKER';
+      position: absolute;
+      left: 0;
+      width: 100%;
+      height: 100%;
+    }
+
+    .hero h1::before {
+      animation: glitch-1 0.6s infinite;
+      clip-path: polygon(0 0, 100% 0, 100% 35%, 0 35%);
+      transform: translateX(-2px);
+      text-shadow: 2px 0 var(--glitch-red);
+    }
+
+    .hero h1::after {
+      animation: glitch-2 0.6s infinite;
+      clip-path: polygon(0 65%, 100% 65%, 100% 100%, 0 100%);
+      transform: translateX(2px);
+      text-shadow: -2px 0 var(--cyber-cyan);
+    }
+
+    .hero-subtitle {
+      font-family: var(--font-body);
+      color: var(--text-secondary);
+      font-size: 1.1rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+    }
+
+    /* Navigation Tabs - Crystallized */
+    .nav-tabs {
+      display: flex;
+      justify-content: center;
+      gap: 1rem;
+      margin-top: 2rem;
+      flex-wrap: wrap;
+    }
+
+    .tab-button {
+      padding: 0.75rem 2rem;
+      font-family: var(--font-display);
+      font-size: 1rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      background: var(--deep-gray);
+      border: 2px solid var(--neon-purple);
+      color: var(--text-primary);
+      cursor: pointer;
+      clip-path: polygon(10% 0%, 100% 0%, 90% 100%, 0% 100%);
+      transition: all 0.3s ease;
+      position: relative;
+    }
+
+    .tab-button::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: linear-gradient(135deg, var(--neon-purple), var(--electric-pink));
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+
+    .tab-button:hover::before {
+      opacity: 0.2;
+    }
+
+    .tab-button.active {
+      background: linear-gradient(135deg, var(--neon-purple), var(--electric-pink));
+      border-color: var(--electric-pink);
+      box-shadow: 0 0 30px rgba(236, 72, 153, 0.6);
+      animation: crystallize 2s ease-in-out infinite;
+    }
+
+    .tab-button:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 5px 20px rgba(168, 85, 247, 0.5);
+    }
+
+    /* Panel Sections */
+    .panel {
+      display: none;
+      animation: fadeIn 0.5s ease-out;
+    }
+
+    .panel.active {
+      display: block;
+    }
+
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .panel-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 2rem;
+      padding-bottom: 1rem;
+      border-bottom: 2px solid var(--electric-pink);
+    }
+
+    .panel-header h2 {
+      font-size: 2rem;
+      color: var(--electric-pink);
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      text-shadow: 0 0 20px var(--electric-pink);
+      margin: 0;
+    }
+
+    /* Grotesque Cards */
+    .card {
+      background: var(--deep-gray);
+      border: 2px solid var(--neon-purple);
+      padding: 2rem;
+      clip-path: polygon(0 0, 100% 0, 100% 90%, 95% 100%, 0 100%);
+      box-shadow:
+        0 10px 40px rgba(168, 85, 247, 0.3),
+        inset 0 0 20px rgba(168, 85, 247, 0.1);
+      transition: all 0.3s ease;
+    }
+
+    .card:hover {
+      border-color: var(--electric-pink);
+      box-shadow:
+        0 15px 50px rgba(236, 72, 153, 0.5),
+        inset 0 0 30px rgba(236, 72, 153, 0.1);
+    }
+
+    .card h3 {
+      margin: 0 0 1.5rem 0;
+      color: var(--electric-pink);
+      font-size: 1.3rem;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+    }
+
+    /* Grid Layout */
+    .grid {
+      display: grid;
+      gap: 2rem;
+      margin-bottom: 3rem;
+    }
+
+    .grid.split {
+      grid-template-columns: 1fr 1fr;
+    }
+
+    /* Form Fields with Cyberpunk Aesthetic */
+    .field {
+      margin-bottom: 1.5rem;
+    }
+
+    .field label {
+      display: block;
+      font-family: var(--font-body);
+      color: var(--cyber-cyan);
+      font-size: 0.85rem;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      margin-bottom: 0.5rem;
+    }
+
+    .field input,
+    .field select,
+    .field textarea {
+      width: 100%;
+      padding: 0.75rem 1rem;
+      background: var(--nightmare-black);
+      border: 1px solid var(--neon-purple);
+      color: var(--text-primary);
+      font-family: var(--font-body);
+      font-size: 0.95rem;
+      transition: all 0.3s ease;
+    }
+
+    .field input:focus,
+    .field select:focus,
+    .field textarea:focus {
+      outline: none;
+      border-color: var(--electric-pink);
+      box-shadow: 0 0 20px rgba(236, 72, 153, 0.5);
+      background: rgba(168, 85, 247, 0.05);
+    }
+
+    .flex-row {
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+
+    .flex-row .field {
+      flex: 1;
+      min-width: 150px;
+    }
+
+    /* Action Buttons */
+    button[type="submit"],
+    .primary {
+      width: 100%;
+      padding: 1rem 2rem;
+      font-family: var(--font-display);
+      font-size: 1.1rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      background: linear-gradient(135deg, var(--neon-purple), var(--electric-pink));
+      border: none;
+      color: var(--text-primary);
+      cursor: pointer;
+      box-shadow: 0 5px 20px rgba(168, 85, 247, 0.5);
+      transition: all 0.3s ease;
+      position: relative;
+      overflow: hidden;
+      margin-top: 1rem;
+    }
+
+    button[type="submit"]::before,
+    .primary::before {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 0;
+      height: 0;
+      background: rgba(255, 255, 255, 0.3);
+      border-radius: 50%;
+      transform: translate(-50%, -50%);
+      transition: width 0.6s, height 0.6s;
+    }
+
+    button[type="submit"]:hover::before,
+    .primary:hover::before {
+      width: 400px;
+      height: 400px;
+    }
+
+    button[type="submit"]:hover,
+    .primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 30px rgba(236, 72, 153, 0.7);
+    }
+
+    /* Table - Evidence Ledger */
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-family: var(--font-body);
+      font-size: 0.85rem;
+    }
+
+    table thead {
+      background: rgba(168, 85, 247, 0.2);
+    }
+
+    table th {
+      padding: 0.75rem;
+      text-align: left;
+      color: var(--cyber-cyan);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      border-bottom: 2px solid var(--neon-purple);
+    }
+
+    table td {
+      padding: 0.75rem;
+      color: var(--text-primary);
+      border-bottom: 1px solid rgba(168, 85, 247, 0.2);
+    }
+
+    table tbody tr:hover {
+      background: rgba(236, 72, 153, 0.1);
+    }
+
+    /* Chart Canvas - Temporal Visualization */
+    canvas {
+      width: 100%;
+      height: 300px;
+      background: var(--nightmare-black);
+      border: 2px solid var(--neon-purple);
+      box-shadow: inset 0 0 30px rgba(168, 85, 247, 0.2);
+      margin-bottom: 1.5rem;
+    }
+
+    /* Metrics Grid */
+    .metrics {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+      gap: 1rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .metric-card {
+      background: var(--nightmare-black);
+      border: 2px solid var(--neon-purple);
+      padding: 1rem;
+      text-align: center;
+      clip-path: polygon(5% 0%, 100% 0%, 95% 100%, 0% 100%);
+      transition: all 0.3s ease;
+    }
+
+    .metric-card:hover {
+      border-color: var(--electric-pink);
+      box-shadow: 0 0 20px rgba(236, 72, 153, 0.5);
+      transform: scale(1.05);
+    }
+
+    .metric-label {
+      display: block;
+      font-family: var(--font-body);
+      font-size: 0.7rem;
+      color: var(--text-secondary);
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      margin-bottom: 0.5rem;
+    }
+
+    .metric-value {
+      display: block;
+      font-family: var(--font-display);
+      font-size: 1.5rem;
+      color: var(--electric-pink);
+      font-weight: 700;
+    }
+
+    /* Console Output - Organic Drip Effect */
+    .console {
+      background: var(--nightmare-black);
+      border: 2px solid var(--cyber-cyan);
+      padding: 1.5rem;
+      font-family: var(--font-body);
+      font-size: 0.9rem;
+      color: var(--glitch-green);
+      min-height: 100px;
+      overflow-y: auto;
+      white-space: pre-wrap;
+      box-shadow: inset 0 0 20px rgba(6, 182, 212, 0.2);
+      animation: drip-in 0.5s ease-out;
+    }
+
+    /* Loading State */
+    .status {
+      margin-top: 1rem;
+      padding: 0.75rem;
+      font-family: var(--font-body);
+      font-size: 0.85rem;
+      text-align: center;
+      border-left: 4px solid var(--electric-pink);
+      background: rgba(236, 72, 153, 0.1);
+      color: var(--electric-pink);
+      animation: pulse-oracle 2s ease-in-out infinite;
+    }
+
+    .status.hidden {
+      display: none;
+    }
+
+    /* Temporal Oracle Face */
+    .temporal-oracle {
+      position: fixed;
+      bottom: 30px;
+      right: 30px;
+      width: 120px;
+      height: 120px;
+      background: radial-gradient(circle, var(--neon-purple), transparent);
+      border: 3px solid var(--electric-pink);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 3rem;
+      animation: pulse-oracle 3s ease-in-out infinite, float 6s ease-in-out infinite;
+      cursor: pointer;
+      z-index: 999;
+      box-shadow: 0 0 40px var(--electric-pink);
+      transition: all 0.3s ease;
+    }
+
+    .temporal-oracle:hover {
+      transform: scale(1.1);
+      box-shadow: 0 0 60px var(--electric-pink);
+    }
+
+    .temporal-oracle.scanning {
+      animation: pulse-oracle 0.5s ease-in-out infinite, spin 2s linear infinite;
+      border-color: var(--cyber-cyan);
+      box-shadow: 0 0 60px var(--cyber-cyan);
+    }
+
+    @keyframes float {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-10px); }
+    }
+
+    /* Responsive Design */
+    @media (max-width: 1024px) {
+      .grid.split {
+        grid-template-columns: 1fr;
+      }
+
+      .hero h1 {
+        font-size: 2.5rem;
+      }
+
+      .nav-tabs {
+        flex-direction: column;
+      }
+
+      .tab-button {
+        width: 100%;
+      }
+    }
+
+    @media (max-width: 640px) {
+      .flex-row {
+        flex-direction: column;
+      }
+
+      .flex-row .field {
+        width: 100%;
+      }
+
+      .temporal-oracle {
+        width: 80px;
+        height: 80px;
+        font-size: 2rem;
+        bottom: 20px;
+        right: 20px;
+      }
+    }
+
+    /* Hidden State */
+    .hidden {
+      display: none !important;
+    }
+  </style>
+</head>
+<body>
+  <!-- Temporal Grid Background -->
+  <div class="temporal-grid"></div>
+
+  <!-- Time Tear Effects -->
+  <div class="time-tear"></div>
+  <div class="time-tear"></div>
+  <div class="time-tear"></div>
+
+  <!-- Temporal Oracle Face -->
+  <div class="temporal-oracle" id="temporal-oracle" title="Temporal Oracle">
+    ⏰
+  </div>
+
+  <!-- Main Content -->
+  <main>
+    <!-- Header -->
+    <header class="hero">
+      <h1>CHRONO-WALKER</h1>
+      <p class="hero-subtitle">Temporal Governance Console</p>
+      <nav class="nav-tabs">
+        <button class="tab-button active" data-target="ledger">📜 Ledger</button>
+        <button class="tab-button" data-target="forecast">🔮 Forecast</button>
+        <button class="tab-button" data-target="cadence">🎯 Cadence</button>
+        <button class="tab-button" data-target="enforce">🛡️ Band Guard</button>
+      </nav>
+    </header>
+
+    <!-- Ledger Panel -->
+    <section id="ledger" class="panel active">
+      <div class="panel-header">
+        <h2>[LEDGER] Signal Archive</h2>
+      </div>
+      <div class="grid split">
+        <div class="card">
+          <h3>⚡ Add Evidence</h3>
+          <form id="add-evidence-form">
+            <div class="field">
+              <label>Field</label>
+              <input name="field" placeholder="wetware×AI×quantum" required />
+            </div>
+            <div class="field">
+              <label>Kind</label>
+              <input name="kind" placeholder="benchmark" required />
+            </div>
+            <div class="flex-row">
+              <div class="field">
+                <label>Strength</label>
+                <input name="strength" type="number" min="0" max="1" step="0.01" value="0.6" required />
+              </div>
+              <div class="field">
+                <label>Outcome</label>
+                <input name="outcome" type="number" min="0" max="1" step="0.01" value="0.6" required />
+              </div>
+            </div>
+            <div class="field">
+              <label>Source</label>
+              <input name="source" placeholder="arXiv:xxxx.xxxxx" />
+            </div>
+            <div class="field">
+              <label>Title</label>
+              <input name="title" placeholder="Signal descriptor" />
+            </div>
+            <div class="field">
+              <label>Notes</label>
+              <textarea name="notes" rows="3" placeholder="Key observations"></textarea>
+            </div>
+            <button type="submit">Inject Evidence</button>
+            <div class="status hidden" id="ledger-status"></div>
+          </form>
+        </div>
+
+        <div class="card">
+          <h3>📊 Recent Entries</h3>
+          <table>
+            <thead>
+              <tr>
+                <th>Timestamp</th>
+                <th>Field</th>
+                <th>Kind</th>
+                <th>Strength</th>
+                <th>Outcome</th>
+              </tr>
+            </thead>
+            <tbody id="ledger-table">
+              <tr>
+                <td>2025-10-15 14:32</td>
+                <td>wetware×AI</td>
+                <td>benchmark</td>
+                <td>0.72</td>
+                <td>0.68</td>
+              </tr>
+              <tr>
+                <td>2025-10-14 09:15</td>
+                <td>quantum×security</td>
+                <td>milestone</td>
+                <td>0.85</td>
+                <td>0.91</td>
+              </tr>
+              <tr>
+                <td>2025-10-13 16:45</td>
+                <td>AI×governance</td>
+                <td>indicator</td>
+                <td>0.60</td>
+                <td>0.55</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- Forecast Panel -->
+    <section id="forecast" class="panel">
+      <div class="panel-header">
+        <h2>[FORECAST] Monte Carlo Horizon</h2>
+      </div>
+      <div class="grid split">
+        <div class="card">
+          <h3>⚙️ Forecast Inputs</h3>
+          <form id="forecast-form">
+            <div class="flex-row">
+              <div class="field">
+                <label>Periods</label>
+                <input name="periods" type="number" min="1" value="8" />
+              </div>
+              <div class="field">
+                <label>Events/Period</label>
+                <input name="events_per_period" type="number" min="1" value="4" />
+              </div>
+            </div>
+            <div class="flex-row">
+              <div class="field">
+                <label>Event Strength</label>
+                <input name="event_strength" type="number" step="0.05" min="0" max="1" value="0.6" />
+              </div>
+              <div class="field">
+                <label>Outcome Mean</label>
+                <input name="outcome_mean" type="number" step="0.05" min="0" max="1" value="0.6" />
+              </div>
+            </div>
+            <div class="flex-row">
+              <div class="field">
+                <label>Outcome Std</label>
+                <input name="outcome_std" type="number" step="0.01" min="0" value="0.15" />
+              </div>
+              <div class="field">
+                <label>Profile</label>
+                <select name="profile">
+                  <option value="optimistic">Optimistic</option>
+                  <option value="neutral" selected>Neutral</option>
+                  <option value="pessimistic">Pessimistic</option>
+                </select>
+              </div>
+            </div>
+            <button type="submit">Project Trajectory</button>
+            <div class="status hidden" id="forecast-status"></div>
+          </form>
+        </div>
+
+        <div class="card">
+          <h3>📈 Simulation Output</h3>
+          <canvas id="forecast-chart" width="560" height="300"></canvas>
+          <div class="metrics">
+            <div class="metric-card">
+              <span class="metric-label">Start Mean</span>
+              <span class="metric-value">0.60</span>
+            </div>
+            <div class="metric-card">
+              <span class="metric-label">Projected Mean</span>
+              <span class="metric-value">0.72</span>
+            </div>
+            <div class="metric-card">
+              <span class="metric-label">5th Percentile</span>
+              <span class="metric-value">0.54</span>
+            </div>
+            <div class="metric-card">
+              <span class="metric-label">95th Percentile</span>
+              <span class="metric-value">0.86</span>
+            </div>
+          </div>
+          <pre class="console">Awaiting projection parameters...</pre>
+        </div>
+      </div>
+    </section>
+
+    <!-- Cadence Panel -->
+    <section id="cadence" class="panel">
+      <div class="panel-header">
+        <h2>[CADENCE] Band Acquisition</h2>
+      </div>
+      <div class="grid split">
+        <div class="card">
+          <h3>🎯 Target Band Input</h3>
+          <form id="cadence-form">
+            <div class="field">
+              <label>Band Lower Bound</label>
+              <input name="band_low" type="number" step="0.01" min="0" max="1" value="0.65" />
+            </div>
+            <div class="field">
+              <label>Periods</label>
+              <input name="periods" type="number" min="1" value="8" />
+            </div>
+            <div class="field">
+              <label>Event Strength</label>
+              <input name="event_strength" type="number" step="0.05" min="0" max="1" value="0.6" />
+            </div>
+            <div class="field">
+              <label>Event Outcome</label>
+              <input name="event_outcome" type="number" step="0.05" min="0" max="1" value="0.6" />
+            </div>
+            <button type="submit">Solve Cadence</button>
+            <div class="status hidden" id="cadence-status"></div>
+          </form>
+        </div>
+
+        <div class="card">
+          <h3>🔢 Cadence Solution</h3>
+          <pre class="console" id="cadence-console">Set objectives to compute optimal cadence...
+
+TARGET: Achieve 0.65+ success rate
+PERIOD HORIZON: 8 time steps
+EVENT QUALITY: 0.6 strength, 0.6 outcome
+
+CALCULATING...</pre>
+        </div>
+      </div>
+    </section>
+
+    <!-- Band Guard Panel -->
+    <section id="enforce" class="panel">
+      <div class="panel-header">
+        <h2>[BAND GUARD] Compliance Scan</h2>
+      </div>
+      <div class="grid split">
+        <div class="card">
+          <h3>🛡️ Band Inputs</h3>
+          <form id="band-form">
+            <div class="flex-row">
+              <div class="field">
+                <label>Low Bound</label>
+                <input name="low" type="number" step="0.01" min="0" max="1" value="0.55" />
+              </div>
+              <div class="field">
+                <label>High Bound</label>
+                <input name="high" type="number" step="0.01" min="0" max="1" value="0.8" />
+              </div>
+            </div>
+            <div class="flex-row">
+              <div class="field">
+                <label>Periods</label>
+                <input name="periods" type="number" min="1" value="8" />
+              </div>
+              <div class="field">
+                <label>Events/Period</label>
+                <input name="events_per_period" type="number" min="1" value="4" />
+              </div>
+            </div>
+            <div class="flex-row">
+              <div class="field">
+                <label>Event Strength</label>
+                <input name="event_strength" type="number" step="0.05" min="0" max="1" value="0.6" />
+              </div>
+              <div class="field">
+                <label>Event Outcome</label>
+                <input name="event_outcome" type="number" step="0.05" min="0" max="1" value="0.6" />
+              </div>
+            </div>
+            <div class="field">
+              <label>Outcome Std</label>
+              <input name="event_outcome_std" type="number" step="0.01" min="0" value="0.15" />
+            </div>
+            <button type="submit">Evaluate Band</button>
+            <div class="status hidden" id="band-status"></div>
+          </form>
+        </div>
+
+        <div class="card">
+          <h3>⚠️ Band Assessment</h3>
+          <pre class="console" id="band-console">Deploy evaluation to review compliance...
+
+ACCEPTABLE RANGE: 0.55 - 0.80
+PERIOD HORIZON: 8 time steps
+SCANNING FOR VIOLATIONS...</pre>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- GAVL Wizard Component -->
+  <script src="/wizard-component.js"></script>
+  <script>
+    window.GAVLWizardConfig = {
+      toolName: "Chrono Walker",
+      storageKey: "chrono_wizard_seen",
+      steps: [
+        {
+          title: "Welcome to Chrono Walker! ⏰",
+          content: `
+            <p>
+              Chrono Walker helps you <strong>plan and track governance timelines</strong>
+              with Bayesian forecasting and compliance monitoring across temporal dimensions.
+            </p>
+            <div class="gavl-tip-box">
+              <h4>💡 What This Tool Does</h4>
+              <p>
+                Track evidence, project futures, plan cadences, and enforce compliance bands
+                for strategic governance planning. Think of it as your temporal navigation engine.
+              </p>
+            </div>
+            <div class="gavl-example-box">
+              <h4>✅ Use Cases:</h4>
+              <ul>
+                <li><strong>Evidence Tracking:</strong> Log signals and benchmarks over time</li>
+                <li><strong>Monte Carlo Forecasting:</strong> Project probabilistic trajectories</li>
+                <li><strong>Cadence Planning:</strong> Find optimal event schedules to hit targets</li>
+                <li><strong>Band Compliance:</strong> Ensure metrics stay in acceptable ranges</li>
+              </ul>
+            </div>
+          `
+        },
+        {
+          title: "Four Modes: Ledger, Forecast, Cadence, Band Guard 📊",
+          content: `
+            <p>Chrono Walker has four main tabs, each for different temporal governance needs.</p>
+            <div class="gavl-example-box">
+              <h4>📜 Ledger - Signal Archive</h4>
+              <p>
+                Record evidence over time: benchmarks, milestones, signals.
+              </p>
+              <ul>
+                <li><strong>Field:</strong> Category (e.g., "wetware×AI×quantum")</li>
+                <li><strong>Kind:</strong> Type of signal (benchmark, milestone, indicator)</li>
+                <li><strong>Strength:</strong> Evidence quality (0-1 scale)</li>
+                <li><strong>Outcome:</strong> Result value (0-1 scale)</li>
+                <li><strong>Best for:</strong> Building historical record for forecasts</li>
+              </ul>
+            </div>
+            <div class="gavl-example-box">
+              <h4>🔮 Forecast - Monte Carlo Horizon</h4>
+              <p>
+                Project probabilistic trajectories into the future.
+              </p>
+              <ul>
+                <li>Simulates multiple possible futures (Monte Carlo method)</li>
+                <li>Shows confidence bands (5th to 95th percentile)</li>
+                <li>Profiles: Optimistic, Neutral, Pessimistic</li>
+                <li><strong>Best for:</strong> Understanding uncertainty and ranges</li>
+              </ul>
+            </div>
+            <div class="gavl-example-box">
+              <h4>🎯 Cadence Planner - Band Acquisition</h4>
+              <p>
+                Calculate how many events you need to hit a target band.
+              </p>
+              <ul>
+                <li>Set your target (e.g., 0.65 success rate)</li>
+                <li>Tool solves for optimal event frequency</li>
+                <li>Shows minimum events needed per period</li>
+                <li><strong>Best for:</strong> Resource planning and goal achievement</li>
+              </ul>
+            </div>
+            <div class="gavl-example-box">
+              <h4>🛡️ Band Guard - Compliance Scan</h4>
+              <p>
+                Monitor if metrics stay within acceptable ranges.
+              </p>
+              <ul>
+                <li>Define upper and lower bounds (e.g., 0.55 - 0.80)</li>
+                <li>Simulates future trajectories</li>
+                <li>Flags periods where you might exit the band</li>
+                <li><strong>Best for:</strong> Risk management and guardrails</li>
+              </ul>
+            </div>
+          `
+        },
+        {
+          title: "Understanding the Inputs ⚙️",
+          content: `
+            <p>
+              Each mode has specific inputs. Here's what they mean:
+            </p>
+            <div class="gavl-example-box">
+              <h4>📊 Common Parameters</h4>
+              <ul>
+                <li><strong>Periods:</strong> Number of time steps to simulate (e.g., 8 quarters)</li>
+                <li><strong>Events per Period:</strong> How many events happen each period (e.g., 4 product launches/quarter)</li>
+                <li><strong>Event Strength:</strong> Quality/importance of events (0=weak, 1=strong)</li>
+                <li><strong>Event Outcome:</strong> Expected success rate (0=failure, 1=success)</li>
+                <li><strong>Outcome Std:</strong> Variability/uncertainty in outcomes</li>
+              </ul>
+            </div>
+            <div class="gavl-tip-box">
+              <h4>💡 Typical Values</h4>
+              <p>
+                For most business use cases, start with:
+              </p>
+              <ul>
+                <li><strong>Periods:</strong> 8 (two years in quarters)</li>
+                <li><strong>Events/Period:</strong> 4 (one per month)</li>
+                <li><strong>Event Strength:</strong> 0.6 (moderate quality)</li>
+                <li><strong>Outcome:</strong> 0.6 (60% success rate)</li>
+                <li><strong>Std:</strong> 0.15 (15% variability)</li>
+              </ul>
+            </div>
+          `
+        },
+        {
+          title: "Reading the Results 📈",
+          content: `
+            <p>
+              After running a simulation, you'll see charts and metrics. Here's how to interpret them:
+            </p>
+            <div class="gavl-example-box">
+              <h4>📉 Forecast Chart</h4>
+              <p>
+                Shows projected trajectory over time:
+              </p>
+              <ul>
+                <li><strong>Center line:</strong> Mean (most likely) outcome</li>
+                <li><strong>Shaded area:</strong> Confidence band (5th-95th percentile)</li>
+                <li><strong>Wider band:</strong> More uncertainty</li>
+                <li><strong>Trend direction:</strong> Upward/downward movement</li>
+              </ul>
+            </div>
+            <div class="gavl-example-box">
+              <h4>📊 Forecast Metrics</h4>
+              <ul>
+                <li><strong>Start Mean:</strong> Your current baseline (period 0)</li>
+                <li><strong>Projected Mean:</strong> Expected value at final period</li>
+                <li><strong>5th Percentile:</strong> Pessimistic scenario (95% likely to exceed this)</li>
+                <li><strong>95th Percentile:</strong> Optimistic scenario (only 5% chance to exceed this)</li>
+              </ul>
+            </div>
+          `
+        },
+        {
+          title: "Ready to Navigate Time! 🚀",
+          content: `
+            <p>
+              You're all set to use Chrono Walker for temporal governance planning!
+            </p>
+            <div class="gavl-tip-box">
+              <h4>💡 Quick Start Recipe</h4>
+              <ol>
+                <li>Start with <strong>📜 Ledger tab</strong> - add a few historical signals</li>
+                <li>Switch to <strong>🔮 Forecast tab</strong> - project 8 periods ahead</li>
+                <li>Review the confidence bands and metrics</li>
+                <li>Try <strong>🎯 Cadence Planner</strong> - set a target like 0.70</li>
+                <li>See how many events you need to hit it</li>
+                <li>Use <strong>🛡️ Band Guard</strong> to check compliance (e.g., 0.60-0.80)</li>
+                <li>Iterate: adjust event strength/frequency based on results</li>
+              </ol>
+            </div>
+            <div class="gavl-example-box">
+              <h4>🎨 New Visual Features</h4>
+              <ul>
+                <li><strong>Temporal Grid:</strong> Crystallized timeline background</li>
+                <li><strong>Time Tears:</strong> Visual rifts showing temporal flow</li>
+                <li><strong>Temporal Oracle:</strong> Floating temporal guide (bottom-right)</li>
+                <li><strong>Glitch Effects:</strong> Reality distortions during calculations</li>
+              </ul>
+            </div>
+            <p style="margin-top: 20px; font-weight: 600; color: #764ba2;">
+              Click "Start Using Tool" to begin navigating the temporal grid! ⏰
+            </p>
+          `
+        }
+      ]
+    };
+  </script>
+
+  <script>
+    /* Copyright (c) 2025 Joshua Hendricks Cole (DBA: Corporation of Light). All Rights Reserved. PATENT PENDING. */
+
+    // Tab Navigation
+    const tabButtons = document.querySelectorAll('.tab-button');
+    const panels = document.querySelectorAll('.panel');
+    const temporalOracle = document.getElementById('temporal-oracle');
+
+    tabButtons.forEach(button => {
+      button.addEventListener('click', () => {
+        const target = button.dataset.target;
+
+        // Update active states
+        tabButtons.forEach(btn => btn.classList.remove('active'));
+        button.classList.add('active');
+
+        panels.forEach(panel => {
+          panel.classList.remove('active');
+          if (panel.id === target) {
+            panel.classList.add('active');
+          }
+        });
+      });
+    });
+
+    // Temporal Oracle Interaction
+    temporalOracle.addEventListener('click', () => {
+      temporalOracle.classList.toggle('scanning');
+      setTimeout(() => {
+        temporalOracle.classList.remove('scanning');
+      }, 3000);
+    });
+
+    // Demo Form Handlers (preview only)
+    const forms = ['add-evidence-form', 'forecast-form', 'cadence-form', 'band-form'];
+    forms.forEach(formId => {
+      const form = document.getElementById(formId);
+      const statusId = formId.replace('-form', '-status');
+      const status = document.getElementById(statusId);
+
+      if (form && status) {
+        form.addEventListener('submit', (e) => {
+          e.preventDefault();
+          temporalOracle.classList.add('scanning');
+          status.textContent = 'Processing temporal calculation...';
+          status.classList.remove('hidden');
+
+          setTimeout(() => {
+            status.textContent = '✅ Calculation complete! (Preview mode)';
+            temporalOracle.classList.remove('scanning');
+            setTimeout(() => {
+              status.classList.add('hidden');
+            }, 3000);
+          }, 2000);
+        });
+      }
+    });
+
+    // Mock chart visualization (placeholder)
+    const canvas = document.getElementById('forecast-chart');
+    if (canvas) {
+      const ctx = canvas.getContext('2d');
+      ctx.fillStyle = '#0A0A0A';
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+      ctx.strokeStyle = '#A855F7';
+      ctx.lineWidth = 2;
+      ctx.beginPath();
+      ctx.moveTo(0, canvas.height / 2);
+      for (let i = 0; i < canvas.width; i += 10) {
+        ctx.lineTo(i, canvas.height / 2 + Math.sin(i / 20) * 50);
+      }
+      ctx.stroke();
+
+      ctx.font = '14px monospace';
+      ctx.fillStyle = '#EC4899';
+      ctx.fillText('Temporal Projection Chart (Demo)', 20, 30);
+    }
+  </script>
+</body>
+</html>

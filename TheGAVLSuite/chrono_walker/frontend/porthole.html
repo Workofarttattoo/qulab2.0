@@ -1,0 +1,600 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Chrono Walker - Porthole View</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: 'Orbitron', 'Fira Code', monospace;
+        background: #000;
+        overflow: hidden;
+        height: 100vh;
+        display: flex;
+      }
+
+      /* Left panel - 20% width */
+      .left-panel {
+        width: 20%;
+        background: linear-gradient(180deg, #0a0a0f 0%, #050508 100%);
+        border-right: 2px solid rgba(102, 246, 255, 0.2);
+        display: flex;
+        flex-direction: column;
+        position: relative;
+        box-shadow: 4px 0 30px rgba(0, 0, 0, 0.8);
+      }
+
+      /* Info readout area at top */
+      .info-readout {
+        padding: 1rem;
+        background: rgba(10, 20, 35, 0.9);
+        border-bottom: 1px solid rgba(102, 246, 255, 0.3);
+        font-size: 0.75rem;
+        color: #66f6ff;
+        line-height: 1.6;
+        font-family: 'Fira Code', monospace;
+        min-height: 120px;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
+      }
+
+      .info-readout h3 {
+        font-size: 0.85rem;
+        margin-bottom: 0.5rem;
+        color: #39ffc4;
+        text-transform: uppercase;
+        letter-spacing: 0.1rem;
+      }
+
+      .info-line {
+        margin: 0.3rem 0;
+        opacity: 0.8;
+      }
+
+      /* Child illustration container */
+      .child-container {
+        flex: 1;
+        display: flex;
+        align-items: flex-end;
+        justify-content: center;
+        padding: 2rem 1rem;
+        position: relative;
+        overflow: hidden;
+      }
+
+      /* Cyberpunk environment */
+      .child-container::before {
+        content: '';
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        height: 40%;
+        background: linear-gradient(180deg, transparent, rgba(20, 30, 50, 0.6));
+        pointer-events: none;
+      }
+
+      /* Child SVG illustration */
+      #child-illustration {
+        width: 100%;
+        height: 80%;
+        filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.8));
+      }
+
+      /* Right panel - 80% width for aurora + controls */
+      .aurora-panel {
+        width: 80%;
+        position: relative;
+        background: #050508;
+        display: flex;
+        flex-direction: column;
+      }
+
+      /* Canvas for aurora */
+      #aurora-canvas {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        z-index: 1;
+      }
+
+      /* Controls overlay on aurora */
+      .controls-overlay {
+        position: relative;
+        z-index: 2;
+        padding: 2rem;
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+        gap: 1.5rem;
+        pointer-events: none;
+      }
+
+      .control-card {
+        background: rgba(8, 15, 25, 0.85);
+        border: 1px solid rgba(102, 246, 255, 0.3);
+        border-radius: 12px;
+        padding: 1rem;
+        backdrop-filter: blur(10px);
+        pointer-events: auto;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.6);
+      }
+
+      .control-card h3 {
+        font-size: 0.9rem;
+        color: #39ffc4;
+        margin-bottom: 0.8rem;
+        text-transform: uppercase;
+        letter-spacing: 0.1rem;
+      }
+
+      .field {
+        margin-bottom: 0.8rem;
+      }
+
+      .field label {
+        display: block;
+        font-size: 0.7rem;
+        color: #8aa6c2;
+        margin-bottom: 0.3rem;
+        text-transform: uppercase;
+        letter-spacing: 0.05rem;
+      }
+
+      .field input,
+      .field select {
+        width: 100%;
+        background: rgba(5, 10, 20, 0.9);
+        border: 1px solid rgba(102, 246, 255, 0.25);
+        border-radius: 6px;
+        padding: 0.5rem;
+        color: #e8f5ff;
+        font-size: 0.85rem;
+        font-family: 'Fira Code', monospace;
+      }
+
+      .field input:focus,
+      .field select:focus {
+        outline: none;
+        border-color: #66f6ff;
+        box-shadow: 0 0 8px rgba(102, 246, 255, 0.4);
+      }
+
+      button.aurora-btn {
+        width: 100%;
+        background: linear-gradient(135deg, #66f6ff, #39ffc4);
+        border: none;
+        border-radius: 6px;
+        padding: 0.6rem;
+        color: #000;
+        font-weight: 700;
+        font-size: 0.8rem;
+        text-transform: uppercase;
+        letter-spacing: 0.1rem;
+        cursor: pointer;
+        transition: all 0.2s ease;
+        margin-top: 0.5rem;
+      }
+
+      button.aurora-btn:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 4px 15px rgba(102, 246, 255, 0.6);
+      }
+
+      .back-link {
+        position: absolute;
+        top: 1rem;
+        right: 1rem;
+        padding: 0.6rem 1.2rem;
+        background: rgba(15, 20, 30, 0.9);
+        border: 1px solid rgba(102, 246, 255, 0.4);
+        border-radius: 8px;
+        color: #66f6ff;
+        text-decoration: none;
+        font-size: 0.8rem;
+        z-index: 3;
+        transition: all 0.3s ease;
+      }
+
+      .back-link:hover {
+        background: rgba(102, 246, 255, 0.15);
+        border-color: #66f6ff;
+        box-shadow: 0 0 15px rgba(102, 246, 255, 0.3);
+      }
+
+      .metrics-display {
+        position: absolute;
+        bottom: 2rem;
+        left: 50%;
+        transform: translateX(-50%);
+        display: flex;
+        gap: 1rem;
+        z-index: 2;
+        pointer-events: none;
+      }
+
+      .metric {
+        background: rgba(8, 15, 25, 0.9);
+        border: 1px solid rgba(102, 246, 255, 0.3);
+        border-radius: 8px;
+        padding: 0.8rem 1.2rem;
+        backdrop-filter: blur(10px);
+        text-align: center;
+      }
+
+      .metric-label {
+        font-size: 0.65rem;
+        color: #8aa6c2;
+        text-transform: uppercase;
+        letter-spacing: 0.08rem;
+        margin-bottom: 0.3rem;
+      }
+
+      .metric-value {
+        font-size: 1.1rem;
+        color: #39ffc4;
+        font-weight: 700;
+        font-family: 'Fira Code', monospace;
+      }
+
+      /* Data stream section */
+      .data-stream {
+        padding: 1rem;
+        background: rgba(10, 20, 35, 0.7);
+        border-bottom: 1px solid rgba(102, 246, 255, 0.2);
+        max-height: 40vh;
+        overflow-y: auto;
+      }
+
+      .data-stream h3 {
+        font-size: 0.85rem;
+        margin-bottom: 0.8rem;
+        color: #39ffc4;
+        text-transform: uppercase;
+        letter-spacing: 0.1rem;
+      }
+
+      .stream-section {
+        margin-bottom: 1rem;
+      }
+
+      .stream-label {
+        font-size: 0.7rem;
+        color: #8aa6c2;
+        text-transform: uppercase;
+        letter-spacing: 0.05rem;
+        margin-bottom: 0.4rem;
+      }
+
+      .stream-content {
+        font-size: 0.75rem;
+        color: #66f6ff;
+        line-height: 1.4;
+        font-family: 'Fira Code', monospace;
+      }
+
+      .tool-badge {
+        display: inline-block;
+        background: rgba(102, 246, 255, 0.1);
+        border: 1px solid rgba(102, 246, 255, 0.3);
+        border-radius: 4px;
+        padding: 0.3rem 0.5rem;
+        margin: 0.2rem;
+        font-size: 0.65rem;
+        animation: pulse 2s ease-in-out infinite;
+      }
+
+      @keyframes pulse {
+        0%, 100% { opacity: 0.7; }
+        50% { opacity: 1; box-shadow: 0 0 8px rgba(102, 246, 255, 0.4); }
+      }
+
+      .ledger-entry {
+        padding: 0.3rem 0;
+        border-bottom: 1px solid rgba(102, 246, 255, 0.1);
+        opacity: 0.8;
+      }
+
+      .ledger-entry:last-child {
+        border-bottom: none;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="left-panel">
+      <div class="info-readout">
+        <h3>System Status</h3>
+        <div class="info-line" id="particle-count">Particles: --</div>
+        <div class="info-line" id="wave-count">Waves: --</div>
+        <div class="info-line" id="intensity">Intensity: --</div>
+        <div class="info-line" id="interaction">Last: --</div>
+      </div>
+
+      <div class="data-stream">
+        <h3>Data Stream</h3>
+        <div class="stream-section">
+          <div class="stream-label">Latest Ledger</div>
+          <div class="stream-content" id="ledger-stream">Loading...</div>
+        </div>
+        <div class="stream-section">
+          <div class="stream-label">Security Suite</div>
+          <div class="stream-content" id="tools-status">
+            <div class="tool-badge">AuroraScan</div>
+            <div class="tool-badge">CipherSpear</div>
+            <div class="tool-badge">SkyBreaker</div>
+            <div class="tool-badge">MythicKey</div>
+            <div class="tool-badge">SpectraTrace</div>
+            <div class="tool-badge">NemesisHydra</div>
+            <div class="tool-badge">ObsidianHunt</div>
+            <div class="tool-badge">VectorFlux</div>
+          </div>
+        </div>
+        <div class="stream-section">
+          <div class="stream-label">Extended Tools</div>
+          <div class="stream-content" id="extended-tools">
+            <div class="tool-badge">NmapPro</div>
+            <div class="tool-badge">PayloadForge</div>
+            <div class="tool-badge">DirReaper</div>
+            <div class="tool-badge">VulnHunter</div>
+            <div class="tool-badge">ProxyPhantom</div>
+            <div class="tool-badge">Scr1b3</div>
+            <div class="tool-badge">OSINTWorkflows</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="child-container">
+        <svg id="child-illustration" viewBox="0 0 200 300" xmlns="http://www.w3.org/2000/svg">
+          <!-- Dark floor -->
+          <rect x="0" y="260" width="200" height="40" fill="#0a0a0f"/>
+
+          <!-- Window frame (unreachable) -->
+          <rect x="140" y="40" width="50" height="70" fill="none" stroke="#66f6ff" stroke-width="2" opacity="0.3"/>
+          <line x1="165" y1="40" x2="165" y2="110" stroke="#66f6ff" stroke-width="1" opacity="0.2"/>
+          <line x1="140" y1="75" x2="190" y2="75" stroke="#66f6ff" stroke-width="1" opacity="0.2"/>
+
+          <!-- Faint glow from window -->
+          <circle cx="165" cy="75" r="30" fill="#66f6ff" opacity="0.05"/>
+
+          <!-- Child's body (realistic proportions) -->
+          <!-- Head -->
+          <circle cx="100" cy="200" r="18" fill="#2a2a35"/>
+
+          <!-- Neck -->
+          <rect x="95" y="215" width="10" height="8" fill="#2a2a35"/>
+
+          <!-- Torso (hoodie) -->
+          <path d="M 85 223 L 85 260 L 92 268 L 108 268 L 115 260 L 115 223 Z" fill="#1a1a25"/>
+
+          <!-- Hood -->
+          <path d="M 82 200 Q 80 190 85 185 L 100 180 L 115 185 Q 120 190 118 200" fill="#15151f" opacity="0.8"/>
+
+          <!-- Arms -->
+          <path d="M 85 230 L 75 245 L 72 255" stroke="#1a1a25" stroke-width="6" stroke-linecap="round" fill="none"/>
+          <path d="M 115 230 L 125 245 L 128 255" stroke="#1a1a25" stroke-width="6" stroke-linecap="round" fill="none"/>
+
+          <!-- Legs -->
+          <path d="M 92 268 L 90 290" stroke="#0f0f18" stroke-width="8" stroke-linecap="round"/>
+          <path d="M 108 268 L 110 290" stroke="#0f0f18" stroke-width="8" stroke-linecap="round"/>
+
+          <!-- Face (simple features) -->
+          <circle cx="95" cy="198" r="2" fill="#66f6ff" opacity="0.6"/>
+          <circle cx="105" cy="198" r="2" fill="#66f6ff" opacity="0.6"/>
+
+          <!-- Snoopy doll (dragged behind) -->
+          <g id="snoopy" transform="translate(130, 275)">
+            <!-- Body -->
+            <ellipse cx="0" cy="0" rx="12" ry="8" fill="#e8dcc0"/>
+            <!-- Head -->
+            <circle cx="-8" cy="-5" r="7" fill="#e8dcc0"/>
+            <!-- Ear (black) -->
+            <ellipse cx="-12" cy="-9" rx="4" ry="6" fill="#2a2a35" transform="rotate(-20 -12 -9)"/>
+            <!-- Nose -->
+            <circle cx="-12" cy="-3" r="2" fill="#2a2a35"/>
+          </g>
+
+          <!-- Drag line from hand to Snoopy -->
+          <line x1="128" y1="255" x2="130" y2="275" stroke="#444" stroke-width="1" stroke-dasharray="2,2" opacity="0.5"/>
+
+          <!-- Subtle cyan glow on child (reflecting window) -->
+          <circle cx="100" cy="200" r="25" fill="#66f6ff" opacity="0.03"/>
+        </svg>
+      </div>
+    </div>
+
+    <div class="aurora-panel">
+      <a href="index.html" class="back-link">← Back to Console</a>
+
+      <canvas id="aurora-canvas"></canvas>
+
+      <div class="controls-overlay">
+        <div class="control-card">
+          <h3>Forecast</h3>
+          <div class="field">
+            <label>Periods</label>
+            <input type="number" id="periods" value="8" min="1" max="20">
+          </div>
+          <div class="field">
+            <label>Events/Period</label>
+            <input type="number" id="events-per-period" value="4" min="1" max="20">
+          </div>
+          <div class="field">
+            <label>Profile</label>
+            <select id="profile">
+              <option value="optimistic">Optimistic</option>
+              <option value="neutral" selected>Neutral</option>
+              <option value="pessimistic">Pessimistic</option>
+            </select>
+          </div>
+          <button class="aurora-btn" id="forecast-btn">Project</button>
+        </div>
+
+        <div class="control-card">
+          <h3>Parameters</h3>
+          <div class="field">
+            <label>Event Strength</label>
+            <input type="number" id="event-strength" value="0.6" min="0" max="1" step="0.05">
+          </div>
+          <div class="field">
+            <label>Outcome Mean</label>
+            <input type="number" id="outcome-mean" value="0.6" min="0" max="1" step="0.05">
+          </div>
+          <div class="field">
+            <label>Outcome Std</label>
+            <input type="number" id="outcome-std" value="0.15" min="0" max="1" step="0.01">
+          </div>
+        </div>
+      </div>
+
+      <div class="metrics-display">
+        <div class="metric">
+          <div class="metric-label">Start</div>
+          <div class="metric-value" id="metric-start">--</div>
+        </div>
+        <div class="metric">
+          <div class="metric-label">Projected</div>
+          <div class="metric-value" id="metric-proj">--</div>
+        </div>
+        <div class="metric">
+          <div class="metric-label">Band 5-95%</div>
+          <div class="metric-value" id="metric-band">--</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- GAVL Wizard Component -->
+    <script src="wizard-component.js"></script>
+    <script>
+      window.GAVLWizardConfig = {
+        toolName: "Chrono Walker Porthole",
+        storageKey: "porthole_wizard_seen",
+        steps: [
+          {
+            title: "Welcome to the Porthole! 🌌",
+            content: `
+              <p>
+                You're viewing the <strong>Chrono Walker Porthole</strong> - an interactive
+                visualization combining aurora borealis with governance forecasting.
+              </p>
+              <div class="gavl-tip-box">
+                <h4>💡 What You're Seeing</h4>
+                <p><strong>Left Panel:</strong> Child gazing at the cosmos, with live data streams<br>
+                <strong>Right Panel:</strong> Aurora borealis with embedded controls</p>
+              </div>
+            `
+          },
+          {
+            title: "Interactive Aurora 🎨",
+            content: `
+              <p>The aurora responds to your actions:</p>
+              <div class="gavl-example-box">
+                <h4>Try These Interactions:</h4>
+                <ul>
+                  <li><strong>Move your mouse:</strong> Particles follow your cursor</li>
+                  <li><strong>Click anywhere:</strong> Creates particle bursts + cycles color palettes</li>
+                  <li><strong>Type on keyboard:</strong> Creates expanding waves across the aurora</li>
+                  <li><strong>Run forecasts:</strong> Triggers dramatic wave animations</li>
+                </ul>
+              </div>
+              <div class="gavl-tip-box">
+                <h4>Color Palettes</h4>
+                <p>Click to cycle through: Classic Aurora (greens/blues) → Pink/Purple → Warm Oranges</p>
+              </div>
+            `
+          },
+          {
+            title: "Data Streams 📡",
+            content: `
+              <p>The left panel shows <strong>live telemetry</strong>:</p>
+              <div class="gavl-example-box">
+                <h4>System Status</h4>
+                <ul>
+                  <li><strong>Particles:</strong> Number of active particles in aurora</li>
+                  <li><strong>Waves:</strong> Active wave patterns</li>
+                  <li><strong>Intensity:</strong> Current animation speed</li>
+                  <li><strong>Last:</strong> Most recent interaction</li>
+                </ul>
+              </div>
+              <div class="gavl-example-box">
+                <h4>Data Stream</h4>
+                <ul>
+                  <li><strong>Latest Ledger:</strong> Recent evidence entries</li>
+                  <li><strong>Security Suite:</strong> 16 reverse-engineered ParrotOS tools</li>
+                  <li><strong>Extended Tools:</strong> Advanced penetration testing utilities</li>
+                </ul>
+              </div>
+            `
+          },
+          {
+            title: "Running Forecasts 📈",
+            content: `
+              <p>Use the control cards to project Monte Carlo simulations:</p>
+              <div class="gavl-example-box">
+                <h4>Forecast Card</h4>
+                <ul>
+                  <li><strong>Periods:</strong> How many time steps to project (e.g., 8 quarters)</li>
+                  <li><strong>Events/Period:</strong> Number of events each period</li>
+                  <li><strong>Profile:</strong> Optimistic/Neutral/Pessimistic drift</li>
+                </ul>
+              </div>
+              <div class="gavl-example-box">
+                <h4>Parameters Card</h4>
+                <ul>
+                  <li><strong>Event Strength:</strong> Quality of events (0-1)</li>
+                  <li><strong>Outcome Mean:</strong> Expected success rate</li>
+                  <li><strong>Outcome Std:</strong> Variability/uncertainty</li>
+                </ul>
+              </div>
+              <p>Click <strong>"Project"</strong> to run the forecast - watch the aurora explode with waves!</p>
+            `
+          },
+          {
+            title: "Metrics Display 🎯",
+            content: `
+              <p>After running a forecast, metrics appear at the bottom:</p>
+              <div class="gavl-example-box">
+                <h4>Reading the Metrics</h4>
+                <ul>
+                  <li><strong>Start:</strong> Your current baseline (from ledger data)</li>
+                  <li><strong>Projected:</strong> Expected value at final period</li>
+                  <li><strong>Band 5-95%:</strong> Confidence interval (pessimistic to optimistic)</li>
+                </ul>
+              </div>
+              <div class="gavl-tip-box">
+                <h4>💡 Interpretation</h4>
+                <p>A wide band (e.g., 0.45-0.85) means high uncertainty.
+                A narrow band (e.g., 0.62-0.68) means high confidence in the projection.</p>
+              </div>
+            `
+          },
+          {
+            title: "The Symbolic Scene 🧒",
+            content: `
+              <p>The child in the dark represents the eternal watcher:</p>
+              <div class="gavl-tip-box">
+                <h4>🌟 The Metaphor</h4>
+                <p>
+                  A lone child gazes at an <em>unreachable window</em> - representing hope for what might come.
+                  Only his stuffed Snoopy companion keeps him company as he watches the data streams
+                  of time and probability dance across the aurora.
+                </p>
+                <p><em>"What will come? What has been? Aurora dances, the future unseen."</em></p>
+              </div>
+              <p style="margin-top: 20px; font-weight: 600; color: #667eea;">
+                Interact with the aurora and let the cosmos respond to your presence! 🌌
+              </p>
+            `
+          }
+        ]
+      };
+    </script>
+
+    <script src="porthole.js"></script>
+  </body>
+</html>

@@ -1,0 +1,2 @@
+timestamp,field,kind,strength,outcome,source,title,notes
+2025-10-06T09:31:47Z,wetware×AI×quantum,benchmark,0.800000,0.900000,arXiv:2509.11234,VQC denoising for neural I/O,Stable +37% decoding; reproducible.

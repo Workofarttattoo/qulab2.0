@@ -1,0 +1,483 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Chrono-Walker Governance Console</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div class="crt-overlay"></div>
+    <div id="system-status" class="status-overlay hidden">
+      <div class="status-card">
+        <span class="status-title">LINK DOWN</span>
+        <p>Telemetry uplink offline. Launch the Chrono-Walker server to enable live controls.</p>
+        <code>python -m backend.server</code>
+      </div>
+    </div>
+    <header class="hero">
+      <div class="hero-glow"></div>
+      <h1>Chrono-Walker Governance Console</h1>
+      <p>Halo-inspired telemetry for Bayesian cadence planning</p>
+      <nav class="nav-tabs">
+        <button data-target="ledger" class="tab-button active">Ledger</button>
+        <button data-target="forecast" class="tab-button">Forecast</button>
+        <button data-target="cadence" class="tab-button">Cadence Planner</button>
+        <button data-target="enforce" class="tab-button">Band Guard</button>
+        <a href="porthole.html" class="porthole-link" title="View The Porthole">⭘</a>
+      </nav>
+    </header>
+
+    <main>
+      <section id="ledger" class="panel active">
+        <div class="panel-header">
+          <h2>[Ledger] Signal Archive</h2>
+          <button id="refresh-ledger" class="ghost-btn">Refresh</button>
+        </div>
+        <div class="grid split">
+          <form id="add-evidence-form" class="card">
+            <h3>Add Evidence</h3>
+            <div class="field">
+              <label>Field</label>
+              <input name="field" placeholder="wetware×AI×quantum" required />
+            </div>
+            <div class="field">
+              <label>Kind</label>
+              <input name="kind" placeholder="benchmark" required />
+            </div>
+            <div class="field">
+              <label>Strength</label>
+              <input name="strength" type="number" min="0" max="1" step="0.01" value="0.6" required />
+            </div>
+            <div class="field">
+              <label>Outcome</label>
+              <input name="outcome" type="number" min="0" max="1" step="0.01" value="0.6" required />
+            </div>
+            <div class="field">
+              <label>Source</label>
+              <input name="source" placeholder="arXiv:xxxx.xxxxx" />
+            </div>
+            <div class="field">
+              <label>Title</label>
+              <input name="title" placeholder="Signal descriptor" />
+            </div>
+            <div class="field">
+              <label>Notes</label>
+              <textarea name="notes" rows="3" placeholder="Key observations"></textarea>
+            </div>
+            <button type="submit" class="primary">Inject Evidence</button>
+            <div class="status" data-slot="add-status"></div>
+          </form>
+          <div class="card ledger-card">
+            <h3>Recent Entries</h3>
+            <table id="ledger-table">
+              <thead>
+                <tr>
+                  <th>Timestamp</th>
+                  <th>Field</th>
+                  <th>Kind</th>
+                  <th>Strength</th>
+                  <th>Outcome</th>
+                  <th>Title</th>
+                </tr>
+              </thead>
+              <tbody></tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <section id="forecast" class="panel">
+        <div class="panel-header">
+          <h2>[Forecast] Monte Carlo Horizon</h2>
+        </div>
+        <div class="grid split">
+          <form id="forecast-form" class="card">
+            <h3>Forecast Inputs</h3>
+            <div class="flex-row">
+              <div class="field">
+                <label>Periods</label>
+                <input name="periods" type="number" min="1" value="8" />
+              </div>
+              <div class="field">
+                <label>Events/Period</label>
+                <input name="events_per_period" type="number" min="1" value="4" />
+              </div>
+              <div class="field">
+                <label>Profile</label>
+                <select name="profile">
+                  <option value="optimistic">Optimistic</option>
+                  <option value="neutral" selected>Neutral</option>
+                  <option value="pessimistic">Pessimistic</option>
+                </select>
+              </div>
+            </div>
+            <div class="flex-row">
+              <div class="field">
+                <label>Event Strength</label>
+                <input name="event_strength" type="number" step="0.05" min="0" max="1" value="0.6" />
+              </div>
+              <div class="field">
+                <label>Outcome Mean</label>
+                <input name="outcome_mean" type="number" step="0.05" min="0" max="1" value="0.6" />
+              </div>
+              <div class="field">
+                <label>Outcome Std</label>
+                <input name="outcome_std" type="number" step="0.01" min="0" value="0.15" />
+              </div>
+            </div>
+            <button type="submit" class="primary">Project Trajectory</button>
+            <div class="status" data-slot="forecast-status"></div>
+          </form>
+          <div class="card" id="forecast-output">
+            <h3>Simulation Output</h3>
+            <canvas id="forecast-chart" width="560" height="240"></canvas>
+            <div class="metrics" id="forecast-metrics">
+              <div class="metric-card">
+                <span class="metric-label">Start Mean</span>
+                <span class="metric-value" data-metric="start-mean">--</span>
+              </div>
+              <div class="metric-card">
+                <span class="metric-label">Projected Mean</span>
+                <span class="metric-value" data-metric="final-mean">--</span>
+              </div>
+              <div class="metric-card">
+                <span class="metric-label">5th Percentile</span>
+                <span class="metric-value" data-metric="final-lo">--</span>
+              </div>
+              <div class="metric-card">
+                <span class="metric-label">95th Percentile</span>
+                <span class="metric-value" data-metric="final-hi">--</span>
+              </div>
+            </div>
+            <pre class="console" id="forecast-console">Awaiting projection...</pre>
+          </div>
+        </div>
+      </section>
+
+      <section id="cadence" class="panel">
+        <div class="panel-header">
+          <h2>[Cadence] Band Acquisition</h2>
+        </div>
+        <div class="grid split">
+          <form id="cadence-form" class="card">
+            <h3>Target Band Input</h3>
+            <div class="field">
+              <label>Band Lower Bound</label>
+              <input name="band_low" type="number" step="0.01" min="0" max="1" value="0.65" />
+            </div>
+            <div class="field">
+              <label>Periods</label>
+              <input name="periods" type="number" min="1" value="8" />
+            </div>
+            <div class="field">
+              <label>Event Strength</label>
+              <input name="event_strength" type="number" step="0.05" min="0" max="1" value="0.6" />
+            </div>
+            <div class="field">
+              <label>Event Outcome</label>
+              <input name="event_outcome" type="number" step="0.05" min="0" max="1" value="0.6" />
+            </div>
+            <button type="submit" class="primary">Solve Cadence</button>
+            <div class="status" data-slot="cadence-status"></div>
+          </form>
+          <div class="card">
+            <h3>Cadence Solution</h3>
+            <pre class="console" id="cadence-console">Set objectives to compute cadence.</pre>
+            <div class="sparkline" id="cadence-gauge"></div>
+          </div>
+        </div>
+      </section>
+
+      <section id="enforce" class="panel">
+        <div class="panel-header">
+          <h2>[Band Guard] Compliance Scan</h2>
+        </div>
+        <div class="grid split">
+          <form id="band-form" class="card">
+            <h3>Band Inputs</h3>
+            <div class="flex-row">
+              <div class="field">
+                <label>Low</label>
+                <input name="low" type="number" step="0.01" min="0" max="1" value="0.55" />
+              </div>
+              <div class="field">
+                <label>High</label>
+                <input name="high" type="number" step="0.01" min="0" max="1" value="0.8" />
+              </div>
+            </div>
+            <div class="flex-row">
+              <div class="field">
+                <label>Periods</label>
+                <input name="periods" type="number" min="1" value="8" />
+              </div>
+              <div class="field">
+                <label>Events/Period</label>
+                <input name="events_per_period" type="number" min="1" value="4" />
+              </div>
+            </div>
+            <div class="flex-row">
+              <div class="field">
+                <label>Event Strength</label>
+                <input name="event_strength" type="number" step="0.05" min="0" max="1" value="0.6" />
+              </div>
+              <div class="field">
+                <label>Event Outcome</label>
+                <input name="event_outcome" type="number" step="0.05" min="0" max="1" value="0.6" />
+              </div>
+              <div class="field">
+                <label>Outcome Std</label>
+                <input name="event_outcome_std" type="number" step="0.01" min="0" value="0.15" />
+              </div>
+            </div>
+            <button type="submit" class="primary">Evaluate Band</button>
+            <div class="status" data-slot="band-status"></div>
+          </form>
+          <div class="card">
+            <h3>Band Assessment</h3>
+            <pre class="console" id="band-console">Deploy evaluation to review compliance.</pre>
+            <div class="anomaly-feed" id="band-violations"></div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer>
+      <p>Chrono-Walker // Tactical Governance Engine</p>
+    </footer>
+
+    <!-- GAVL Wizard Component -->
+    <script src="/wizard-component.js"></script>
+    <script>
+      window.GAVLWizardConfig = {
+        toolName: "Chrono Walker",
+        storageKey: "chrono_wizard_seen",
+        steps: [
+          {
+            title: "Welcome to Chrono Walker! ⏰",
+            content: `
+              <p>
+                Chrono Walker helps you <strong>plan and track governance timelines</strong>
+                with Bayesian forecasting and compliance monitoring.
+              </p>
+              <div class="gavl-tip-box">
+                <h4>💡 What This Tool Does</h4>
+                <p>
+                  Track evidence, project futures, plan cadences, and enforce compliance bands
+                  for strategic governance planning. Think of it as your tactical timeline engine.
+                </p>
+              </div>
+              <div class="gavl-example-box">
+                <h4>✅ Use Cases:</h4>
+                <ul>
+                  <li><strong>Evidence Tracking:</strong> Log signals and benchmarks over time</li>
+                  <li><strong>Monte Carlo Forecasting:</strong> Project probabilistic trajectories</li>
+                  <li><strong>Cadence Planning:</strong> Find optimal event schedules to hit targets</li>
+                  <li><strong>Band Compliance:</strong> Ensure metrics stay in acceptable ranges</li>
+                </ul>
+              </div>
+            `
+          },
+          {
+            title: "Four Modes: Ledger, Forecast, Cadence, Band Guard 📊",
+            content: `
+              <p>Chrono Walker has four main tabs, each for different governance needs.</p>
+              <div class="gavl-example-box">
+                <h4>📜 Ledger - Signal Archive</h4>
+                <p>
+                  Record evidence over time: benchmarks, milestones, signals.
+                </p>
+                <ul>
+                  <li><strong>Field:</strong> Category (e.g., "wetware×AI×quantum")</li>
+                  <li><strong>Kind:</strong> Type of signal (benchmark, milestone, indicator)</li>
+                  <li><strong>Strength:</strong> Evidence quality (0-1 scale)</li>
+                  <li><strong>Outcome:</strong> Result value (0-1 scale)</li>
+                  <li><strong>Best for:</strong> Building historical record for forecasts</li>
+                </ul>
+              </div>
+              <div class="gavl-example-box">
+                <h4>🔮 Forecast - Monte Carlo Horizon</h4>
+                <p>
+                  Project probabilistic trajectories into the future.
+                </p>
+                <ul>
+                  <li>Simulates multiple possible futures (Monte Carlo method)</li>
+                  <li>Shows confidence bands (5th to 95th percentile)</li>
+                  <li>Profiles: Optimistic, Neutral, Pessimistic</li>
+                  <li><strong>Best for:</strong> Understanding uncertainty and ranges</li>
+                </ul>
+              </div>
+              <div class="gavl-example-box">
+                <h4>🎯 Cadence Planner - Band Acquisition</h4>
+                <p>
+                  Calculate how many events you need to hit a target band.
+                </p>
+                <ul>
+                  <li>Set your target (e.g., 0.65 success rate)</li>
+                  <li>Tool solves for optimal event frequency</li>
+                  <li>Shows minimum events needed per period</li>
+                  <li><strong>Best for:</strong> Resource planning and goal achievement</li>
+                </ul>
+              </div>
+              <div class="gavl-example-box">
+                <h4>🛡️ Band Guard - Compliance Scan</h4>
+                <p>
+                  Monitor if metrics stay within acceptable ranges.
+                </p>
+                <ul>
+                  <li>Define upper and lower bounds (e.g., 0.55 - 0.80)</li>
+                  <li>Simulates future trajectories</li>
+                  <li>Flags periods where you might exit the band</li>
+                  <li><strong>Best for:</strong> Risk management and guardrails</li>
+                </ul>
+              </div>
+            `
+          },
+          {
+            title: "Understanding the Inputs ⚙️",
+            content: `
+              <p>
+                Each mode has specific inputs. Here's what they mean:
+              </p>
+              <div class="gavl-example-box">
+                <h4>📊 Common Parameters</h4>
+                <ul>
+                  <li><strong>Periods:</strong> Number of time steps to simulate (e.g., 8 quarters)</li>
+                  <li><strong>Events per Period:</strong> How many events happen each period (e.g., 4 product launches/quarter)</li>
+                  <li><strong>Event Strength:</strong> Quality/importance of events (0=weak, 1=strong)</li>
+                  <li><strong>Event Outcome:</strong> Expected success rate (0=failure, 1=success)</li>
+                  <li><strong>Outcome Std:</strong> Variability/uncertainty in outcomes</li>
+                </ul>
+              </div>
+              <div class="gavl-tip-box">
+                <h4>💡 Typical Values</h4>
+                <p>
+                  For most business use cases, start with:
+                </p>
+                <ul>
+                  <li><strong>Periods:</strong> 8 (two years in quarters)</li>
+                  <li><strong>Events/Period:</strong> 4 (one per month)</li>
+                  <li><strong>Event Strength:</strong> 0.6 (moderate quality)</li>
+                  <li><strong>Outcome:</strong> 0.6 (60% success rate)</li>
+                  <li><strong>Std:</strong> 0.15 (15% variability)</li>
+                </ul>
+              </div>
+              <div class="gavl-example-box">
+                <h4>🎯 Profile Modes (Forecast Tab)</h4>
+                <ul>
+                  <li><strong>Optimistic:</strong> Assumes higher success rates, lower uncertainty</li>
+                  <li><strong>Neutral:</strong> Balanced assumptions (recommended default)</li>
+                  <li><strong>Pessimistic:</strong> Conservative estimates, higher uncertainty</li>
+                </ul>
+                <p><em>Tip: Run all three profiles to see the full range!</em></p>
+              </div>
+            `
+          },
+          {
+            title: "Reading the Results 📈",
+            content: `
+              <p>
+                After running a simulation, you'll see charts and metrics. Here's how to interpret them:
+              </p>
+              <div class="gavl-example-box">
+                <h4>📉 Forecast Chart</h4>
+                <p>
+                  Shows projected trajectory over time:
+                </p>
+                <ul>
+                  <li><strong>Center line:</strong> Mean (most likely) outcome</li>
+                  <li><strong>Shaded area:</strong> Confidence band (5th-95th percentile)</li>
+                  <li><strong>Wider band:</strong> More uncertainty</li>
+                  <li><strong>Trend direction:</strong> Upward/downward movement</li>
+                </ul>
+              </div>
+              <div class="gavl-example-box">
+                <h4>📊 Forecast Metrics</h4>
+                <ul>
+                  <li><strong>Start Mean:</strong> Your current baseline (period 0)</li>
+                  <li><strong>Projected Mean:</strong> Expected value at final period</li>
+                  <li><strong>5th Percentile:</strong> Pessimistic scenario (95% likely to exceed this)</li>
+                  <li><strong>95th Percentile:</strong> Optimistic scenario (only 5% chance to exceed this)</li>
+                </ul>
+                <p>
+                  <em>Example: If 5th = 0.52 and 95th = 0.78, you have wide uncertainty!</em>
+                </p>
+              </div>
+              <div class="gavl-example-box">
+                <h4>🎯 Cadence Solution</h4>
+                <p>
+                  Shows how many events you need per period to hit your target:
+                </p>
+                <ul>
+                  <li><strong>"Need X events/period":</strong> Minimum frequency required</li>
+                  <li><strong>Gauge visualization:</strong> Green = achievable, Red = aggressive</li>
+                  <li><strong>Console output:</strong> Detailed calculation breakdown</li>
+                </ul>
+              </div>
+              <div class="gavl-example-box">
+                <h4>🛡️ Band Assessment</h4>
+                <p>
+                  Shows compliance with your acceptable range:
+                </p>
+                <ul>
+                  <li><strong>Violations listed:</strong> Periods where you exit the band</li>
+                  <li><strong>Anomaly feed:</strong> Visual timeline of risk periods</li>
+                  <li><strong>Console:</strong> Summary statistics and recommendations</li>
+                </ul>
+                <p><em>Tip: If you see many violations, adjust your event parameters!</em></p>
+              </div>
+            `
+          },
+          {
+            title: "Ready to Plan! 🚀",
+            content: `
+              <p>
+                You're all set to use Chrono Walker for governance planning!
+              </p>
+              <div class="gavl-tip-box">
+                <h4>💡 Quick Start Recipe</h4>
+                <ol>
+                  <li>Start with <strong>Ledger tab</strong> - add a few historical signals</li>
+                  <li>Switch to <strong>Forecast tab</strong> - project 8 periods ahead</li>
+                  <li>Review the confidence bands and metrics</li>
+                  <li>Try <strong>Cadence Planner</strong> - set a target like 0.70</li>
+                  <li>See how many events you need to hit it</li>
+                  <li>Use <strong>Band Guard</strong> to check compliance (e.g., 0.60-0.80)</li>
+                  <li>Iterate: adjust event strength/frequency based on results</li>
+                </ol>
+              </div>
+              <div class="gavl-example-box">
+                <h4>🎯 Example Scenario: Product Launch Planning</h4>
+                <p>
+                  <strong>Goal:</strong> Maintain 70% success rate over next 2 years
+                </p>
+                <ol>
+                  <li><strong>Ledger:</strong> Log past 5 launches with outcomes</li>
+                  <li><strong>Forecast:</strong> Project 8 quarters, 4 launches/quarter</li>
+                  <li><strong>Cadence:</strong> Calculate minimum launches needed for 0.70 target</li>
+                  <li><strong>Band Guard:</strong> Check if trajectory stays in 0.65-0.80 band</li>
+                  <li><strong>Action:</strong> If violations detected, increase event strength or frequency</li>
+                </ol>
+              </div>
+              <div class="gavl-tip-box">
+                <h4>📚 Pro Tips</h4>
+                <ul>
+                  <li>Start with <strong>Neutral profile</strong>, then try Optimistic/Pessimistic</li>
+                  <li>Lower Outcome Std = more predictable results</li>
+                  <li>Higher Event Strength = faster improvement</li>
+                  <li>Use Band Guard to set safety margins before committing resources</li>
+                  <li>Export ledger data periodically for backup</li>
+                </ul>
+              </div>
+              <p style="margin-top: 20px; font-weight: 600; color: #667eea;">
+                Click "Start Using Tool" to begin planning your governance timeline! ⏰
+              </p>
+            `
+          }
+        ]
+      };
+    </script>
+
+    <script src="app.js" type="module"></script>
+  </body>
+</html>
