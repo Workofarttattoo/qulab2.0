@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AuroraScan - Documentation</title>
+    <style>
+        body {
+            font-family: 'Courier New', monospace;
+            background: linear-gradient(135deg, #0a0a0a 0%, #1a0000 100%);
+            color: #fff;
+            margin: 0;
+            padding: 20px;
+        }
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: rgba(26, 0, 0, 0.8);
+            border: 2px solid #ff3333;
+            border-radius: 10px;
+            padding: 40px;
+        }
+        h1 { color: #ff6666; font-size: 2.5em; margin-bottom: 10px; }
+        h2 { color: #ff9999; margin-top: 30px; }
+        code {
+            background: #1a0000;
+            padding: 2px 8px;
+            border-radius: 4px;
+            color: #00ff00;
+        }
+        pre {
+            background: #000;
+            border: 1px solid #ff3333;
+            padding: 20px;
+            border-radius: 8px;
+            overflow-x: auto;
+        }
+        .warning {
+            background: #330000;
+            border-left: 5px solid #ff0000;
+            padding: 15px;
+            margin: 20px 0;
+        }
+        a { color: #ff6666; text-decoration: none; }
+        a:hover { color: #ff9999; }
+        .back { display: inline-block; margin-bottom: 20px; padding: 10px 20px; background: #ff3333; border-radius: 5px; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <a href="../index.html" class="back">← Back to Tools</a>
+
+        <h1>🔍 AuroraScan</h1>
+        <p><strong>Network reconnaissance and port scanning utility</strong></p>
+
+        <div class="warning">
+            <strong>⚠️ AUTHORIZED USE ONLY</strong><br>
+            Only scan networks and systems you own or have explicit written permission to test.
+        </div>
+
+        <h2>📋 Overview</h2>
+        <p>AuroraScan is a professional network reconnaissance tool designed for security assessments. It discovers open services, identifies potential attack vectors, and provides detailed host information.</p>
+
+        <h2>✨ Features</h2>
+        <ul>
+            <li>Fast multi-threaded port scanning</li>
+            <li>Service version detection</li>
+            <li>OS fingerprinting</li>
+            <li>Network topology mapping</li>
+            <li>JSON output for automation</li>
+            <li>Customizable scan profiles (stealth, normal, aggressive)</li>
+        </ul>
+
+        <h2>🚀 Quick Start</h2>
+        <pre><code># Basic scan
+python -m tools.aurorascan 192.168.1.0/24
+
+# Stealth scan with version detection
+python -m tools.aurorascan 192.168.1.0/24 --profile stealth --version-detect
+
+# JSON output for automation
+python -m tools.aurorascan 192.168.1.100 --json --output scan-results.json
+
+# GUI mode
+python -m tools.aurorascan --gui</code></pre>
+
+        <h2>⚙️ Parameters</h2>
+        <ul>
+            <li><code>target</code> - IP address or CIDR range to scan</li>
+            <li><code>--profile</code> - Scan profile: stealth, normal, aggressive</li>
+            <li><code>--ports</code> - Port range (default: 1-1000)</li>
+            <li><code>--timeout</code> - Connection timeout in seconds</li>
+            <li><code>--json</code> - Output results in JSON format</li>
+            <li><code>--gui</code> - Launch graphical interface</li>
+        </ul>
+
+        <h2>📊 Example Output</h2>
+        <pre><code>[AuroraScan] Scanning 192.168.1.0/24...
+[+] Host: 192.168.1.1 (ONLINE)
+    ├─ Port 22/tcp  OPEN  (SSH - OpenSSH 8.2)
+    ├─ Port 80/tcp  OPEN  (HTTP - nginx/1.18.0)
+    └─ Port 443/tcp OPEN  (HTTPS - nginx/1.18.0)
+
+[+] Host: 192.168.1.100 (ONLINE)
+    ├─ Port 3306/tcp OPEN (MySQL 5.7.32)
+    └─ Port 8080/tcp OPEN (HTTP - Apache Tomcat)
+
+[Summary] 2 hosts up, 5 open ports discovered</code></pre>
+
+        <h2>🛡️ Legal & Ethical Use</h2>
+        <p>AuroraScan must only be used for:</p>
+        <ul>
+            <li>Authorized penetration tests with written permission</li>
+            <li>Security assessments on your own networks</li>
+            <li>Bug bounty programs within defined scope</li>
+            <li>Educational purposes in lab environments</li>
+        </ul>
+
+        <p style="margin-top: 40px; text-align: center; opacity: 0.7;">
+            Copyright © 2025 Joshua Hendricks Cole (DBA: Corporation of Light). All Rights Reserved. PATENT PENDING.
+        </p>
+    </div>
+</body>
+</html>
