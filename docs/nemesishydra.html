@@ -2,7 +2,8 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Tool Documentation</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NemesisHydra - Documentation</title>
     <style>
         body {
             font-family: 'Courier New', monospace;
@@ -14,26 +15,44 @@
         .container {
             max-width: 900px;
             margin: 0 auto;
-            background: rgba(26, 0, 0, 0.8);
+            background: rgba(26, 0, 0, 0.9);
             border: 2px solid #ff3333;
             border-radius: 10px;
             padding: 40px;
         }
-        h1 { color: #ff6666; }
-        .back { display: inline-block; margin-bottom: 20px; padding: 10px 20px; background: #ff3333; border-radius: 5px; text-decoration: none; color: #fff; }
+        h1 { color: #ff6666; font-size: 2.5em; }
+        h2 { color: #ff9999; margin-top: 30px; }
+        code { background: #1a0000; padding: 3px 8px; border-radius: 4px; color: #00ff00; }
+        pre { background: #000; border: 1px solid #ff3333; padding: 20px; border-radius: 8px; overflow-x: auto; }
         .warning { background: #330000; border-left: 5px solid #ff0000; padding: 15px; margin: 20px 0; }
+        a { color: #ff6666; text-decoration: none; }
+        .back { display: inline-block; margin-bottom: 20px; padding: 10px 20px; background: #ff3333; border-radius: 5px; }
+        ul { line-height: 2; }
     </style>
 </head>
 <body>
     <div class="container">
-        <a href="../index.html" class="back">← Back to Tools</a>
-        <h1>Documentation Coming Soon</h1>
+        <a href="../index.html" class="back">← Back to All Tools</a>
+        <h1>🐍 NemesisHydra</h1>
+        <p><strong>Multi-protocol authentication testing tool</strong></p>
         <div class="warning">
             <strong>⚠️ AUTHORIZED USE ONLY</strong><br>
-            This tool is for authorized security testing only.
+            Only test systems you own or have explicit written permission to assess.
         </div>
-        <p>Comprehensive documentation and usage examples are being prepared.</p>
-        <p>Copyright © 2025 Joshua Hendricks Cole (DBA: Corporation of Light). All Rights Reserved. PATENT PENDING.</p>
+        <h2>📋 Overview</h2>
+        <p>NemesisHydra evaluates password strength and authentication mechanisms across SSH, FTP, HTTP, and more.</p>
+        <h2>✨ Features</h2>
+        <ul><li>Multi-protocol support (SSH/FTP/HTTP/SMB/RDP)</li><li>Dictionary attacks</li><li>Rate limiting</li><li>Session management</li></ul>
+        <h2>🚀 Quick Start</h2>
+        <pre><code>python -m tools.nemesishydra --target 192.168.1.100 --protocol ssh --username admin --wordlist passwords.txt</code></pre>
+        <h2>📊 Example Output</h2>
+        <pre><code>[NemesisHydra] Testing SSH authentication
+[+] Valid credentials: admin/Welcome1</code></pre>
+        <h2>🛡️ Legal & Ethical Use</h2>
+        <p><strong>NemesisHydra</strong> must only be used for authorized security testing.</p>
+        <p style="margin-top: 40px; text-align: center; opacity: 0.7;">
+            Copyright © 2025 Joshua Hendricks Cole (DBA: Corporation of Light). All Rights Reserved. PATENT PENDING.
+        </p>
     </div>
 </body>
 </html>
