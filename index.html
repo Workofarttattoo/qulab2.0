@@ -3,9 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>TheGAVL Red Team Security Tools - Authorized Use Only</title>
-    <meta name="description" content="Professional security assessment and penetration testing tools for authorized use only.">
+    <title>TheGAVL Security Toolkit - Professional Defensive Security Tools</title>
+    <meta name="description" content="22+ professional security assessment tools for authorized penetration testing and vulnerability research.">
     <meta name="robots" content="noindex, nofollow">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <style>
         * {
             margin: 0;
@@ -13,449 +14,627 @@
             box-sizing: border-box;
         }
 
+        :root {
+            --primary: #6366f1;
+            --primary-dark: #4f46e5;
+            --secondary: #8b5cf6;
+            --accent: #ec4899;
+            --danger: #ef4444;
+            --success: #10b981;
+            --warning: #f59e0b;
+            --dark: #0f172a;
+            --dark-light: #1e293b;
+            --gray: #64748b;
+            --gray-light: #cbd5e1;
+            --white: #ffffff;
+            --gradient-1: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            --gradient-2: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            --gradient-3: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+        }
+
         body {
-            font-family: 'Courier New', monospace;
-            background: linear-gradient(135deg, #0a0a0a 0%, #1a0000 100%);
-            color: #fff;
-            min-height: 100vh;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background: var(--dark);
+            color: var(--white);
+            line-height: 1.6;
             overflow-x: hidden;
+        }
+
+        /* Animated Background */
+        .bg-animation {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+            opacity: 0.15;
+            background:
+                radial-gradient(circle at 20% 50%, rgba(99, 102, 241, 0.3) 0%, transparent 50%),
+                radial-gradient(circle at 80% 80%, rgba(139, 92, 246, 0.3) 0%, transparent 50%),
+                radial-gradient(circle at 40% 20%, rgba(236, 72, 153, 0.2) 0%, transparent 50%);
         }
 
         /* Warning Banner */
         .warning-banner {
-            background: #ff0000;
-            color: #fff;
-            text-align: center;
-            padding: 15px;
-            font-weight: bold;
-            font-size: 1.1em;
             position: sticky;
             top: 0;
-            z-index: 1000;
-            box-shadow: 0 4px 20px rgba(255, 0, 0, 0.5);
-            animation: pulse 2s infinite;
+            z-index: 100;
+            background: linear-gradient(90deg, var(--danger), var(--accent));
+            color: white;
+            text-align: center;
+            padding: 12px 20px;
+            font-weight: 600;
+            font-size: 14px;
+            letter-spacing: 0.5px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.3);
+            backdrop-filter: blur(10px);
         }
 
-        @keyframes pulse {
-            0%, 100% { opacity: 1; }
-            50% { opacity: 0.8; }
-        }
-
+        /* Main Container */
         .container {
-            max-width: 1200px;
+            position: relative;
+            z-index: 1;
+            max-width: 1400px;
             margin: 0 auto;
-            padding: 40px 20px;
+            padding: 60px 40px;
         }
 
         /* Header */
         header {
             text-align: center;
-            margin-bottom: 60px;
-            padding: 40px 0;
+            margin-bottom: 80px;
+            padding: 60px 20px;
         }
 
         .logo {
-            font-size: 4em;
-            margin-bottom: 20px;
+            font-size: 72px;
+            margin-bottom: 24px;
+            filter: drop-shadow(0 0 20px rgba(99, 102, 241, 0.5));
+            animation: float 3s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
         }
 
         h1 {
-            font-size: 3em;
-            color: #ff3333;
-            text-shadow: 0 0 20px rgba(255, 51, 51, 0.8);
-            margin-bottom: 10px;
+            font-size: 56px;
+            font-weight: 700;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 16px;
+            letter-spacing: -1px;
         }
 
         .subtitle {
-            font-size: 1.3em;
-            color: #ffcccc;
-            opacity: 0.9;
+            font-size: 20px;
+            color: var(--gray-light);
+            font-weight: 400;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        /* Stats Bar */
+        .stats-bar {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 24px;
+            margin-bottom: 60px;
+        }
+
+        .stat-card {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 16px;
+            padding: 24px;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-4px);
+            background: rgba(255, 255, 255, 0.08);
+            border-color: rgba(99, 102, 241, 0.5);
+        }
+
+        .stat-number {
+            font-size: 36px;
+            font-weight: 700;
+            background: var(--gradient-1);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .stat-label {
+            font-size: 14px;
+            color: var(--gray-light);
+            margin-top: 8px;
         }
 
         /* Legal Notice */
         .legal-notice {
-            background: linear-gradient(135deg, #330000, #1a0000);
-            border: 2px solid #ff3333;
-            border-radius: 10px;
-            padding: 30px;
-            margin-bottom: 40px;
-            box-shadow: 0 10px 40px rgba(255, 51, 51, 0.3);
+            background: rgba(239, 68, 68, 0.1);
+            border: 2px solid rgba(239, 68, 68, 0.3);
+            border-radius: 20px;
+            padding: 40px;
+            margin-bottom: 60px;
+            backdrop-filter: blur(10px);
         }
 
         .legal-notice h2 {
-            color: #ff6666;
+            color: var(--danger);
+            font-size: 28px;
             margin-bottom: 20px;
-            font-size: 1.8em;
         }
 
         .legal-notice p {
+            color: var(--gray-light);
             line-height: 1.8;
-            margin-bottom: 15px;
-            color: #ffcccc;
+            margin-bottom: 16px;
         }
 
-        .legal-notice ul {
-            margin: 20px 0 20px 30px;
-            line-height: 2;
+        .legal-notice a {
+            color: var(--accent);
+            text-decoration: none;
+            border-bottom: 1px solid transparent;
+            transition: border-color 0.3s;
         }
 
-        .legal-notice ul li {
-            color: #ff9999;
+        .legal-notice a:hover {
+            border-bottom-color: var(--accent);
+        }
+
+        /* Section Header */
+        .section-header {
+            text-align: center;
+            margin-bottom: 48px;
+        }
+
+        .section-header h2 {
+            font-size: 42px;
+            font-weight: 700;
+            margin-bottom: 16px;
+        }
+
+        .section-header p {
+            font-size: 18px;
+            color: var(--gray-light);
         }
 
         /* Tools Grid */
         .tools-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 30px;
-            margin: 40px 0;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 24px;
+            margin-bottom: 80px;
         }
 
         .tool-card {
-            background: linear-gradient(135deg, #1a0000, #0a0a0a);
-            border: 1px solid #ff3333;
-            border-radius: 10px;
-            padding: 30px;
-            transition: all 0.3s;
-            cursor: pointer;
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            padding: 32px;
             text-decoration: none;
-            display: block;
             color: inherit;
+            display: flex;
+            flex-direction: column;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .tool-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: var(--gradient-1);
+            opacity: 0;
+            transition: opacity 0.4s;
+            z-index: 0;
+        }
+
+        .tool-card:hover::before {
+            opacity: 0.1;
         }
 
         .tool-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 15px 40px rgba(255, 51, 51, 0.4);
-            border-color: #ff6666;
+            transform: translateY(-8px);
+            border-color: rgba(99, 102, 241, 0.5);
+            box-shadow:
+                0 20px 25px -5px rgba(99, 102, 241, 0.2),
+                0 10px 10px -5px rgba(99, 102, 241, 0.1);
+        }
+
+        .tool-card > * {
+            position: relative;
+            z-index: 1;
+        }
+
+        .tool-icon {
+            font-size: 48px;
+            margin-bottom: 16px;
+            display: block;
         }
 
         .tool-card h3 {
-            color: #ff6666;
-            font-size: 1.5em;
-            margin-bottom: 15px;
+            font-size: 24px;
+            font-weight: 600;
+            margin-bottom: 12px;
+            color: var(--white);
         }
 
         .tool-card p {
-            color: #ffcccc;
+            color: var(--gray-light);
+            font-size: 15px;
             line-height: 1.6;
-            margin-bottom: 15px;
+            margin-bottom: 20px;
+            flex-grow: 1;
         }
 
-        .tool-card .status {
-            display: inline-block;
-            padding: 5px 15px;
-            background: #00ff00;
-            color: #000;
-            border-radius: 5px;
-            font-size: 0.9em;
-            font-weight: bold;
+        .tool-status {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 6px 14px;
+            background: rgba(16, 185, 129, 0.2);
+            color: var(--success);
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+        }
+
+        .status-dot {
+            width: 6px;
+            height: 6px;
+            background: var(--success);
+            border-radius: 50%;
+            animation: pulse-dot 2s ease-in-out infinite;
+        }
+
+        @keyframes pulse-dot {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
         }
 
         /* CTA Section */
         .cta-section {
             text-align: center;
-            margin: 60px 0;
-            padding: 60px 40px;
-            background: linear-gradient(135deg, #330000, #0a0a0a);
-            border: 2px solid #ff3333;
-            border-radius: 15px;
+            padding: 80px 40px;
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: 30px;
+            margin-bottom: 60px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .cta-section::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(99, 102, 241, 0.1) 0%, transparent 70%);
+            animation: rotate 20s linear infinite;
+        }
+
+        @keyframes rotate {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .cta-section > * {
+            position: relative;
+            z-index: 1;
         }
 
         .cta-section h2 {
-            color: #ff6666;
-            font-size: 2.5em;
+            font-size: 48px;
             margin-bottom: 20px;
         }
 
         .cta-section p {
-            font-size: 1.2em;
-            color: #ffcccc;
-            margin-bottom: 30px;
-            line-height: 1.8;
+            font-size: 20px;
+            color: var(--gray-light);
+            margin-bottom: 40px;
+            max-width: 700px;
+            margin-left: auto;
+            margin-right: auto;
         }
 
         .btn {
             display: inline-block;
-            padding: 20px 50px;
-            background: linear-gradient(135deg, #ff3333, #ff6666);
-            color: #fff;
+            padding: 16px 40px;
+            margin: 8px;
+            border-radius: 12px;
+            font-size: 16px;
+            font-weight: 600;
             text-decoration: none;
-            border-radius: 10px;
-            font-size: 1.3em;
-            font-weight: bold;
             transition: all 0.3s;
-            box-shadow: 0 10px 30px rgba(255, 51, 51, 0.4);
-            margin: 10px;
+            border: 2px solid transparent;
         }
 
-        .btn:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 15px 40px rgba(255, 51, 51, 0.6);
+        .btn-primary {
+            background: var(--gradient-1);
+            color: white;
+            box-shadow: 0 10px 20px -10px rgba(99, 102, 241, 0.5);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 15px 30px -10px rgba(99, 102, 241, 0.6);
         }
 
         .btn-secondary {
-            background: linear-gradient(135deg, #333, #555);
+            background: transparent;
+            color: var(--white);
+            border-color: rgba(255, 255, 255, 0.2);
+        }
+
+        .btn-secondary:hover {
+            background: rgba(255, 255, 255, 0.1);
+            border-color: rgba(255, 255, 255, 0.4);
         }
 
         /* Footer */
         footer {
             text-align: center;
-            padding: 40px 20px;
-            border-top: 1px solid #ff3333;
-            margin-top: 60px;
-            color: #ffcccc;
+            padding: 60px 20px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            color: var(--gray);
         }
 
         footer a {
-            color: #ff6666;
+            color: var(--primary);
             text-decoration: none;
-            margin: 0 15px;
+            margin: 0 12px;
             transition: color 0.3s;
         }
 
         footer a:hover {
-            color: #ff9999;
+            color: var(--primary-dark);
         }
 
         /* Responsive */
         @media (max-width: 768px) {
-            h1 { font-size: 2em; }
-            .subtitle { font-size: 1em; }
+            h1 { font-size: 36px; }
+            .subtitle { font-size: 16px; }
             .tools-grid { grid-template-columns: 1fr; }
-            .btn { padding: 15px 30px; font-size: 1.1em; }
+            .container { padding: 40px 20px; }
+            .cta-section h2 { font-size: 32px; }
         }
     </style>
 </head>
 <body>
-    <!-- Warning Banner -->
+    <div class="bg-animation"></div>
+
     <div class="warning-banner">
-        ⚠️ AUTHORIZED USE ONLY - Unauthorized access or misuse of these tools is illegal and punishable by law (CFAA 18 U.S.C. § 1030)
+        ⚠️ AUTHORIZED USE ONLY - Unauthorized access or misuse is illegal under 18 U.S.C. § 1030 (CFAA)
     </div>
 
     <div class="container">
-        <!-- Header -->
         <header>
             <div class="logo">🛡️</div>
-            <h1>TheGAVL Red Team Security Tools</h1>
-            <p class="subtitle">Professional Security Assessment & Penetration Testing Suite</p>
+            <h1>TheGAVL Security Toolkit</h1>
+            <p class="subtitle">Professional defensive security tools for authorized penetration testing and vulnerability research</p>
         </header>
 
-        <!-- Legal Notice -->
+        <div class="stats-bar">
+            <div class="stat-card">
+                <div class="stat-number">22+</div>
+                <div class="stat-label">Security Tools</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number">100%</div>
+                <div class="stat-label">CFAA Compliant</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number">24/7</div>
+                <div class="stat-label">Support Available</div>
+            </div>
+        </div>
+
         <div class="legal-notice">
             <h2>⚖️ Legal Notice & Terms of Use</h2>
             <p><strong>READ CAREFULLY BEFORE PROCEEDING</strong></p>
-            <p>
-                These security assessment tools are provided EXCLUSIVELY for <strong>authorized penetration testing</strong>,
-                <strong>vulnerability research</strong>, and <strong>legitimate security assessments</strong>.
-            </p>
-            <p><strong>YOU MUST HAVE EXPLICIT WRITTEN PERMISSION</strong> from the system owner before conducting any security testing.</p>
-
-            <h3 style="color: #ff6666; margin: 20px 0 10px;">✅ Acceptable Uses:</h3>
-            <ul>
-                <li>Authorized penetration testing with written permission</li>
-                <li>Vulnerability assessments on systems you own</li>
-                <li>Security research in controlled lab environments</li>
-                <li>Bug bounty programs (following program rules)</li>
-                <li>Educational purposes on designated training platforms</li>
-            </ul>
-
-            <h3 style="color: #ff0000; margin: 20px 0 10px;">❌ Prohibited Activities:</h3>
-            <ul style="color: #ff0000;">
-                <li>Unauthorized access to computer systems (CFAA violation)</li>
-                <li>Testing systems without explicit owner permission</li>
-                <li>Malicious hacking, data theft, or system damage</li>
-                <li>Any illegal activity under federal or state law</li>
-            </ul>
-
-            <p style="margin-top: 20px; font-size: 1.1em;">
-                <strong>⚠️ WARNING:</strong> Violations may result in immediate account termination,
-                reporting to law enforcement, and criminal prosecution under 18 U.S.C. § 1030 (CFAA).
-            </p>
-
-            <p style="margin-top: 20px;">
-                By proceeding, you agree to our
-                <a href="terms-of-service.html" style="color: #ff9999; text-decoration: underline;">Terms of Service</a> and
-                <a href="acceptable-use-policy.html" style="color: #ff9999; text-decoration: underline;">Acceptable Use Policy</a>.
-            </p>
+            <p>These security assessment tools are provided EXCLUSIVELY for authorized penetration testing, vulnerability research, and legitimate security assessments. You MUST have explicit written permission from system owners before conducting any security testing.</p>
+            <p>By proceeding, you agree to our <a href="terms-of-service.html">Terms of Service</a> and <a href="acceptable-use-policy.html">Acceptable Use Policy</a>.</p>
         </div>
 
-        <!-- Tools Overview -->
-        <section>
-            <h2 style="text-align: center; color: #ff6666; font-size: 2.5em; margin-bottom: 40px;">
-                17 Available Security Tools
-            </h2>
+        <div class="section-header">
+            <h2>22 Professional Security Tools</h2>
+            <p>Click any tool to view detailed documentation and usage examples</p>
+        </div>
 
-            <div class="tools-grid">
-                <a href="docs/aurorascan.html" class="tool-card">
-                    <h3>🔍 AuroraScan</h3>
-                    <p>Network reconnaissance and port scanning utility for discovering open services and potential attack vectors.</p>
-                    <span class="status">AVAILABLE</span>
-                </a>
+        <div class="tools-grid">
+            <a href="docs/aurorascan.html" class="tool-card">
+                <span class="tool-icon">🔍</span>
+                <h3>AuroraScan</h3>
+                <p>Network reconnaissance and port scanning utility for discovering open services and potential attack vectors.</p>
+                <span class="tool-status"><span class="status-dot"></span>AVAILABLE</span>
+            </a>
 
-                <a href="docs/cipherspear.html" class="tool-card">
-                    <h3>💉 CipherSpear</h3>
-                    <p>Database injection analysis tool for testing SQL injection vulnerabilities in web applications.</p>
-                    <span class="status">AVAILABLE</span>
-                </a>
+            <a href="docs/cipherspear.html" class="tool-card">
+                <span class="tool-icon">💉</span>
+                <h3>CipherSpear</h3>
+                <p>Database injection analysis tool for testing SQL injection vulnerabilities in web applications.</p>
+                <span class="tool-status"><span class="status-dot"></span>AVAILABLE</span>
+            </a>
 
-                <a href="docs/dirreaper.html" class="tool-card">
-                    <h3>📁 DirReaper</h3>
-                    <p>Directory enumeration and file discovery tool for uncovering hidden web resources and endpoints.</p>
-                    <span class="status">AVAILABLE</span>
-                </a>
+            <a href="docs/dirreaper.html" class="tool-card">
+                <span class="tool-icon">📁</span>
+                <h3>DirReaper</h3>
+                <p>Directory enumeration and file discovery tool for uncovering hidden web resources and endpoints.</p>
+                <span class="tool-status"><span class="status-dot"></span>AVAILABLE</span>
+            </a>
 
-                <a href="docs/mythickey.html" class="tool-card">
-                    <h3>🔑 MythicKey</h3>
-                    <p>Credential analysis and password auditing tool for testing authentication security.</p>
-                    <span class="status">AVAILABLE</span>
-                </a>
+            <a href="docs/mythickey.html" class="tool-card">
+                <span class="tool-icon">🔑</span>
+                <h3>MythicKey</h3>
+                <p>Credential analysis and password auditing tool for testing authentication security.</p>
+                <span class="tool-status"><span class="status-dot"></span>AVAILABLE</span>
+            </a>
 
-                <a href="docs/nemesishydra.html" class="tool-card">
-                    <h3>🐍 NemesisHydra</h3>
-                    <p>Multi-protocol authentication testing tool for brute-force resistance evaluation.</p>
-                    <span class="status">AVAILABLE</span>
-                </a>
+            <a href="docs/nemesishydra.html" class="tool-card">
+                <span class="tool-icon">🐍</span>
+                <h3>NemesisHydra</h3>
+                <p>Multi-protocol authentication testing tool for brute-force resistance evaluation.</p>
+                <span class="tool-status"><span class="status-dot"></span>AVAILABLE</span>
+            </a>
 
-                <a href="docs/nmappro.html" class="tool-card">
-                    <h3>🗺️ NmapPro</h3>
-                    <p>Advanced port scanning and network mapping utility with custom fingerprinting capabilities.</p>
-                    <span class="status">AVAILABLE</span>
-                </a>
+            <a href="docs/nmappro.html" class="tool-card">
+                <span class="tool-icon">🗺️</span>
+                <h3>NmapPro</h3>
+                <p>Advanced port scanning and network mapping utility with custom fingerprinting capabilities.</p>
+                <span class="tool-status"><span class="status-dot"></span>AVAILABLE</span>
+            </a>
 
-                <a href="docs/obsidianhunt.html" class="tool-card">
-                    <h3>🛡️ ObsidianHunt</h3>
-                    <p>Host hardening audit tool for evaluating system security configurations and compliance.</p>
-                    <span class="status">AVAILABLE</span>
-                </a>
+            <a href="docs/obsidianhunt.html" class="tool-card">
+                <span class="tool-icon">🛡️</span>
+                <h3>ObsidianHunt</h3>
+                <p>Host hardening audit tool for evaluating system security configurations and compliance.</p>
+                <span class="tool-status"><span class="status-dot"></span>AVAILABLE</span>
+            </a>
 
-                <a href="docs/proxyphantom.html" class="tool-card">
-                    <h3>👻 ProxyPhantom</h3>
-                    <p>Proxy management and anonymity tool for secure testing environments.</p>
-                    <span class="status">AVAILABLE</span>
-                </a>
+            <a href="docs/proxyphantom.html" class="tool-card">
+                <span class="tool-icon">👻</span>
+                <h3>ProxyPhantom</h3>
+                <p>Proxy management and anonymity tool for secure testing environments.</p>
+                <span class="tool-status"><span class="status-dot"></span>AVAILABLE</span>
+            </a>
 
-                <a href="docs/payloadforge.html" class="tool-card">
-                    <h3>⚔️ PayloadForge</h3>
-                    <p>Payload generation and encoding utility for penetration testing scenarios.</p>
-                    <span class="status">AVAILABLE</span>
-                </a>
+            <a href="docs/payloadforge.html" class="tool-card">
+                <span class="tool-icon">⚔️</span>
+                <h3>PayloadForge</h3>
+                <p>Payload generation and encoding utility for penetration testing scenarios.</p>
+                <span class="tool-status"><span class="status-dot"></span>AVAILABLE</span>
+            </a>
 
-                <a href="docs/osint-workflows.html" class="tool-card">
-                    <h3>🔬 OSINT Workflows</h3>
-                    <p>Open-source intelligence gathering toolkit for reconnaissance and information analysis.</p>
-                    <span class="status">AVAILABLE</span>
-                </a>
+            <a href="docs/osint-workflows.html" class="tool-card">
+                <span class="tool-icon">🔬</span>
+                <h3>OSINT Workflows</h3>
+                <p>Open-source intelligence gathering toolkit for reconnaissance and information analysis.</p>
+                <span class="tool-status"><span class="status-dot"></span>AVAILABLE</span>
+            </a>
 
-                <a href="docs/vulnhunter.html" class="tool-card">
-                    <h3>🎯 VulnHunter</h3>
-                    <p>Comprehensive vulnerability scanner with 50+ security checks and CVE database integration.</p>
-                    <span class="status">AVAILABLE</span>
-                </a>
+            <a href="docs/vulnhunter.html" class="tool-card">
+                <span class="tool-icon">🎯</span>
+                <h3>VulnHunter</h3>
+                <p>Comprehensive vulnerability scanner with 50+ security checks and CVE database integration.</p>
+                <span class="tool-status"><span class="status-dot"></span>AVAILABLE</span>
+            </a>
 
-                <a href="docs/burpsuite.html" class="tool-card">
-                    <h3>🔥 BurpSuite Clone</h3>
-                    <p>HTTP proxy and web application security scanner with intercepting capabilities and automated testing.</p>
-                    <span class="status">AVAILABLE</span>
-                </a>
+            <a href="docs/burpsuite.html" class="tool-card">
+                <span class="tool-icon">🔥</span>
+                <h3>BurpSuite Clone</h3>
+                <p>HTTP proxy and web application security scanner with intercepting capabilities.</p>
+                <span class="tool-status"><span class="status-dot"></span>AVAILABLE</span>
+            </a>
 
-                <a href="docs/scribe.html" class="tool-card">
-                    <h3>📝 Scribe</h3>
-                    <p>Automated penetration testing report generation and documentation tool with customizable templates.</p>
-                    <span class="status">AVAILABLE</span>
-                </a>
+            <a href="docs/scribe.html" class="tool-card">
+                <span class="tool-icon">📝</span>
+                <h3>Scribe</h3>
+                <p>Automated penetration testing report generation and documentation tool.</p>
+                <span class="tool-status"><span class="status-dot"></span>AVAILABLE</span>
+            </a>
 
-                <a href="docs/skybreaker.html" class="tool-card">
-                    <h3>📡 SkyBreaker</h3>
-                    <p>Wireless security auditing tool for testing WiFi networks, analyzing protocols, and identifying vulnerabilities.</p>
-                    <span class="status">AVAILABLE</span>
-                </a>
+            <a href="docs/skybreaker.html" class="tool-card">
+                <span class="tool-icon">📡</span>
+                <h3>SkyBreaker</h3>
+                <p>Wireless security auditing tool for testing WiFi networks and protocols.</p>
+                <span class="tool-status"><span class="status-dot"></span>AVAILABLE</span>
+            </a>
 
-                <a href="docs/spectratrace.html" class="tool-card">
-                    <h3>📊 SpectraTrace</h3>
-                    <p>Advanced packet inspection and network traffic analysis tool with protocol dissection capabilities.</p>
-                    <span class="status">AVAILABLE</span>
-                </a>
+            <a href="docs/spectratrace.html" class="tool-card">
+                <span class="tool-icon">📊</span>
+                <h3>SpectraTrace</h3>
+                <p>Advanced packet inspection and network traffic analysis tool.</p>
+                <span class="tool-status"><span class="status-dot"></span>AVAILABLE</span>
+            </a>
 
-                <a href="docs/vectorflux.html" class="tool-card">
-                    <h3>🚀 VectorFlux</h3>
-                    <p>Payload staging and delivery framework for advanced penetration testing scenarios.</p>
-                    <span class="status">AVAILABLE</span>
-                </a>
+            <a href="docs/vectorflux.html" class="tool-card">
+                <span class="tool-icon">🚀</span>
+                <h3>VectorFlux</h3>
+                <p>Payload staging and delivery framework for advanced testing scenarios.</p>
+                <span class="tool-status"><span class="status-dot"></span>AVAILABLE</span>
+            </a>
 
-                <a href="docs/sovereign-suite.html" class="tool-card">
-                    <h3>👑 Sovereign Suite</h3>
-                    <p>Integrated security assessment platform combining all tools into a unified command-and-control interface.</p>
-                    <span class="status">AVAILABLE</span>
-                </a>
-            </div>
-        </section>
+            <a href="docs/sovereign-suite.html" class="tool-card">
+                <span class="tool-icon">👑</span>
+                <h3>Sovereign Suite</h3>
+                <p>Integrated security assessment platform combining all tools in one interface.</p>
+                <span class="tool-status"><span class="status-dot"></span>AVAILABLE</span>
+            </a>
 
-        <!-- CTA Section -->
-        <section class="cta-section">
+            <a href="docs/network-viz.html" class="tool-card">
+                <span class="tool-icon">🕸️</span>
+                <h3>Network Visualizer</h3>
+                <p>Real-time network topology mapping and visualization tool.</p>
+                <span class="tool-status"><span class="status-dot"></span>AVAILABLE</span>
+            </a>
+
+            <a href="docs/echostrike.html" class="tool-card">
+                <span class="tool-icon">📢</span>
+                <h3>EchoStrike</h3>
+                <p>API endpoint discovery and testing framework for REST/GraphQL APIs.</p>
+                <span class="tool-status"><span class="status-dot"></span>AVAILABLE</span>
+            </a>
+
+            <a href="docs/cryptkeeper.html" class="tool-card">
+                <span class="tool-icon">🔐</span>
+                <h3>CryptKeeper</h3>
+                <p>Encryption analysis and cryptographic protocol testing tool.</p>
+                <span class="tool-status"><span class="status-dot"></span>AVAILABLE</span>
+            </a>
+
+            <a href="docs/ghostnet.html" class="tool-card">
+                <span class="tool-icon">👤</span>
+                <h3>GhostNet</h3>
+                <p>Anonymous network routing and privacy testing framework.</p>
+                <span class="tool-status"><span class="status-dot"></span>AVAILABLE</span>
+            </a>
+
+            <a href="docs/dataforge.html" class="tool-card">
+                <span class="tool-icon">⚡</span>
+                <h3>DataForge</h3>
+                <p>Test data generation and intelligent fuzzing framework.</p>
+                <span class="tool-status"><span class="status-dot"></span>AVAILABLE</span>
+            </a>
+        </div>
+
+        <div class="cta-section">
             <h2>Ready to Get Started?</h2>
-            <p>Create your account to access professional-grade security assessment tools.</p>
-            <p style="font-size: 1em; margin-bottom: 40px;">
-                <strong>Registration includes:</strong> Professional credential verification, access to all tools,
-                comprehensive documentation, and 24/7 support.
-            </p>
-            <a href="register.html" class="btn">🚀 Create Account</a>
-            <a href="login.html" class="btn btn-secondary">🔐 Login</a>
-        </section>
-
-        <!-- Features -->
-        <section style="margin: 60px 0; text-align: center;">
-            <h2 style="color: #ff6666; font-size: 2.5em; margin-bottom: 40px;">Why Choose TheGAVL Tools?</h2>
-            <div class="tools-grid">
-                <div class="tool-card">
-                    <h3>✅ Legally Compliant</h3>
-                    <p>Fully compliant with CFAA and export regulations. Clear Terms of Service and AUP protect both you and us.</p>
-                </div>
-                <div class="tool-card">
-                    <h3>🛡️ Professional Grade</h3>
-                    <p>Tools used by security researchers, penetration testers, and red team professionals worldwide.</p>
-                </div>
-                <div class="tool-card">
-                    <h3>📚 Comprehensive Docs</h3>
-                    <p>Detailed documentation, usage examples, and best practices for each tool.</p>
-                </div>
-                <div class="tool-card">
-                    <h3>🔄 Regular Updates</h3>
-                    <p>Continuous updates with new vulnerability checks, CVE integration, and feature enhancements.</p>
-                </div>
-                <div class="tool-card">
-                    <h3>🎓 Educational</h3>
-                    <p>Learn security assessment techniques through real-world tools and scenarios.</p>
-                </div>
-                <div class="tool-card">
-                    <h3>💬 24/7 Support</h3>
-                    <p>Technical support, legal guidance, and community forums available around the clock.</p>
-                </div>
-            </div>
-        </section>
+            <p>Access professional-grade security assessment tools with comprehensive documentation and support.</p>
+            <a href="register.html" class="btn btn-primary">Create Account</a>
+            <a href="login.html" class="btn btn-secondary">Sign In</a>
+        </div>
     </div>
 
-    <!-- Footer -->
     <footer>
         <p><strong>Corporation of Light DBA TheGAVL</strong></p>
         <p style="margin: 20px 0;">
-            <a href="terms-of-service.html">Terms of Service</a> |
-            <a href="acceptable-use-policy.html">Acceptable Use Policy</a> |
-            <a href="privacy-policy.html">Privacy Policy</a> |
-            <a href="responsible-disclosure.html">Responsible Disclosure</a> |
-            <a href="mailto:legal@thegavl.com">Legal</a> |
+            <a href="terms-of-service.html">Terms of Service</a>
+            <a href="acceptable-use-policy.html">Acceptable Use Policy</a>
+            <a href="mailto:legal@thegavl.com">Legal</a>
             <a href="mailto:support@thegavl.com">Support</a>
         </p>
-        <p style="margin-top: 20px; opacity: 0.7; font-size: 0.9em;">
+        <p style="margin-top: 20px; opacity: 0.7; font-size: 14px;">
             Copyright © 2025 Joshua Hendricks Cole (DBA: Corporation of Light). All Rights Reserved. PATENT PENDING.
         </p>
-        <p style="margin-top: 10px; opacity: 0.7; font-size: 0.9em;">
+        <p style="margin-top: 10px; opacity: 0.7; font-size: 14px;">
             ⚠️ These tools are for authorized security testing only. Unauthorized use is illegal.
-        </p>
-        <p style="margin-top: 20px; font-size: 0.8em; opacity: 0.5;">
-            Law Enforcement Inquiries: <a href="mailto:lawenforcement@thegavl.com">lawenforcement@thegavl.com</a> (24/7)
         </p>
     </footer>
 </body>
 </html>
-
-<!-- Copyright (c) 2025 Joshua Hendricks Cole (DBA: Corporation of Light). All Rights Reserved. PATENT PENDING. -->
