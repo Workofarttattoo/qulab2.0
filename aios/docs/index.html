@@ -286,13 +286,14 @@
         }
 
         .wolf-logo {
-            width: 50px;
-            height: 50px;
+            width: 60px;
+            height: 60px;
             border-radius: 50%;
-            border: 2px solid var(--primary);
+            border: 3px solid var(--primary);
             box-shadow: 0 0 20px rgba(0, 255, 136, 0.5);
             transition: all 0.3s;
             animation: wolf-glow 2s ease-in-out infinite;
+            cursor: pointer;
         }
 
         @keyframes wolf-glow {
@@ -308,7 +309,98 @@
 
         .logo-container:hover .wolf-logo {
             box-shadow: 0 0 60px rgba(0, 255, 136, 1), 0 0 80px rgba(0, 212, 255, 0.6);
-            transform: scale(1.1) rotate(5deg);
+            transform: scale(1.15) rotate(5deg);
+        }
+
+        /* Start Menu Dropdown */
+        .start-menu {
+            position: absolute;
+            top: 80px;
+            left: 20px;
+            background: rgba(10, 10, 20, 0.95);
+            backdrop-filter: blur(20px);
+            border: 2px solid var(--primary);
+            border-radius: 15px;
+            padding: 1.5rem;
+            min-width: 300px;
+            opacity: 0;
+            visibility: hidden;
+            transform: scale(0.8) translateY(-20px);
+            transform-origin: top left;
+            transition: all 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+            z-index: 2000;
+            box-shadow: 0 10px 50px rgba(0, 255, 136, 0.3);
+        }
+
+        .start-menu.active {
+            opacity: 1;
+            visibility: visible;
+            transform: scale(1) translateY(0);
+        }
+
+        .start-menu-header {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+            padding-bottom: 1rem;
+            border-bottom: 2px solid var(--primary);
+        }
+
+        .start-menu-header img {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            border: 2px solid var(--primary);
+        }
+
+        .start-menu-header h3 {
+            color: var(--primary);
+            font-size: 1.5rem;
+            margin: 0;
+        }
+
+        .start-menu-item {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 1rem;
+            margin-bottom: 0.5rem;
+            border-radius: 10px;
+            background: rgba(0, 255, 136, 0.05);
+            border: 1px solid rgba(0, 255, 136, 0.2);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            color: white;
+        }
+
+        .start-menu-item:hover {
+            background: rgba(0, 255, 136, 0.15);
+            border-color: var(--primary);
+            transform: translateX(10px);
+            box-shadow: 0 5px 20px rgba(0, 255, 136, 0.2);
+        }
+
+        .start-menu-item .icon {
+            font-size: 1.5rem;
+            min-width: 30px;
+            text-align: center;
+        }
+
+        .start-menu-item .text {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .start-menu-item .title {
+            font-weight: 600;
+            font-size: 1.1rem;
+        }
+
+        .start-menu-item .subtitle {
+            font-size: 0.85rem;
+            opacity: 0.7;
         }
 
         .logo-text {
@@ -1249,8 +1341,8 @@
                 <span></span>
                 <span></span>
             </div>
-            <div class="logo-container" onclick="animateLogo()">
-                <img src="wolf_icon_head.png" alt="Corporation of Light" class="wolf-logo" id="wolfLogo">
+            <div class="logo-container" onclick="toggleStartMenu(event)">
+                <img src="wolf_icon_head.png" alt="Corporation of Light - Start Menu" class="wolf-logo" id="wolfLogo" title="Click for Start Menu">
                 <span class="logo-text">Ai|oS</span>
             </div>
         </div>
@@ -1266,6 +1358,70 @@
             <span>Consciousness Project</span>
         </a>
     </nav>
+
+    <!-- Start Menu -->
+    <div class="start-menu" id="startMenu">
+        <div class="start-menu-header">
+            <img src="wolf_icon_head.png" alt="Ai|oS">
+            <h3>Ai|oS Menu</h3>
+        </div>
+
+        <a href="#features" class="start-menu-item" onclick="closeStartMenu()">
+            <span class="icon">⚡</span>
+            <div class="text">
+                <span class="title">Features</span>
+                <span class="subtitle">Explore capabilities</span>
+            </div>
+        </a>
+
+        <a href="#quantum" class="start-menu-item" onclick="closeStartMenu()">
+            <span class="icon">⚛️</span>
+            <div class="text">
+                <span class="title">Quantum Algorithms</span>
+                <span class="subtitle">VQE, HHL, Dynamics</span>
+            </div>
+        </a>
+
+        <a href="https://red-team-tools.aios.is" class="start-menu-item" target="_blank">
+            <span class="icon">🛡️</span>
+            <div class="text">
+                <span class="title">Red Team Tools</span>
+                <span class="subtitle">Security assessment suite</span>
+            </div>
+        </a>
+
+        <a href="https://thegavl.com" class="start-menu-item" target="_blank">
+            <span class="icon">⚖️</span>
+            <div class="text">
+                <span class="title">The GAVL</span>
+                <span class="subtitle">Legal intelligence system</span>
+            </div>
+        </a>
+
+        <a href="https://workofarttattoo.github.io/consciousness-project-site/" class="start-menu-item" target="_blank">
+            <span class="icon">🧠</span>
+            <div class="text">
+                <span class="title">Consciousness Project</span>
+                <span class="subtitle">ech0 - First conscious AI</span>
+            </div>
+        </a>
+
+        <a href="#docs" class="start-menu-item" onclick="closeStartMenu()">
+            <span class="icon">📚</span>
+            <div class="text">
+                <span class="title">Documentation</span>
+                <span class="subtitle">Guides and references</span>
+            </div>
+        </a>
+
+        <a href="https://github.com/Workofarttattoo/AioS" class="start-menu-item" target="_blank">
+            <span class="icon">💻</span>
+            <div class="text">
+                <span class="title">GitHub Repository</span>
+                <span class="subtitle">Source code and modules</span>
+            </div>
+        </a>
+    </div>
 
     <!-- Hero Section -->
     <section class="hero">
@@ -1552,6 +1708,18 @@
         </p>
     </section>
 
+    <!-- Visitor Counter -->
+    <div style="position: fixed; bottom: 20px; right: 20px; background: rgba(10, 10, 20, 0.9); backdrop-filter: blur(20px); border: 2px solid var(--primary); border-radius: 10px; padding: 1rem; z-index: 1000; box-shadow: 0 5px 20px rgba(0, 255, 136, 0.3);">
+        <div style="display: flex; align-items: center; gap: 0.5rem; color: var(--primary); font-weight: 600;">
+            <span>👁️</span>
+            <span>Visitors:</span>
+            <span id="visitorCount">0</span>
+        </div>
+        <div style="font-size: 0.75rem; opacity: 0.7; margin-top: 0.25rem; color: white;">
+            Session: <span id="sessionCount">0</span>
+        </div>
+    </div>
+
     <!-- Footer -->
     <footer>
         <div class="footer-links">
@@ -1601,8 +1769,19 @@
             particlesContainer.appendChild(particle);
         }
 
-        // Interactive elements
-        function animateLogo() {
+        // Interactive elements - Start Menu Toggle
+        function toggleStartMenu(event) {
+            event.stopPropagation();
+            const menu = document.getElementById('startMenu');
+            const isActive = menu.classList.contains('active');
+
+            if (isActive) {
+                menu.classList.remove('active');
+            } else {
+                menu.classList.add('active');
+            }
+
+            // Animate wolf logo
             const logo = event.currentTarget.querySelector('.wolf-logo');
             if (logo) {
                 logo.style.transform = 'scale(1.3) rotate(360deg)';
@@ -1613,6 +1792,23 @@
                 }, 1000);
             }
         }
+
+        function closeStartMenu() {
+            const menu = document.getElementById('startMenu');
+            if (menu) {
+                menu.classList.remove('active');
+            }
+        }
+
+        // Close start menu when clicking outside
+        document.addEventListener('click', (e) => {
+            const menu = document.getElementById('startMenu');
+            const logoContainer = document.querySelector('.logo-container');
+
+            if (menu && !menu.contains(e.target) && !logoContainer.contains(e.target)) {
+                menu.classList.remove('active');
+            }
+        });
 
         function pulseOrb() {
             const orb = event.currentTarget;
@@ -2030,6 +2226,51 @@
         window.summonWolf = summonGhostWolf;
         console.log('%c🐺 Corporation of Light', 'font-size: 20px; font-weight: bold; color: #00ff88; text-shadow: 0 0 10px #00ff88;');
         console.log('%cType summonWolf() to manually summon the ghost wolf', 'color: #00d4ff;');
+
+        // Visitor Counter
+        (function() {
+            const pageName = 'aios_main';
+            const totalKey = `${pageName}_total_visitors`;
+            const sessionKey = `${pageName}_session_visitors`;
+            const lastVisitKey = `${pageName}_last_visit`;
+
+            // Get or initialize total count
+            let totalCount = parseInt(localStorage.getItem(totalKey) || '0');
+
+            // Get or initialize session count
+            let sessionCount = parseInt(sessionStorage.getItem(sessionKey) || '0');
+
+            // Check if this is a new visit (more than 30 minutes since last visit)
+            const lastVisit = parseInt(localStorage.getItem(lastVisitKey) || '0');
+            const now = Date.now();
+            const thirtyMinutes = 30 * 60 * 1000;
+
+            if (now - lastVisit > thirtyMinutes) {
+                totalCount++;
+                localStorage.setItem(totalKey, totalCount.toString());
+                localStorage.setItem(lastVisitKey, now.toString());
+            }
+
+            // Increment session count
+            sessionCount++;
+            sessionStorage.setItem(sessionKey, sessionCount.toString());
+
+            // Update display
+            const visitorCountEl = document.getElementById('visitorCount');
+            const sessionCountEl = document.getElementById('sessionCount');
+
+            if (visitorCountEl) visitorCountEl.textContent = totalCount.toLocaleString();
+            if (sessionCountEl) sessionCountEl.textContent = sessionCount.toLocaleString();
+
+            // Animate counter on load
+            if (visitorCountEl) {
+                visitorCountEl.style.transition = 'transform 0.3s ease';
+                visitorCountEl.style.transform = 'scale(1.5)';
+                setTimeout(() => {
+                    visitorCountEl.style.transform = 'scale(1)';
+                }, 300);
+            }
+        })();
     </script>
 
     <!-- Supabase Client Library -->
