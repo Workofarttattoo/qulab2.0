@@ -1,0 +1,505 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bayesian Sophiarch • Oracle's Nightmare Chamber</title>
+
+    <style>
+        /* Copyright (c) 2025 Joshua Hendricks Cole (DBA: Corporation of Light). All Rights Reserved. PATENT PENDING. */
+
+        @import url('https://fonts.googleapis.com/css2?family=Creepster&family=Bungee&family=Inter:wght@400;600&display=swap');
+
+        :root {
+            --nightmare-black: #0A0A0A;
+            --void-black: #000000;
+            --deep-gray: #1A1A1A;
+            --neon-purple: #A855F7;
+            --electric-pink: #EC4899;
+            --cyber-cyan: #06B6D4;
+            --pardee-pink: #FF1493;
+            --pardee-yellow: #F4E9C3;
+            --pardee-purple: #6B46C1;
+            --text-primary: #E0E0E0;
+            --text-secondary: #A0A0A0;
+            --font-display: 'Bungee', cursive;
+            --font-creepy: 'Creepster', cursive;
+            --font-body: 'Inter', sans-serif;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: var(--pardee-yellow);
+            color: var(--nightmare-black);
+            font-family: var(--font-body);
+            position: relative;
+            overflow-x: hidden;
+            min-height: 100vh;
+        }
+
+        /* PARDEE-STYLE NETWORK FACE - Top of page */
+        .network-face-container {
+            position: relative;
+            width: 100%;
+            max-width: 600px;
+            margin: 2rem auto;
+            display: flex;
+            justify-content: center;
+        }
+
+        .network-face {
+            position: relative;
+            width: 500px;
+            height: 600px;
+        }
+
+        /* Face bleeding drips around form fields */
+        .form-with-face {
+            position: relative;
+            background: var(--pardee-pink);
+            border: 4px solid var(--nightmare-black);
+            border-radius: 20px;
+            padding: 2rem;
+            margin: 2rem;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+        }
+
+        .form-with-face::before {
+            content: '';
+            position: absolute;
+            top: -40px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 60px;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 80 60"><ellipse cx="40" cy="30" rx="35" ry="25" fill="none" stroke="%23000" stroke-width="3"/><circle cx="40" cy="30" r="15" fill="%23FF1493"/><circle cx="40" cy="30" r="6" fill="%23000"/><path d="M10,30 Q20,20 30,25" stroke="%23000" stroke-width="2" fill="none"/><path d="M70,30 Q60,40 50,35" stroke="%23000" stroke-width="2" fill="none"/></svg>') no-repeat center;
+            background-size: contain;
+        }
+
+        /* Drip decorations */
+        .drip-left, .drip-right {
+            position: absolute;
+            top: 20%;
+            width: 30px;
+            height: 100px;
+        }
+
+        .drip-left {
+            left: -15px;
+        }
+
+        .drip-right {
+            right: -15px;
+        }
+
+        /* Container */
+        .container {
+            position: relative;
+            z-index: 2;
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        /* Header */
+        .oracle-header {
+            text-align: center;
+            margin: 2rem 0 3rem 0;
+            position: relative;
+        }
+
+        .oracle-header h1 {
+            font-family: var(--font-creepy);
+            font-size: clamp(3rem, 8vw, 6rem);
+            margin-bottom: 1rem;
+            color: var(--pardee-purple);
+            text-shadow:
+                3px 3px 0 var(--nightmare-black),
+                -2px -2px 0 var(--pardee-pink);
+            letter-spacing: 0.1em;
+        }
+
+        .oracle-header p {
+            font-size: 1.25rem;
+            color: var(--nightmare-black);
+            font-weight: 600;
+        }
+
+        /* Grid Layout */
+        .config-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+
+        /* Labels and inputs */
+        label {
+            display: block;
+            color: var(--nightmare-black);
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            margin-bottom: 0.5rem;
+            font-weight: 700;
+            font-family: var(--font-display);
+        }
+
+        textarea, input, select {
+            width: 100%;
+            padding: 0.75rem;
+            background: var(--pardee-yellow);
+            border: 3px solid var(--nightmare-black);
+            color: var(--nightmare-black);
+            font-family: var(--font-body);
+            border-radius: 8px;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        textarea:focus, input:focus, select:focus {
+            outline: none;
+            border-color: var(--pardee-purple);
+            box-shadow: 0 0 0 3px rgba(107, 70, 193, 0.3);
+        }
+
+        /* Button */
+        button {
+            width: 100%;
+            padding: 1.25rem 2rem;
+            font-family: var(--font-display);
+            font-size: 1.2rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            background: var(--pardee-purple);
+            border: 4px solid var(--nightmare-black);
+            color: var(--pardee-yellow);
+            cursor: pointer;
+            box-shadow: 5px 5px 0 var(--nightmare-black);
+            transition: all 0.2s ease;
+            margin-top: 1rem;
+        }
+
+        button:hover {
+            transform: translate(2px, 2px);
+            box-shadow: 3px 3px 0 var(--nightmare-black);
+        }
+
+        button:active {
+            transform: translate(5px, 5px);
+            box-shadow: 0 0 0 var(--nightmare-black);
+        }
+
+        /* Horizon tags */
+        .horizon-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+        }
+
+        .horizon-tag {
+            background: var(--pardee-yellow);
+            border: 3px solid var(--nightmare-black);
+            color: var(--nightmare-black);
+            padding: 0.5rem 1rem;
+            border-radius: 8px;
+            cursor: pointer;
+            font-family: var(--font-display);
+            font-weight: 700;
+            text-transform: uppercase;
+            font-size: 0.875rem;
+            transition: all 0.2s ease;
+        }
+
+        .horizon-tag.active {
+            background: var(--pardee-pink);
+            color: var(--nightmare-black);
+            box-shadow: 3px 3px 0 var(--nightmare-black);
+        }
+
+        /* Algorithm cards */
+        .algorithm-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .algorithm-option {
+            background: var(--pardee-yellow);
+            border: 3px solid var(--nightmare-black);
+            padding: 1rem;
+            border-radius: 12px;
+            cursor: pointer;
+            text-align: center;
+            transition: all 0.2s ease;
+        }
+
+        .algorithm-option.selected {
+            background: var(--pardee-pink);
+            box-shadow: 4px 4px 0 var(--nightmare-black);
+            transform: translate(-2px, -2px);
+        }
+
+        .algorithm-option h4 {
+            color: var(--pardee-purple);
+            margin-bottom: 0.5rem;
+            font-size: 1.1rem;
+            font-family: var(--font-display);
+        }
+
+        .algorithm-option p {
+            color: var(--nightmare-black);
+            font-size: 0.875rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .algorithm-option small {
+            color: var(--pardee-purple);
+            font-weight: 600;
+        }
+
+        .form-field-wrapper {
+            margin-bottom: 1.5rem;
+            position: relative;
+        }
+    </style>
+</head>
+<body>
+    <!-- NETWORK FACE MASCOT - Pardee Style with CVE/Network Data Integration -->
+    <div class="network-face-container">
+        <svg class="network-face" viewBox="0 0 500 600" xmlns="http://www.w3.org/2000/svg">
+            <!-- Outer circle frame -->
+            <ellipse cx="250" cy="300" rx="240" ry="280" fill="#FF1493" stroke="#000" stroke-width="5"/>
+
+            <!-- Dripping organic tendrils - left side -->
+            <path d="M50,250 Q30,280 40,310 Q25,340 35,370 Q20,400 30,430"
+                  stroke="#F4E9C3" stroke-width="8" fill="none" stroke-linecap="round">
+                <animate attributeName="d"
+                         values="M50,250 Q30,280 40,310 Q25,340 35,370 Q20,400 30,430;
+                                 M50,250 Q25,285 40,315 Q20,345 35,375 Q15,405 30,435;
+                                 M50,250 Q30,280 40,310 Q25,340 35,370 Q20,400 30,430"
+                         dur="4s" repeatCount="indefinite"/>
+            </path>
+            <path d="M60,200 Q45,230 55,260" stroke="#F4E9C3" stroke-width="6" fill="none" stroke-linecap="round"/>
+
+            <!-- Dripping organic tendrils - right side -->
+            <path d="M450,250 Q470,280 460,310 Q475,340 465,370 Q480,400 470,430"
+                  stroke="#F4E9C3" stroke-width="8" fill="none" stroke-linecap="round">
+                <animate attributeName="d"
+                         values="M450,250 Q470,280 460,310 Q475,340 465,370 Q480,400 470,430;
+                                 M450,250 Q475,285 460,315 Q480,345 465,375 Q485,405 470,435;
+                                 M450,250 Q470,280 460,310 Q475,340 465,370 Q480,400 470,430"
+                         dur="4s" repeatCount="indefinite"/>
+            </path>
+
+            <!-- Top drips -->
+            <ellipse cx="150" cy="60" rx="8" ry="15" fill="#FF1493"/>
+            <ellipse cx="180" cy="80" rx="6" ry="12" fill="#F4E9C3"/>
+            <ellipse cx="320" cy="70" rx="7" ry="14" fill="#FF1493"/>
+
+            <!-- Spiral hypnotic eyes with CVE data -->
+            <!-- Left eye -->
+            <circle cx="180" cy="240" r="50" fill="#6B46C1" stroke="#000" stroke-width="4"/>
+            <path d="M180,240 Q200,240 210,250 Q210,270 200,280 Q180,290 160,280 Q140,270 140,250 Q150,230 170,230 Q190,230 200,240"
+                  fill="none" stroke="#F4E9C3" stroke-width="3"/>
+            <circle cx="180" cy="240" r="15" fill="#000"/>
+
+            <!-- Right eye -->
+            <circle cx="320" cy="240" r="50" fill="#6B46C1" stroke="#000" stroke-width="4"/>
+            <path d="M320,240 Q340,240 350,250 Q350,270 340,280 Q320,290 300,280 Q280,270 280,250 Q290,230 310,230 Q330,230 340,240"
+                  fill="none" stroke="#F4E9C3" stroke-width="3"/>
+            <circle cx="320" cy="240" r="15" fill="#000"/>
+
+            <!-- Nose area with drip -->
+            <ellipse cx="250" cy="300" rx="20" ry="30" fill="#E8B4A6" stroke="#000" stroke-width="3"/>
+
+            <!-- GRINNING TEETH MOUTH -->
+            <path d="M150,380 Q250,420 350,380" stroke="#000" stroke-width="5" fill="none" stroke-linecap="round">
+                <animate attributeName="d"
+                         values="M150,380 Q250,420 350,380;M150,380 Q250,425 350,380;M150,380 Q250,420 350,380"
+                         dur="3s" repeatCount="indefinite"/>
+            </path>
+
+            <!-- Exposed teeth -->
+            <rect x="170" y="378" width="15" height="25" fill="#FFF" stroke="#000" stroke-width="2"/>
+            <rect x="190" y="378" width="15" height="30" fill="#FFF" stroke="#000" stroke-width="2"/>
+            <rect x="210" y="378" width="15" height="32" fill="#FFF" stroke="#000" stroke-width="2"/>
+            <rect x="230" y="378" width="15" height="35" fill="#FFF" stroke="#000" stroke-width="2"/>
+            <rect x="250" y="378" width="15" height="32" fill="#FFF" stroke="#000" stroke-width="2"/>
+            <rect x="270" y="378" width="15" height="30" fill="#FFF" stroke="#000" stroke-width="2"/>
+            <rect x="290" y="378" width="15" height="28" fill="#FFF" stroke="#000" stroke-width="2"/>
+            <rect x="310" y="378" width="15" height="25" fill="#FFF" stroke="#000" stroke-width="2"/>
+
+            <!-- TEXT INTEGRATED INTO FACE - Top (like PRIMUS in hat) -->
+            <text x="250" y="120" text-anchor="middle" font-family="Bungee, sans-serif" font-size="48"
+                  fill="#F4E9C3" stroke="#000" stroke-width="3" font-weight="900">
+                BAYESIAN
+            </text>
+
+            <!-- Text in "hat band" area -->
+            <text x="250" y="170" text-anchor="middle" font-family="Arial Black, sans-serif" font-size="28"
+                  fill="#6B46C1" stroke="#000" stroke-width="2" font-weight="900">
+                ORACLE ENGINE
+            </text>
+
+            <!-- CVE numbers in left eye spiral -->
+            <text x="180" y="225" text-anchor="middle" font-family="monospace" font-size="10" fill="#F4E9C3" font-weight="700">
+                CVE-2024
+            </text>
+
+            <!-- Network mode in right eye spiral -->
+            <text x="320" y="225" text-anchor="middle" font-family="monospace" font-size="10" fill="#F4E9C3" font-weight="700">
+                SCAN-MODE
+            </text>
+
+            <!-- "Bow tie" area at bottom with ensemble text -->
+            <ellipse cx="250" cy="520" rx="80" ry="60" fill="#6B46C1" stroke="#000" stroke-width="4"/>
+            <text x="250" y="515" text-anchor="middle" font-family="Arial, sans-serif" font-size="14"
+                  fill="#F4E9C3" stroke="#000" stroke-width="1" font-weight="900">
+                PARTICLE
+            </text>
+            <text x="250" y="535" text-anchor="middle" font-family="Arial, sans-serif" font-size="14"
+                  fill="#F4E9C3" stroke="#000" stroke-width="1" font-weight="900">
+                FILTER
+            </text>
+
+            <!-- Bottom drips -->
+            <ellipse cx="200" cy="580" rx="10" ry="18" fill="#FF1493">
+                <animate attributeName="cy" values="580;590;580" dur="2s" repeatCount="indefinite"/>
+            </ellipse>
+            <ellipse cx="300" cy="585" rx="8" ry="15" fill="#F4E9C3">
+                <animate attributeName="cy" values="585;595;585" dur="2.5s" repeatCount="indefinite"/>
+            </ellipse>
+        </svg>
+    </div>
+
+    <div class="container">
+        <!-- Header -->
+        <header class="oracle-header">
+            <h1>SOPHIARCH</h1>
+            <p>Probabilistic Oracle • Network Analysis</p>
+        </header>
+
+        <!-- Configuration Section -->
+        <div class="config-grid">
+            <!-- Forecast Configuration -->
+            <div class="form-with-face">
+                <!-- Drip decorations -->
+                <svg class="drip-left" viewBox="0 0 30 100" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M15,0 Q10,30 15,60 Q10,80 15,100" stroke="#000" stroke-width="3" fill="none"/>
+                    <ellipse cx="15" cy="90" rx="5" ry="10" fill="#F4E9C3"/>
+                </svg>
+                <svg class="drip-right" viewBox="0 0 30 100" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M15,0 Q20,30 15,60 Q20,80 15,100" stroke="#000" stroke-width="3" fill="none"/>
+                    <ellipse cx="15" cy="90" rx="5" ry="10" fill="#F4E9C3"/>
+                </svg>
+
+                <h2 style="margin: 0 0 1.5rem 0; color: var(--nightmare-black); font-family: var(--font-display);">📊 FORECAST CONFIG</h2>
+
+                <div class="form-field-wrapper">
+                    <label>Problem Statement</label>
+                    <textarea id="problem" rows="4" placeholder="Enter your forecasting problem...">Demo probabilistic forecast</textarea>
+                </div>
+
+                <div class="form-field-wrapper">
+                    <label>Forecast Horizons</label>
+                    <div class="horizon-container">
+                        <div class="horizon-tag active">1 Day</div>
+                        <div class="horizon-tag active">1 Week</div>
+                        <div class="horizon-tag active">1 Month</div>
+                        <div class="horizon-tag">3 Months</div>
+                        <div class="horizon-tag">6 Months</div>
+                        <div class="horizon-tag">1 Year</div>
+                    </div>
+                </div>
+
+                <div class="form-field-wrapper">
+                    <label>Confidence Threshold (%)</label>
+                    <input type="number" id="confidence-threshold" min="50" max="99" value="80">
+                </div>
+
+                <button id="run-forecast">🚀 RUN FORECAST</button>
+            </div>
+
+            <!-- Algorithm Selection -->
+            <div class="form-with-face">
+                <!-- Drip decorations -->
+                <svg class="drip-left" viewBox="0 0 30 100" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M15,0 Q10,30 15,60 Q10,80 15,100" stroke="#000" stroke-width="3" fill="none"/>
+                    <ellipse cx="15" cy="90" rx="5" ry="10" fill="#F4E9C3"/>
+                </svg>
+                <svg class="drip-right" viewBox="0 0 30 100" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M15,0 Q20,30 15,60 Q20,80 15,100" stroke="#000" stroke-width="3" fill="none"/>
+                    <ellipse cx="15" cy="90" rx="5" ry="10" fill="#F4E9C3"/>
+                </svg>
+
+                <h2 style="margin: 0 0 1.5rem 0; color: var(--nightmare-black); font-family: var(--font-display);">🧠 ALGORITHM</h2>
+
+                <div class="algorithm-grid">
+                    <div class="algorithm-option selected">
+                        <h4>Particle Filter</h4>
+                        <p>Sequential Monte Carlo</p>
+                        <small>⚡ Fast • Real-time</small>
+                    </div>
+
+                    <div class="algorithm-option">
+                        <h4>Gaussian Process</h4>
+                        <p>Regression with uncertainty</p>
+                        <small>📊 Smooth trends</small>
+                    </div>
+
+                    <div class="algorithm-option">
+                        <h4>NUTS Sampler</h4>
+                        <p>Hamiltonian Monte Carlo</p>
+                        <small>🎯 High quality</small>
+                    </div>
+
+                    <div class="algorithm-option">
+                        <h4>Ensemble</h4>
+                        <p>Multiple algorithms</p>
+                        <small>🛡️ Robust</small>
+                    </div>
+                </div>
+
+                <div class="form-field-wrapper">
+                    <label>Number of Particles</label>
+                    <input type="number" id="num-particles" min="100" max="5000" step="100" value="500">
+                    <p style="font-size: 0.875rem; color: var(--nightmare-black); margin-top: 0.5rem; font-weight: 600;">
+                        More particles = higher accuracy, slower performance
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Algorithm selection
+        document.querySelectorAll('.algorithm-option').forEach(option => {
+            option.addEventListener('click', function() {
+                document.querySelectorAll('.algorithm-option').forEach(opt => {
+                    opt.classList.remove('selected');
+                });
+                this.classList.add('selected');
+            });
+        });
+
+        // Horizon tag selection
+        document.querySelectorAll('.horizon-tag').forEach(tag => {
+            tag.addEventListener('click', function() {
+                this.classList.toggle('active');
+            });
+        });
+
+        // Run forecast button
+        document.getElementById('run-forecast').addEventListener('click', () => {
+            alert('Forecast running! (Demo mode)');
+        });
+    </script>
+</body>
+</html>

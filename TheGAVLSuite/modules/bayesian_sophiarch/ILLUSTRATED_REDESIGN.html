@@ -1,0 +1,569 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bayesian Sophiarch • Oracle's Nightmare Chamber</title>
+
+    <!-- Corporation of Light Design System -->
+    <link rel="stylesheet" href="../../corporation-of-light.css">
+
+    <style>
+        /* Copyright (c) 2025 Joshua Hendricks Cole (DBA: Corporation of Light). All Rights Reserved. PATENT PENDING. */
+
+        body {
+            background: var(--nightmare-black);
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        /* ILLUSTRATED GROTESQUE FACE BORDERS */
+        /* Melting face frame around header */
+        .melting-face-frame {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        /* Top-left corner: Watching eye */
+        .corner-eye {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            width: 120px;
+            height: 80px;
+            z-index: 10;
+            pointer-events: none;
+        }
+
+        .corner-eye svg {
+            width: 100%;
+            height: 100%;
+            filter: drop-shadow(0 0 20px var(--neon-purple));
+        }
+
+        /* Top-right corner: Dripping face */
+        .corner-drip {
+            position: fixed;
+            top: 0;
+            right: 0;
+            width: 200px;
+            height: 250px;
+            z-index: 10;
+            pointer-events: none;
+        }
+
+        .corner-drip svg {
+            width: 100%;
+            height: 100%;
+            filter: drop-shadow(0 0 30px var(--electric-pink));
+        }
+
+        /* Bottom-left: Grotesque mouth/teeth */
+        .corner-mouth {
+            position: fixed;
+            bottom: 20px;
+            left: 20px;
+            width: 150px;
+            height: 100px;
+            z-index: 10;
+            pointer-events: none;
+        }
+
+        .corner-mouth svg {
+            width: 100%;
+            height: 100%;
+            filter: drop-shadow(0 0 20px var(--cyber-cyan));
+        }
+
+        /* Card illustrations - faces bleeding from edges */
+        .grotesque-card {
+            position: relative;
+            overflow: visible !important;
+        }
+
+        .grotesque-card::before {
+            content: '';
+            position: absolute;
+            top: -30px;
+            right: -20px;
+            width: 60px;
+            height: 80px;
+            background: radial-gradient(ellipse at center, var(--neon-purple) 0%, transparent 70%);
+            border-radius: 50% 50% 40% 60%;
+            filter: blur(8px);
+            animation: organic-pulse 3s ease-in-out infinite;
+            z-index: -1;
+        }
+
+        .grotesque-card::after {
+            content: '';
+            position: absolute;
+            bottom: -20px;
+            left: 30%;
+            width: 40%;
+            height: 30px;
+            background: linear-gradient(to bottom, var(--electric-pink), transparent);
+            border-radius: 50%;
+            filter: blur(6px);
+            animation: drip 4s ease-in-out infinite;
+        }
+
+        /* Network vein patterns in cards */
+        .card-veins {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            opacity: 0.15;
+            z-index: 0;
+        }
+
+        .card-veins svg {
+            width: 100%;
+            height: 100%;
+        }
+
+        /* Menu items with eye motifs */
+        .horizon-tag {
+            position: relative;
+            overflow: visible;
+        }
+
+        .horizon-tag::before {
+            content: '👁';
+            position: absolute;
+            left: -25px;
+            top: 50%;
+            transform: translateY(-50%) scale(0);
+            font-size: 1.2rem;
+            transition: all 0.3s ease;
+            filter: drop-shadow(0 0 10px var(--neon-purple));
+        }
+
+        .horizon-tag:hover::before {
+            transform: translateY(-50%) scale(1);
+        }
+
+        .horizon-tag.active::before {
+            content: '👁';
+            transform: translateY(-50%) scale(1);
+            animation: blink 3s ease-in-out infinite;
+        }
+
+        @keyframes blink {
+            0%, 90%, 100% { opacity: 1; }
+            95% { opacity: 0; }
+        }
+
+        /* Algorithm cards with face fragments */
+        .algorithm-option {
+            position: relative;
+            overflow: visible;
+        }
+
+        .algorithm-option::before {
+            content: '';
+            position: absolute;
+            top: -10px;
+            left: -10px;
+            width: 30px;
+            height: 30px;
+            background: radial-gradient(circle, var(--cyber-cyan) 20%, transparent 80%);
+            border-radius: 50%;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .algorithm-option:hover::before {
+            opacity: 1;
+            animation: pulse-oracle 1s ease-in-out infinite;
+        }
+
+        .algorithm-option.selected::before {
+            opacity: 1;
+            background: radial-gradient(circle, var(--electric-pink) 20%, transparent 80%);
+        }
+
+        /* Melting text effect on headers */
+        .oracle-header h1 {
+            position: relative;
+        }
+
+        .oracle-header h1::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 20%;
+            width: 60%;
+            height: 15px;
+            background: linear-gradient(to bottom, var(--neon-purple), transparent);
+            filter: blur(8px);
+            animation: drip-slow 5s ease-in-out infinite alternate;
+        }
+
+        @keyframes drip-slow {
+            0% { transform: scaleY(0.8); }
+            100% { transform: scaleY(1.2); }
+        }
+
+        /* Floating fragments with eye shapes */
+        .data-fragment {
+            position: absolute;
+            font-family: var(--font-body);
+            font-size: 12px;
+            color: var(--cyber-cyan);
+            opacity: 0.3;
+            animation: float-fragment 15s linear infinite;
+        }
+
+        .data-fragment.eye-fragment::before {
+            content: '◉';
+            margin-right: 5px;
+            color: var(--electric-pink);
+        }
+
+        /* Results cards with organic borders */
+        .insight-card {
+            position: relative;
+            border-radius: 8px 8px 20px 8px;
+        }
+
+        .insight-card::before {
+            content: '';
+            position: absolute;
+            top: -5px;
+            left: -5px;
+            width: calc(100% + 10px);
+            height: calc(100% + 10px);
+            background: linear-gradient(135deg, var(--neon-purple) 0%, var(--electric-pink) 50%, var(--cyber-cyan) 100%);
+            border-radius: 8px 8px 20px 8px;
+            opacity: 0.2;
+            z-index: -1;
+            filter: blur(10px);
+            animation: organic-pulse 4s ease-in-out infinite;
+        }
+
+        /* Container positioning */
+        .container {
+            position: relative;
+            z-index: 2;
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        /* Inherit all other styles from base CSS */
+    </style>
+</head>
+<body>
+    <!-- ILLUSTRATED CORNER DECORATIONS -->
+
+    <!-- Top-Left: Watching Eye -->
+    <div class="corner-eye">
+        <svg viewBox="0 0 120 80" xmlns="http://www.w3.org/2000/svg">
+            <!-- Eye outline -->
+            <ellipse cx="60" cy="40" rx="50" ry="30" fill="none" stroke="#A855F7" stroke-width="2">
+                <animate attributeName="rx" values="50;52;50" dur="3s" repeatCount="indefinite"/>
+            </ellipse>
+            <!-- Iris -->
+            <circle cx="60" cy="40" r="18" fill="#EC4899">
+                <animate attributeName="r" values="18;20;18" dur="2s" repeatCount="indefinite"/>
+            </circle>
+            <!-- Pupil -->
+            <circle cx="60" cy="40" r="8" fill="#0A0A0A"/>
+            <!-- Highlight -->
+            <circle cx="65" cy="35" r="3" fill="#06B6D4" opacity="0.8"/>
+            <!-- Veins/network lines -->
+            <path d="M20,40 Q30,30 40,35" stroke="#A855F7" stroke-width="1" fill="none" opacity="0.6"/>
+            <path d="M100,40 Q90,50 80,45" stroke="#EC4899" stroke-width="1" fill="none" opacity="0.6"/>
+            <path d="M60,10 Q65,20 60,30" stroke="#06B6D4" stroke-width="1" fill="none" opacity="0.4"/>
+        </svg>
+    </div>
+
+    <!-- Top-Right: Dripping Face Fragment -->
+    <div class="corner-drip">
+        <svg viewBox="0 0 200 250" xmlns="http://www.w3.org/2000/svg">
+            <!-- Face outline (melting) -->
+            <path d="M100,20 Q150,30 160,80 Q170,130 150,180 L145,220 Q140,240 130,245 Q120,250 110,248 L90,240 Q80,235 75,220 L70,180 Q50,130 60,80 Q70,30 100,20 Z"
+                  fill="none" stroke="#EC4899" stroke-width="3" opacity="0.8">
+                <animate attributeName="d"
+                         values="M100,20 Q150,30 160,80 Q170,130 150,180 L145,220 Q140,240 130,245 Q120,250 110,248 L90,240 Q80,235 75,220 L70,180 Q50,130 60,80 Q70,30 100,20 Z;
+                                 M100,20 Q150,35 160,80 Q172,135 150,185 L145,225 Q138,243 130,248 Q118,253 110,250 L88,242 Q78,237 73,222 L68,185 Q48,135 58,82 Q68,32 100,20 Z;
+                                 M100,20 Q150,30 160,80 Q170,130 150,180 L145,220 Q140,240 130,245 Q120,250 110,248 L90,240 Q80,235 75,220 L70,180 Q50,130 60,80 Q70,30 100,20 Z"
+                         dur="4s" repeatCount="indefinite"/>
+            </path>
+
+            <!-- Eye (top) -->
+            <ellipse cx="90" cy="60" rx="20" ry="15" fill="#A855F7" opacity="0.7"/>
+            <circle cx="90" cy="60" r="8" fill="#0A0A0A"/>
+
+            <!-- Drip lines -->
+            <path d="M130,100 Q132,140 130,180" stroke="#EC4899" stroke-width="2" fill="none" opacity="0.6">
+                <animate attributeName="opacity" values="0.6;0.3;0.6" dur="3s" repeatCount="indefinite"/>
+            </path>
+            <path d="M70,120 Q72,160 70,200" stroke="#A855F7" stroke-width="2" fill="none" opacity="0.5">
+                <animate attributeName="opacity" values="0.5;0.2;0.5" dur="3.5s" repeatCount="indefinite"/>
+            </path>
+
+            <!-- Drip drops -->
+            <ellipse cx="130" cy="200" rx="8" ry="15" fill="#EC4899" opacity="0.8">
+                <animate attributeName="cy" values="200;210;200" dur="2s" repeatCount="indefinite"/>
+            </ellipse>
+            <ellipse cx="70" cy="220" rx="6" ry="12" fill="#A855F7" opacity="0.7">
+                <animate attributeName="cy" values="220;235;220" dur="2.5s" repeatCount="indefinite"/>
+            </ellipse>
+        </svg>
+    </div>
+
+    <!-- Bottom-Left: Grotesque Mouth -->
+    <div class="corner-mouth">
+        <svg viewBox="0 0 150 100" xmlns="http://www.w3.org/2000/svg">
+            <!-- Mouth curve -->
+            <path d="M20,50 Q75,80 130,50" stroke="#06B6D4" stroke-width="3" fill="none">
+                <animate attributeName="d"
+                         values="M20,50 Q75,80 130,50;M20,50 Q75,85 130,50;M20,50 Q75,80 130,50"
+                         dur="4s" repeatCount="indefinite"/>
+            </path>
+
+            <!-- Teeth -->
+            <rect x="40" y="48" width="8" height="15" fill="#fff" opacity="0.8"/>
+            <rect x="52" y="48" width="8" height="18" fill="#fff" opacity="0.9"/>
+            <rect x="64" y="48" width="8" height="20" fill="#fff"/>
+            <rect x="76" y="48" width="8" height="18" fill="#fff" opacity="0.9"/>
+            <rect x="88" y="48" width="8" height="15" fill="#fff" opacity="0.8"/>
+            <rect x="100" y="48" width="8" height="12" fill="#fff" opacity="0.7"/>
+
+            <!-- Network veins -->
+            <path d="M30,40 Q50,35 70,38" stroke="#06B6D4" stroke-width="1" fill="none" opacity="0.5"/>
+            <path d="M80,38 Q100,35 120,40" stroke="#EC4899" stroke-width="1" fill="none" opacity="0.5"/>
+        </svg>
+    </div>
+
+    <!-- Data Fragments Background -->
+    <div class="data-fragments" id="data-fragments"></div>
+
+    <!-- Oracle Network Face Mascot -->
+    <div class="oracle-face" id="oracle-face" style="position: fixed; top: 50%; right: 20px; transform: translateY(-50%); width: 150px; height: 150px; background: radial-gradient(circle, var(--neon-purple), transparent); border-radius: 50%; border: 3px solid var(--electric-pink); z-index: 100; display: flex; align-items: center; justify-content: center; font-size: 60px; animation: pulse-oracle 3s ease-in-out infinite; box-shadow: 0 0 30px var(--neon-purple), inset 0 0 30px rgba(236, 72, 153, 0.3);">
+        🔮
+    </div>
+
+    <div class="container">
+        <!-- Header -->
+        <header class="oracle-header" style="text-align: center; margin-bottom: 3rem; position: relative; margin-top: 2rem;">
+            <h1 class="neon-text glitch-text" data-text="BAYESIAN SOPHIARCH" style="font-size: clamp(3rem, 6vw, 5rem); margin-bottom: 1rem;">
+                BAYESIAN SOPHIARCH
+            </h1>
+            <p class="drip-text" style="font-size: 1.25rem; color: var(--cyber-cyan);">
+                Oracle's Nightmare Chamber • Probabilistic Visions
+            </p>
+        </header>
+
+        <!-- Configuration Section -->
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(400px, 1fr)); gap: 2rem; margin-bottom: 3rem;">
+            <!-- Forecast Configuration -->
+            <div class="grotesque-card" style="background: var(--deep-gray); border: 2px solid var(--neon-purple); padding: 2rem; clip-path: polygon(0% 5%, 5% 0%, 100% 0%, 100% 95%, 95% 100%, 0% 100%); box-shadow: 0 10px 40px rgba(168, 85, 247, 0.3), inset 0 0 20px rgba(168, 85, 247, 0.1); position: relative;">
+                <!-- Card Veins SVG -->
+                <div class="card-veins">
+                    <svg viewBox="0 0 400 600" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M50,0 Q100,100 80,200 Q60,300 100,400 Q140,500 100,600"
+                              stroke="#A855F7" stroke-width="2" fill="none" opacity="0.3"/>
+                        <path d="M200,0 Q180,150 220,300 Q260,450 200,600"
+                              stroke="#EC4899" stroke-width="2" fill="none" opacity="0.25"/>
+                        <path d="M350,0 Q330,200 360,400 Q390,500 350,600"
+                              stroke="#06B6D4" stroke-width="2" fill="none" opacity="0.2"/>
+                        <!-- Small connection nodes -->
+                        <circle cx="100" cy="100" r="4" fill="#A855F7" opacity="0.6"/>
+                        <circle cx="180" cy="150" r="3" fill="#EC4899" opacity="0.5"/>
+                        <circle cx="220" cy="300" r="4" fill="#06B6D4" opacity="0.6"/>
+                        <circle cx="100" cy="400" r="3" fill="#A855F7" opacity="0.5"/>
+                    </svg>
+                </div>
+
+                <h2 style="margin: 0 0 1.5rem 0; color: var(--electric-pink); position: relative; z-index: 1;">📊 Forecast Configuration</h2>
+
+                <div style="margin-bottom: 1.5rem; position: relative; z-index: 1;">
+                    <label style="display: block; color: var(--text-primary); font-size: 0.9rem; text-transform: uppercase; margin-bottom: 0.5rem;">Problem Statement</label>
+                    <textarea id="problem" rows="4" placeholder="Enter your forecasting problem..." style="width: 100%; padding: 0.75rem; background: var(--nightmare-black); border: 1px solid var(--neon-purple); color: var(--text-primary); font-family: var(--font-body); border-radius: 4px;">Demo probabilistic forecast</textarea>
+                </div>
+
+                <div style="margin-bottom: 1.5rem; position: relative; z-index: 1;">
+                    <label style="display: block; color: var(--text-primary); font-size: 0.9rem; text-transform: uppercase; margin-bottom: 0.5rem;">Forecast Horizons</label>
+                    <div style="display: flex; flex-wrap: wrap; gap: 0.5rem;">
+                        <div class="horizon-tag active" style="background: linear-gradient(135deg, var(--neon-purple), var(--electric-pink)); border: 2px solid transparent; color: var(--nightmare-black); padding: 0.5rem 1rem; border-radius: 4px; cursor: pointer; font-family: var(--font-display); font-weight: 700; text-transform: uppercase; font-size: 0.875rem; position: relative;">1 Day</div>
+                        <div class="horizon-tag active" style="background: linear-gradient(135deg, var(--neon-purple), var(--electric-pink)); border: 2px solid transparent; color: var(--nightmare-black); padding: 0.5rem 1rem; border-radius: 4px; cursor: pointer; font-family: var(--font-display); font-weight: 700; text-transform: uppercase; font-size: 0.875rem; position: relative;">1 Week</div>
+                        <div class="horizon-tag active" style="background: linear-gradient(135deg, var(--neon-purple), var(--electric-pink)); border: 2px solid transparent; color: var(--nightmare-black); padding: 0.5rem 1rem; border-radius: 4px; cursor: pointer; font-family: var(--font-display); font-weight: 700; text-transform: uppercase; font-size: 0.875rem; position: relative;">1 Month</div>
+                        <div class="horizon-tag" style="background: transparent; border: 2px solid var(--neon-purple); color: var(--neon-purple); padding: 0.5rem 1rem; border-radius: 4px; cursor: pointer; font-family: var(--font-display); font-weight: 700; text-transform: uppercase; font-size: 0.875rem; position: relative;">3 Months</div>
+                        <div class="horizon-tag" style="background: transparent; border: 2px solid var(--neon-purple); color: var(--neon-purple); padding: 0.5rem 1rem; border-radius: 4px; cursor: pointer; font-family: var(--font-display); font-weight: 700; text-transform: uppercase; font-size: 0.875rem; position: relative;">6 Months</div>
+                        <div class="horizon-tag" style="background: transparent; border: 2px solid var(--neon-purple); color: var(--neon-purple); padding: 0.5rem 1rem; border-radius: 4px; cursor: pointer; font-family: var(--font-display); font-weight: 700; text-transform: uppercase; font-size: 0.875rem; position: relative;">1 Year</div>
+                    </div>
+                </div>
+
+                <div style="margin-bottom: 1.5rem; position: relative; z-index: 1;">
+                    <label style="display: block; color: var(--text-primary); font-size: 0.9rem; text-transform: uppercase; margin-bottom: 0.5rem;">Confidence Threshold (%)</label>
+                    <input type="number" id="confidence-threshold" min="50" max="99" value="80" style="width: 100%; padding: 0.75rem; background: var(--nightmare-black); border: 1px solid var(--neon-purple); color: var(--text-primary); font-family: var(--font-body); border-radius: 4px;">
+                </div>
+
+                <button id="run-forecast" style="width: 100%; padding: 1rem 2rem; font-family: var(--font-display); font-size: 1.1rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; background: linear-gradient(135deg, var(--neon-purple), var(--electric-pink)); border: none; color: var(--text-primary); cursor: pointer; box-shadow: 0 5px 20px rgba(168, 85, 247, 0.5); position: relative; z-index: 1; transition: all 0.3s ease;">
+                    🚀 Run Forecast
+                </button>
+            </div>
+
+            <!-- Algorithm Selection -->
+            <div class="grotesque-card" style="background: var(--deep-gray); border: 2px solid var(--neon-purple); padding: 2rem; clip-path: polygon(10px 0%, calc(100% - 10px) 0%, 100% 10px, 100% calc(100% - 10px), calc(100% - 10px) 100%, 10px 100%, 0% calc(100% - 10px), 0% 10px); box-shadow: 0 10px 40px rgba(168, 85, 247, 0.3), inset 0 0 20px rgba(168, 85, 247, 0.1); position: relative;">
+                <!-- Card Veins SVG -->
+                <div class="card-veins">
+                    <svg viewBox="0 0 400 600" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M0,100 Q100,120 200,100 Q300,80 400,100"
+                              stroke="#EC4899" stroke-width="2" fill="none" opacity="0.3"/>
+                        <path d="M0,300 Q150,320 200,300 Q250,280 400,300"
+                              stroke="#06B6D4" stroke-width="2" fill="none" opacity="0.25"/>
+                        <circle cx="200" cy="100" r="5" fill="#EC4899" opacity="0.7"/>
+                        <circle cx="200" cy="300" r="4" fill="#06B6D4" opacity="0.6"/>
+                    </svg>
+                </div>
+
+                <h2 style="margin: 0 0 1.5rem 0; color: var(--electric-pink); position: relative; z-index: 1;">🧠 Algorithm Selection</h2>
+
+                <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 1rem; margin-bottom: 2rem; position: relative; z-index: 1;">
+                    <div class="algorithm-option selected" style="background: linear-gradient(135deg, rgba(168, 85, 247, 0.2), rgba(236, 72, 153, 0.2)); border: 2px solid var(--electric-pink); padding: 1rem; border-radius: 8px; cursor: pointer; text-align: center; position: relative; box-shadow: 0 0 30px rgba(236, 72, 153, 0.5), inset 0 0 20px rgba(168, 85, 247, 0.3);">
+                        <h4 style="color: var(--cyber-cyan); margin-bottom: 0.5rem; font-size: 1.1rem;">Particle Filter</h4>
+                        <p style="color: var(--text-secondary); font-size: 0.875rem; margin-bottom: 0.5rem;">Sequential Monte Carlo</p>
+                        <small style="color: var(--ambient-purple); font-weight: 600;">⚡ Fast • Real-time</small>
+                    </div>
+
+                    <div class="algorithm-option" style="background: var(--deep-gray); border: 2px solid rgba(168, 85, 247, 0.5); padding: 1rem; border-radius: 8px; cursor: pointer; text-align: center; position: relative;">
+                        <h4 style="color: var(--cyber-cyan); margin-bottom: 0.5rem; font-size: 1.1rem;">Gaussian Process</h4>
+                        <p style="color: var(--text-secondary); font-size: 0.875rem; margin-bottom: 0.5rem;">Regression with uncertainty</p>
+                        <small style="color: var(--ambient-purple); font-weight: 600;">📊 Smooth trends</small>
+                    </div>
+
+                    <div class="algorithm-option" style="background: var(--deep-gray); border: 2px solid rgba(168, 85, 247, 0.5); padding: 1rem; border-radius: 8px; cursor: pointer; text-align: center; position: relative;">
+                        <h4 style="color: var(--cyber-cyan); margin-bottom: 0.5rem; font-size: 1.1rem;">NUTS Sampler</h4>
+                        <p style="color: var(--text-secondary); font-size: 0.875rem; margin-bottom: 0.5rem;">Hamiltonian Monte Carlo</p>
+                        <small style="color: var(--ambient-purple); font-weight: 600;">🎯 High quality</small>
+                    </div>
+
+                    <div class="algorithm-option" style="background: var(--deep-gray); border: 2px solid rgba(168, 85, 247, 0.5); padding: 1rem; border-radius: 8px; cursor: pointer; text-align: center; position: relative;">
+                        <h4 style="color: var(--cyber-cyan); margin-bottom: 0.5rem; font-size: 1.1rem;">Ensemble</h4>
+                        <p style="color: var(--text-secondary); font-size: 0.875rem; margin-bottom: 0.5rem;">Multiple algorithms</p>
+                        <small style="color: var(--ambient-purple); font-weight: 600;">🛡️ Robust</small>
+                    </div>
+                </div>
+
+                <div style="margin-top: 2rem; position: relative; z-index: 1;">
+                    <label style="display: block; color: var(--text-primary); font-size: 0.9rem; text-transform: uppercase; margin-bottom: 0.5rem;">Number of Particles</label>
+                    <input type="number" id="num-particles" min="100" max="5000" step="100" value="500" style="width: 100%; padding: 0.75rem; background: var(--nightmare-black); border: 1px solid var(--neon-purple); color: var(--text-primary); font-family: var(--font-body); border-radius: 4px;">
+                    <p style="font-size: 0.875rem; color: var(--text-secondary); margin-top: 0.5rem;">
+                        More particles = higher accuracy, slower performance
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Initialize data fragments with some eye fragments
+        function createDataFragments() {
+            const container = document.getElementById('data-fragments');
+            const fragments = [
+                'Σ(x)', 'β=0.95', 'p(θ|D)', '∫f(x)dx', 'N(μ,σ²)',
+                'MCMC', 'HMC', 'P(A|B)', 'λ=2.5', 'KL-DIV',
+                'Bayes', '∇L', 'ESS', 'NUTS', 'GP'
+            ];
+
+            for (let i = 0; i < 30; i++) {
+                const fragment = document.createElement('div');
+                fragment.className = 'data-fragment' + (Math.random() > 0.7 ? ' eye-fragment' : '');
+                fragment.textContent = fragments[Math.floor(Math.random() * fragments.length)];
+                fragment.style.left = Math.random() * 100 + '%';
+                fragment.style.top = Math.random() * 100 + '%';
+                fragment.style.animationDelay = Math.random() * 15 + 's';
+                fragment.style.fontSize = (Math.random() * 8 + 10) + 'px';
+                fragment.style.position = 'absolute';
+                fragment.style.fontFamily = 'monospace';
+                fragment.style.color = '#06B6D4';
+                fragment.style.opacity = '0.3';
+                fragment.style.animation = `float-fragment 15s linear infinite ${Math.random() * 15}s`;
+                container.appendChild(fragment);
+            }
+        }
+
+        // Oracle face animation
+        const oracleFace = document.getElementById('oracle-face');
+        const runButton = document.getElementById('run-forecast');
+
+        runButton.addEventListener('click', () => {
+            oracleFace.style.animation = 'pulse-oracle 1s ease-in-out infinite, glitch 0.5s infinite';
+            oracleFace.textContent = '👁️';
+
+            setTimeout(() => {
+                oracleFace.style.animation = 'pulse-oracle 3s ease-in-out infinite';
+                oracleFace.style.background = 'radial-gradient(circle, #10B981, #06B6D4)';
+                oracleFace.style.borderColor = '#10B981';
+                oracleFace.textContent = '💎';
+
+                setTimeout(() => {
+                    oracleFace.style.background = 'radial-gradient(circle, #A855F7, transparent)';
+                    oracleFace.style.borderColor = '#EC4899';
+                    oracleFace.textContent = '🔮';
+                }, 5000);
+            }, 3000);
+        });
+
+        // Algorithm selection
+        document.querySelectorAll('.algorithm-option').forEach(option => {
+            option.addEventListener('click', function() {
+                document.querySelectorAll('.algorithm-option').forEach(opt => {
+                    opt.style.background = 'var(--deep-gray)';
+                    opt.style.border = '2px solid rgba(168, 85, 247, 0.5)';
+                    opt.style.boxShadow = 'none';
+                });
+                this.style.background = 'linear-gradient(135deg, rgba(168, 85, 247, 0.2), rgba(236, 72, 153, 0.2))';
+                this.style.border = '2px solid var(--electric-pink)';
+                this.style.boxShadow = '0 0 30px rgba(236, 72, 153, 0.5), inset 0 0 20px rgba(168, 85, 247, 0.3)';
+            });
+        });
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', () => {
+            createDataFragments();
+        });
+
+        // Add CSS animations
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes float-fragment {
+                0% { transform: translateY(100vh) rotate(0deg); opacity: 0; }
+                10% { opacity: 0.3; }
+                90% { opacity: 0.3; }
+                100% { transform: translateY(-100vh) rotate(360deg); opacity: 0; }
+            }
+            @keyframes pulse-oracle {
+                0%, 100% { transform: translateY(-50%) scale(1); box-shadow: 0 0 30px #A855F7, inset 0 0 30px rgba(236, 72, 153, 0.3); }
+                50% { transform: translateY(-50%) scale(1.1); box-shadow: 0 0 60px #A855F7, inset 0 0 50px rgba(236, 72, 153, 0.5); }
+            }
+            @keyframes glitch {
+                0%, 100% { transform: translateY(-50%) translateX(0); }
+                20% { transform: translateY(-50%) translateX(-2px); }
+                40% { transform: translateY(-50%) translateX(2px); }
+                60% { transform: translateY(-50%) translateX(-2px); }
+                80% { transform: translateY(-50%) translateX(2px); }
+            }
+            @keyframes organic-pulse {
+                0%, 100% { opacity: 0.2; }
+                50% { opacity: 0.4; }
+            }
+            @keyframes drip {
+                0%, 100% { transform: scaleY(1); }
+                50% { transform: scaleY(1.3); }
+            }
+        `;
+        document.head.appendChild(style);
+    </script>
+</body>
+</html>

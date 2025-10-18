@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Boardroom of Light Console</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <header class="hero">
+      <h1>Boardroom of Light Console</h1>
+      <p>Simulate executive deliberations and compare realities in real time.</p>
+      <button id="help-toggle" class="ghost">Help</button>
+    </header>
+
+    <main>
+      <section class="controls">
+        <div class="control-card">
+          <h2>Single Boardroom</h2>
+          <label>
+            Realm
+            <select id="realm-select">
+              <option value="light">Boardroom of Light</option>
+              <option value="authentic">Adjacent Boardroom</option>
+            </select>
+          </label>
+          <label>
+            Seats
+            <input id="seats-input" type="number" min="3" max="12" value="7" />
+          </label>
+          <label>
+            Rounds
+            <input id="rounds-input" type="number" min="1" max="6" value="3" />
+          </label>
+          <label class="switch">
+            <input id="quantum-toggle" type="checkbox" />
+            <span>Enable Quantum Consensus</span>
+          </label>
+          <button id="run-single" class="primary">Run Boardroom</button>
+        </div>
+
+        <div class="control-card">
+          <h2>Multiverse Comparison</h2>
+          <p class="hint">Runs light and authentic boardrooms side by side.</p>
+          <label>
+            Seats
+            <input id="multi-seats" type="number" min="3" max="12" value="7" />
+          </label>
+          <label>
+            Rounds
+            <input id="multi-rounds" type="number" min="1" max="6" value="3" />
+          </label>
+          <label class="switch">
+            <input id="multi-quantum" type="checkbox" />
+            <span>Enable Quantum Consensus</span>
+          </label>
+          <button id="run-multiverse" class="accent">Compare Realms</button>
+        </div>
+      </section>
+
+      <section id="boardroom-view" class="panel">
+        <h2>Boardroom Roster</h2>
+        <div id="roster" class="roster-grid"></div>
+        <h3>Phase Ledger</h3>
+        <div id="ledger" class="ledger-timeline"></div>
+      </section>
+
+      <section id="multiverse-view" class="panel hidden">
+        <h2>Multiverse Insights</h2>
+        <div id="headlines" class="headline-list"></div>
+        <div class="comparison-grid">
+          <div>
+            <h3>Boardroom of Light</h3>
+            <div id="light-roster" class="roster-grid"></div>
+          </div>
+          <div>
+            <h3>Adjacent Boardroom</h3>
+            <div id="authentic-roster" class="roster-grid"></div>
+          </div>
+        </div>
+        <h3>Evidence & Accusations</h3>
+        <div id="evidence" class="evidence-list"></div>
+      </section>
+    </main>
+
+    <div id="help-bubble" class="help-bubble hidden" draggable="true">
+      <button id="help-close" aria-label="Close help">×</button>
+      <h4>Need a hint?</h4>
+      <ul>
+        <li>Use <strong>Run Boardroom</strong> to watch one realm deliberate.</li>
+        <li><strong>Compare Realms</strong> runs light vs authentic to expose deltas.</li>
+        <li>Hover cards to read inner thoughts and pressure points.</li>
+        <li>Drag this bubble anywhere—double-click to snap to the corner.</li>
+      </ul>
+    </div>
+
+    <div id="toast" class="toast hidden"></div>
+
+    <!-- GAVL Wizard Component -->
+    <script src="/wizard-component.js"></script>
+    <script>
+      window.GAVLWizardConfig = {
+        toolName: "Boardroom of Light",
+        storageKey: "boardroom_wizard_seen",
+        steps: [
+          {
+            title: "Welcome to Boardroom of Light! 🏛️",
+            content: `
+              <p>
+                The Boardroom of Light simulates <strong>executive deliberations</strong> using AI advisors
+                to help you explore decisions from multiple perspectives.
+              </p>
+              <div class="gavl-tip-box">
+                <h4>💡 What This Tool Does</h4>
+                <p>
+                  Run simulated board meetings with 3-12 virtual advisors who debate issues,
+                  share perspectives, and reach consensus. Compare different "realities" to
+                  see how decisions might differ in alternate scenarios.
+                </p>
+              </div>
+              <div class="gavl-example-box">
+                <h4>✅ Use Cases:</h4>
+                <ul>
+                  <li><strong>Strategic Planning:</strong> Test business strategies with diverse viewpoints</li>
+                  <li><strong>Risk Analysis:</strong> Explore potential pitfalls before committing</li>
+                  <li><strong>Decision Validation:</strong> See if your idea holds up to scrutiny</li>
+                  <li><strong>Scenario Comparison:</strong> Compare "light" vs "authentic" realities</li>
+                </ul>
+              </div>
+            `
+          },
+          {
+            title: "Two Modes: Single vs Multiverse 🌐",
+            content: `
+              <p>
+                The tool offers two simulation modes, each with different purposes.
+              </p>
+              <div class="gavl-example-box">
+                <h4>🎯 Single Boardroom Mode</h4>
+                <p>
+                  Run one boardroom deliberation in either the "Light" or "Authentic" realm.
+                </p>
+                <ul>
+                  <li><strong>Light Realm:</strong> Optimistic, collaborative advisors</li>
+                  <li><strong>Authentic Realm:</strong> Realistic, sometimes contentious advisors</li>
+                  <li><strong>Best for:</strong> Quick validation of a single scenario</li>
+                </ul>
+              </div>
+              <div class="gavl-example-box">
+                <h4>🌍 Multiverse Comparison Mode</h4>
+                <p>
+                  Runs both Light and Authentic boardrooms side-by-side, then compares results.
+                </p>
+                <ul>
+                  <li>See how optimistic vs realistic advisors differ</li>
+                  <li>Identify areas of agreement and conflict</li>
+                  <li>Get "evidence" of discrepancies between realities</li>
+                  <li><strong>Best for:</strong> Comprehensive scenario analysis</li>
+                </ul>
+              </div>
+            `
+          },
+          {
+            title: "Configuration Options ⚙️",
+            content: `
+              <p>
+                Customize your boardroom simulation with these settings:
+              </p>
+              <div class="gavl-example-box">
+                <h4>🪑 Seats (3-12)</h4>
+                <p>
+                  Number of virtual advisors in the boardroom.
+                </p>
+                <ul>
+                  <li><strong>3-5:</strong> Quick, focused deliberations</li>
+                  <li><strong>7:</strong> Balanced (recommended default)</li>
+                  <li><strong>9-12:</strong> Diverse perspectives, longer runtime</li>
+                </ul>
+              </div>
+              <div class="gavl-example-box">
+                <h4>🔄 Rounds (1-6)</h4>
+                <p>
+                  Number of discussion rounds. More rounds = deeper analysis.
+                </p>
+                <ul>
+                  <li><strong>1-2:</strong> Quick opinions</li>
+                  <li><strong>3:</strong> Standard deliberation (recommended)</li>
+                  <li><strong>4-6:</strong> Thorough debate with consensus building</li>
+                </ul>
+              </div>
+              <div class="gavl-tip-box">
+                <h4>⚛️ Quantum Consensus (Optional)</h4>
+                <p>
+                  Enable to use quantum-inspired algorithms for decision-making.
+                  Adds superposition and entanglement effects to advisor interactions.
+                </p>
+              </div>
+            `
+          },
+          {
+            title: "Reading the Results 📊",
+            content: `
+              <p>
+                After running a simulation, you'll see several sections with insights.
+              </p>
+              <div class="gavl-example-box">
+                <h4>👥 Boardroom Roster</h4>
+                <p>
+                  Shows all advisors with their:
+                </p>
+                <ul>
+                  <li><strong>Role:</strong> CEO, CFO, CTO, etc.</li>
+                  <li><strong>Inner Thoughts:</strong> Private considerations</li>
+                  <li><strong>Pressure Points:</strong> What influences them</li>
+                  <li><strong>Votes/Stance:</strong> Their position on issues</li>
+                </ul>
+                <p><em>Hover over cards to see details!</em></p>
+              </div>
+              <div class="gavl-example-box">
+                <h4>📜 Phase Ledger</h4>
+                <p>
+                  Timeline showing how the discussion evolved:
+                </p>
+                <ul>
+                  <li>Round-by-round progression</li>
+                  <li>Key arguments made</li>
+                  <li>Voting patterns</li>
+                  <li>Consensus formation</li>
+                </ul>
+              </div>
+              <div class="gavl-example-box">
+                <h4>🌐 Multiverse Insights (Comparison Mode)</h4>
+                <p>
+                  When comparing realities, you'll also see:
+                </p>
+                <ul>
+                  <li><strong>Headlines:</strong> Key differences between realms</li>
+                  <li><strong>Evidence:</strong> Specific discrepancies found</li>
+                  <li><strong>Accusations:</strong> Conflicting advisor positions</li>
+                </ul>
+              </div>
+            `
+          },
+          {
+            title: "Ready to Simulate! 🚀",
+            content: `
+              <p>
+                You're all set to run your first boardroom simulation!
+              </p>
+              <div class="gavl-tip-box">
+                <h4>💡 Quick Start Recipe</h4>
+                <ol>
+                  <li>Start with <strong>Single Boardroom</strong> mode</li>
+                  <li>Choose <strong>Light realm</strong> for optimistic analysis</li>
+                  <li>Set <strong>7 seats</strong> and <strong>3 rounds</strong></li>
+                  <li>Click <strong>"Run Boardroom"</strong></li>
+                  <li>Wait 5-10 seconds for simulation</li>
+                  <li>Review roster and phase ledger</li>
+                  <li>Try <strong>Multiverse Comparison</strong> next!</li>
+                </ol>
+              </div>
+              <div class="gavl-example-box">
+                <h4>📚 Additional Features</h4>
+                <ul>
+                  <li><strong>Help Button:</strong> Click for quick hints anytime</li>
+                  <li><strong>Draggable Help Bubble:</strong> Move it around as needed</li>
+                  <li><strong>Toast Notifications:</strong> Status updates appear bottom-right</li>
+                </ul>
+              </div>
+              <p style="margin-top: 20px; font-weight: 600; color: #764ba2;">
+                Click "Start Using Tool" to begin your first simulation! 🎯
+              </p>
+            `
+          }
+        ]
+      };
+    </script>
+
+    <script src="app.js" type="module"></script>
+  </body>
+</html>

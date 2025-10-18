@@ -1,0 +1,852 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>Jimminy Cricket - Corporation of Light</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <!-- Corporation of Light Design System -->
+  <link rel="stylesheet" href="/Users/noone/TheGAVLSuite/corporation-of-light.css" />
+
+  <style>
+    /* Copyright (c) 2025 Joshua Hendricks Cole (DBA: Corporation of Light). All Rights Reserved. PATENT PENDING. */
+
+    /* Jimminy Cricket Specific: Conscience Chamber Theme */
+    body {
+      background: var(--nightmare-black);
+      margin: 0;
+      padding: 0;
+      overflow: hidden;
+      position: relative;
+    }
+
+    /* Pulsing Consciousness Background */
+    .consciousness-layer {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: radial-gradient(ellipse at center, rgba(168, 85, 247, 0.1) 0%, transparent 70%);
+      animation: consciousness-pulse 8s ease-in-out infinite;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    @keyframes consciousness-pulse {
+      0%, 100% { opacity: 0.3; transform: scale(1); }
+      50% { opacity: 0.6; transform: scale(1.1); }
+    }
+
+    /* Whisper Particles Floating */
+    .whisper-particles {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 1;
+    }
+
+    .whisper-particle {
+      position: absolute;
+      width: 4px;
+      height: 4px;
+      background: var(--cyber-cyan);
+      border-radius: 50%;
+      opacity: 0;
+      animation: float-whisper 15s infinite ease-in-out;
+      box-shadow: 0 0 10px var(--cyber-cyan);
+    }
+
+    @keyframes float-whisper {
+      0% {
+        opacity: 0;
+        transform: translateY(100vh) translateX(0);
+      }
+      10% {
+        opacity: 0.6;
+      }
+      90% {
+        opacity: 0.6;
+      }
+      100% {
+        opacity: 0;
+        transform: translateY(-100vh) translateX(var(--drift-x, 50px));
+      }
+    }
+
+    /* Main App Shell */
+    .app-shell {
+      display: grid;
+      grid-template-columns: 1fr 500px;
+      height: 100vh;
+      position: relative;
+      z-index: 2;
+    }
+
+    /* Jimminy Viewer Section */
+    .viewer {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      background: linear-gradient(135deg, var(--nightmare-black) 0%, var(--deep-gray) 100%);
+      border-right: 3px solid var(--electric-pink);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .viewer::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background-image:
+        radial-gradient(circle at 20% 50%, rgba(168, 85, 247, 0.1) 0%, transparent 50%),
+        radial-gradient(circle at 80% 50%, rgba(236, 72, 153, 0.1) 0%, transparent 50%);
+      animation: mood-shift 10s ease-in-out infinite;
+    }
+
+    @keyframes mood-shift {
+      0%, 100% { opacity: 0.3; }
+      50% { opacity: 0.7; }
+    }
+
+    /* Jimminy Character - Giant Network Face */
+    .jimminy-face {
+      width: 400px;
+      height: 400px;
+      position: relative;
+      animation: idle-sway 4s ease-in-out infinite;
+      filter: drop-shadow(0 0 40px var(--neon-purple));
+    }
+
+    @keyframes idle-sway {
+      0%, 100% { transform: translateY(0) rotate(0deg); }
+      25% { transform: translateY(-10px) rotate(-2deg); }
+      75% { transform: translateY(10px) rotate(2deg); }
+    }
+
+    .jimminy-face.celebrate {
+      animation: celebrate-dance 1s ease-in-out infinite;
+      filter: drop-shadow(0 0 60px var(--glitch-green));
+    }
+
+    @keyframes celebrate-dance {
+      0%, 100% { transform: scale(1) rotate(0deg); }
+      25% { transform: scale(1.1) rotate(-5deg); }
+      50% { transform: scale(1.05) rotate(5deg); }
+      75% { transform: scale(1.1) rotate(-3deg); }
+    }
+
+    .jimminy-face.concern {
+      animation: concern-tilt 2s ease-in-out infinite;
+      filter: drop-shadow(0 0 60px var(--glitch-red));
+    }
+
+    @keyframes concern-tilt {
+      0%, 100% { transform: rotate(-5deg) scale(0.95); }
+      50% { transform: rotate(5deg) scale(0.95); }
+    }
+
+    /* Jimminy Face Visualization */
+    .jimminy-visual {
+      width: 100%;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 18rem;
+      position: relative;
+      background: radial-gradient(circle, var(--neon-purple) 0%, transparent 60%);
+      border-radius: 50%;
+      border: 5px solid var(--electric-pink);
+      box-shadow:
+        0 0 40px var(--electric-pink),
+        inset 0 0 60px rgba(168, 85, 247, 0.4);
+    }
+
+    .jimminy-visual::before {
+      content: '';
+      position: absolute;
+      top: 10%;
+      left: 10%;
+      right: 10%;
+      bottom: 10%;
+      border: 3px solid var(--cyber-cyan);
+      border-radius: 50%;
+      animation: crystallize 3s ease-in-out infinite;
+      opacity: 0.5;
+    }
+
+    /* Mood Label */
+    .mood-label {
+      margin-top: 2rem;
+      font-family: var(--font-display);
+      font-size: 2rem;
+      color: var(--electric-pink);
+      text-transform: uppercase;
+      letter-spacing: 0.2em;
+      text-align: center;
+      text-shadow: 0 0 20px var(--electric-pink);
+      animation: glitch 3s infinite;
+    }
+
+    /* Console Section */
+    .console {
+      background: var(--deep-gray);
+      display: flex;
+      flex-direction: column;
+      height: 100vh;
+      overflow: hidden;
+      border-left: 3px solid var(--neon-purple);
+      box-shadow: -10px 0 40px rgba(168, 85, 247, 0.3);
+    }
+
+    .console header {
+      background: linear-gradient(135deg, var(--neon-purple), var(--electric-pink));
+      padding: 1.5rem 2rem;
+      border-bottom: 3px solid var(--electric-pink);
+      box-shadow: 0 5px 20px rgba(236, 72, 153, 0.5);
+    }
+
+    .console h1 {
+      margin: 0 0 0.5rem 0;
+      font-size: 1.8rem;
+      color: var(--text-primary);
+      text-transform: uppercase;
+      letter-spacing: 0.15em;
+      text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+    }
+
+    .console .status {
+      display: inline-block;
+      padding: 0.4rem 1rem;
+      font-family: var(--font-body);
+      font-size: 0.85rem;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      border-radius: 20px;
+      font-weight: 700;
+    }
+
+    .status.connected {
+      background: var(--glitch-green);
+      color: var(--nightmare-black);
+      box-shadow: 0 0 15px var(--glitch-green);
+      animation: pulse-oracle 2s ease-in-out infinite;
+    }
+
+    .status.reconnecting {
+      background: var(--glitch-orange);
+      color: var(--nightmare-black);
+      animation: blink 1s infinite;
+    }
+
+    .status.disconnected {
+      background: var(--glitch-red);
+      color: var(--text-primary);
+      animation: blink 2s infinite;
+    }
+
+    @keyframes blink {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.5; }
+    }
+
+    /* Whisper Feed */
+    .transcript {
+      flex: 1;
+      overflow-y: auto;
+      padding: 2rem;
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+    }
+
+    .transcript::-webkit-scrollbar {
+      width: 8px;
+    }
+
+    .transcript::-webkit-scrollbar-track {
+      background: var(--nightmare-black);
+    }
+
+    .transcript::-webkit-scrollbar-thumb {
+      background: var(--neon-purple);
+      border-radius: 4px;
+    }
+
+    .transcript::-webkit-scrollbar-thumb:hover {
+      background: var(--electric-pink);
+    }
+
+    /* Whisper Card */
+    .whisper {
+      background: var(--nightmare-black);
+      border-left: 4px solid var(--neon-purple);
+      padding: 1.5rem;
+      clip-path: polygon(0 0, 100% 0, 100% 95%, 98% 100%, 0 100%);
+      transition: all 0.3s ease;
+      animation: drip-in 0.5s ease-out;
+      position: relative;
+    }
+
+    .whisper::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: linear-gradient(135deg, var(--neon-purple) 0%, transparent 50%);
+      opacity: 0;
+      transition: opacity 0.3s ease;
+      pointer-events: none;
+    }
+
+    .whisper:hover::before {
+      opacity: 0.1;
+    }
+
+    .whisper:hover {
+      transform: translateX(-5px);
+      border-left-width: 8px;
+      box-shadow: -5px 5px 20px rgba(168, 85, 247, 0.5);
+    }
+
+    .whisper.celebrate {
+      border-left-color: var(--glitch-green);
+      background: rgba(79, 209, 197, 0.05);
+    }
+
+    .whisper.concern {
+      border-left-color: var(--glitch-red);
+      background: rgba(255, 75, 75, 0.05);
+    }
+
+    .whisper-timestamp {
+      font-family: var(--font-body);
+      font-size: 0.75rem;
+      color: var(--text-secondary);
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      margin-bottom: 0.5rem;
+    }
+
+    .whisper-message {
+      font-family: var(--font-body);
+      font-size: 1rem;
+      color: var(--text-primary);
+      line-height: 1.6;
+      margin-bottom: 1rem;
+      font-style: italic;
+    }
+
+    .whisper-recommendations {
+      margin-top: 1rem;
+      padding-top: 1rem;
+      border-top: 1px solid rgba(168, 85, 247, 0.3);
+    }
+
+    .whisper-recommendations h4 {
+      font-family: var(--font-display);
+      font-size: 0.9rem;
+      color: var(--cyber-cyan);
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      margin: 0 0 0.75rem 0;
+    }
+
+    .whisper-recommendations ul {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+
+    .whisper-recommendations li {
+      font-family: var(--font-body);
+      font-size: 0.9rem;
+      color: var(--text-secondary);
+      padding: 0.5rem 0;
+      padding-left: 1.5rem;
+      position: relative;
+    }
+
+    .whisper-recommendations li::before {
+      content: '→';
+      position: absolute;
+      left: 0;
+      color: var(--cyber-cyan);
+      font-weight: 700;
+    }
+
+    /* Empty State */
+    .empty-state {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100%;
+      color: var(--text-secondary);
+      text-align: center;
+      padding: 2rem;
+    }
+
+    .empty-state-icon {
+      font-size: 5rem;
+      margin-bottom: 1.5rem;
+      opacity: 0.5;
+      animation: pulse-oracle 3s ease-in-out infinite;
+    }
+
+    .empty-state-title {
+      font-family: var(--font-display);
+      font-size: 1.5rem;
+      color: var(--electric-pink);
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      margin-bottom: 1rem;
+    }
+
+    .empty-state-message {
+      font-family: var(--font-body);
+      font-size: 1rem;
+      line-height: 1.6;
+      max-width: 400px;
+    }
+
+    /* Responsive Design */
+    @media (max-width: 1024px) {
+      .app-shell {
+        grid-template-columns: 1fr;
+        grid-template-rows: 400px 1fr;
+      }
+
+      .viewer {
+        border-right: none;
+        border-bottom: 3px solid var(--electric-pink);
+      }
+
+      .console {
+        border-left: none;
+        border-top: 3px solid var(--neon-purple);
+      }
+
+      .jimminy-face {
+        width: 300px;
+        height: 300px;
+      }
+
+      .jimminy-visual {
+        font-size: 12rem;
+      }
+    }
+
+    @media (max-width: 640px) {
+      .app-shell {
+        grid-template-rows: 300px 1fr;
+      }
+
+      .jimminy-face {
+        width: 200px;
+        height: 200px;
+      }
+
+      .jimminy-visual {
+        font-size: 8rem;
+      }
+
+      .mood-label {
+        font-size: 1.5rem;
+      }
+
+      .console h1 {
+        font-size: 1.3rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Consciousness Layer -->
+  <div class="consciousness-layer"></div>
+
+  <!-- Whisper Particles -->
+  <div class="whisper-particles" id="whisper-particles"></div>
+
+  <!-- Main App Shell -->
+  <main class="app-shell">
+    <!-- Jimminy Viewer -->
+    <section class="viewer">
+      <div class="jimminy-face" id="jimminy-face">
+        <div class="jimminy-visual">
+          🦗
+        </div>
+      </div>
+      <div class="mood-label" id="mood-label">IDLE - MONITORING</div>
+    </section>
+
+    <!-- Whisper Console -->
+    <section class="console">
+      <header>
+        <h1>Jimminy Cricket Whisper Log</h1>
+        <p class="status disconnected" id="connection-status">disconnected</p>
+      </header>
+
+      <article class="transcript" id="whisper-feed">
+        <!-- Empty State -->
+        <div class="empty-state">
+          <div class="empty-state-icon">🦗</div>
+          <div class="empty-state-title">Awaiting Deliberations</div>
+          <div class="empty-state-message">
+            Jimminy is ready to provide ethical guidance. Start a boardroom simulation to begin receiving whispers.
+          </div>
+        </div>
+      </article>
+    </section>
+  </main>
+
+  <!-- GAVL Wizard Component -->
+  <script src="./wizard-component.js"></script>
+  <script>
+    window.GAVLWizardConfig = {
+      toolName: "Jimminy Cricket",
+      storageKey: "jimminy_wizard_seen",
+      steps: [
+        {
+          title: "Welcome to Jimminy Cricket! 🦗",
+          content: `
+            <p>
+              Jimminy Cricket is your <strong>conscience companion</strong> that provides
+              ethical guidance and wisdom during boardroom deliberations in the nightmare realm.
+            </p>
+            <div class="gavl-tip-box">
+              <h4>💡 What This Tool Does</h4>
+              <p>
+                Jimminy listens to your boardroom deliberations and offers real-time ethical
+                advice, flags potential concerns, and celebrates wise decisions. Think of him
+                as your personal ethical advisor from the Corporation of Light.
+              </p>
+            </div>
+            <div class="gavl-example-box">
+              <h4>✅ Use Cases:</h4>
+              <ul>
+                <li><strong>Ethical Guardrails:</strong> Catch potential ethical issues before committing</li>
+                <li><strong>Wisdom Sharing:</strong> Receive insights based on deliberation context</li>
+                <li><strong>Conscience Checking:</strong> Get a second opinion on tough decisions</li>
+                <li><strong>Cultural Alignment:</strong> Ensure decisions align with your values</li>
+              </ul>
+            </div>
+          `
+        },
+        {
+          title: "How Jimminy Works 🎩",
+          content: `
+            <p>
+              Jimminy Cricket connects to your Boardroom of Light sessions and provides real-time feedback
+              through the consciousness layer.
+            </p>
+            <div class="gavl-example-box">
+              <h4>🔗 Integration with Boardroom</h4>
+              <p>
+                Jimminy monitors your boardroom deliberations via WebSocket connection:
+              </p>
+              <ul>
+                <li>Listens to advisor discussions and decisions</li>
+                <li>Analyzes ethical implications in real-time</li>
+                <li>Provides whispered guidance without interrupting flow</li>
+                <li>Flags concerns or celebrates alignment</li>
+              </ul>
+            </div>
+            <div class="gavl-example-box">
+              <h4>🎭 Three Moods</h4>
+              <ul>
+                <li><strong>Idle:</strong> Normal monitoring mode (gentle sway)</li>
+                <li><strong>Celebrate:</strong> Wise decision detected (excited dance, green glow)</li>
+                <li><strong>Concern:</strong> Ethical flag raised (tilted posture, red glow)</li>
+              </ul>
+              <p><em>Watch Jimminy's animations and glow - they reflect his mood!</em></p>
+            </div>
+            <div class="gavl-tip-box">
+              <h4>💡 Connection Status</h4>
+              <p>
+                The status indicator in the header shows connection state:
+              </p>
+              <ul>
+                <li><strong>Connected:</strong> Live link to boardroom (green, pulsing)</li>
+                <li><strong>Reconnecting:</strong> Temporary disconnection (orange, blinking)</li>
+                <li><strong>Disconnected:</strong> Server offline (red, blinking)</li>
+              </ul>
+            </div>
+          `
+        },
+        {
+          title: "Reading Jimminy's Whispers 💬",
+          content: `
+            <p>
+              Jimminy communicates through the "Whisper Log" - a feed of ethical insights in the conscience chamber.
+            </p>
+            <div class="gavl-example-box">
+              <h4>📜 Whisper Log Format</h4>
+              <p>
+                Each whisper contains:
+              </p>
+              <ul>
+                <li><strong>Timestamp:</strong> When the guidance was given</li>
+                <li><strong>Message:</strong> Jimminy's main insight or concern</li>
+                <li><strong>Recommendations:</strong> Actionable suggestions (if applicable)</li>
+                <li><strong>Mood Indicator:</strong> Color-coded border based on concern level</li>
+              </ul>
+            </div>
+            <div class="gavl-example-box">
+              <h4>🎨 Mood Colors</h4>
+              <ul>
+                <li><strong>Green Border:</strong> Celebration - wise decision detected</li>
+                <li><strong>Red Border:</strong> Concern - potential ethical issue flagged</li>
+                <li><strong>Purple Border:</strong> Neutral - general observation or insight</li>
+              </ul>
+            </div>
+            <div class="gavl-example-box">
+              <h4>📊 Example Whispers</h4>
+              <p><strong>Celebration:</strong></p>
+              <p><em>"That's a principled stance! Prioritizing transparency aligns with long-term trust."</em></p>
+              <p><strong>Concern:</strong></p>
+              <p><em>"Caution: This approach may create short-term gains but compromise stakeholder trust."</em></p>
+              <ul>
+                <li>Consider stakeholder communication plan</li>
+                <li>Review impact on brand reputation</li>
+                <li>Consult with ethics board before proceeding</li>
+              </ul>
+            </div>
+          `
+        },
+        {
+          title: "Setting Up Your Session 🚀",
+          content: `
+            <p>
+              To use Jimminy Cricket, you need a running Boardroom of Light session.
+            </p>
+            <div class="gavl-tip-box">
+              <h4>💡 Prerequisites</h4>
+              <ol>
+                <li>Ensure the <strong>Boardroom of Light server</strong> is running</li>
+                <li>Server must have <strong>WebSocket support</strong> enabled</li>
+                <li>Jimminy connects to <code>/jimminy</code> WebSocket endpoint</li>
+                <li>If "disconnected", check server logs and restart if needed</li>
+              </ol>
+            </div>
+            <div class="gavl-example-box">
+              <h4>🎯 Typical Workflow</h4>
+              <ol>
+                <li><strong>Start Boardroom:</strong> Launch your boardroom simulation</li>
+                <li><strong>Open Jimminy:</strong> Navigate to Jimminy Cricket interface</li>
+                <li><strong>Verify Connection:</strong> Check status shows "connected"</li>
+                <li><strong>Run Deliberation:</strong> Execute your boardroom scenario</li>
+                <li><strong>Monitor Whispers:</strong> Watch for Jimminy's real-time guidance</li>
+                <li><strong>Adjust Course:</strong> Act on recommendations as appropriate</li>
+              </ol>
+            </div>
+            <div class="gavl-example-box">
+              <h4>🔧 Troubleshooting</h4>
+              <ul>
+                <li><strong>"Disconnected":</strong> Server not running - start Boardroom backend</li>
+                <li><strong>"Reconnecting...":</strong> Temporary network issue - wait 1-2 seconds</li>
+                <li><strong>No whispers:</strong> Run a boardroom simulation to generate events</li>
+                <li><strong>Old whispers:</strong> Feed shows last 20 entries only (auto-pruned)</li>
+              </ul>
+            </div>
+          `
+        },
+        {
+          title: "Ready for Ethical Guidance! 🌟",
+          content: `
+            <p>
+              You're all set to use Jimminy Cricket as your conscience companion in the nightmare realm!
+            </p>
+            <div class="gavl-tip-box">
+              <h4>💡 Quick Start Recipe</h4>
+              <ol>
+                <li>Ensure <strong>Boardroom server is running</strong></li>
+                <li>Check <strong>connection status</strong> shows "connected"</li>
+                <li>Run a <strong>boardroom simulation</strong> from main interface</li>
+                <li>Watch Jimminy's <strong>character</strong> for mood changes</li>
+                <li>Read <strong>whisper log</strong> for detailed guidance</li>
+                <li>Act on <strong>recommendations</strong> as needed</li>
+              </ol>
+            </div>
+            <div class="gavl-example-box">
+              <h4>🎭 Interpreting Jimminy's Behavior</h4>
+              <ul>
+                <li><strong>Gentle Sway:</strong> Idle monitoring, all is well</li>
+                <li><strong>Excited Dance + Green Glow:</strong> Celebrating a wise decision!</li>
+                <li><strong>Concern Tilt + Red Glow:</strong> Ethical issue detected, review whispers</li>
+                <li><strong>Whisper Particles:</strong> Consciousness streams flowing around you</li>
+              </ul>
+            </div>
+            <div class="gavl-tip-box">
+              <h4>📚 Best Practices</h4>
+              <ul>
+                <li>Keep Jimminy open <strong>during all deliberations</strong></li>
+                <li>Review whispers <strong>after each phase</strong> of boardroom</li>
+                <li>Treat concerns as <strong>signals, not blockers</strong></li>
+                <li>Use recommendations as <strong>discussion starters</strong></li>
+                <li>Celebrate when Jimminy celebrates - you're on the right track!</li>
+              </ul>
+            </div>
+            <div class="gavl-example-box">
+              <h4>🌟 Philosophy</h4>
+              <p>
+                Jimminy doesn't <em>tell</em> you what to do - he helps you think through
+                the ethical dimensions of your decisions. He's a <strong>guide</strong>,
+                not a gatekeeper. Use his wisdom to make more thoughtful, values-aligned choices.
+              </p>
+            </div>
+            <p style="margin-top: 20px; font-weight: 600; color: #764ba2;">
+              Click "Start Using Tool" to begin your ethically-guided deliberations in the nightmare realm! 🦗
+            </p>
+          `
+        }
+      ]
+    };
+  </script>
+
+  <script>
+    /* Copyright (c) 2025 Joshua Hendricks Cole (DBA: Corporation of Light). All Rights Reserved. PATENT PENDING. */
+
+    // DOM Elements
+    const jimminyFace = document.getElementById('jimminy-face');
+    const moodLabel = document.getElementById('mood-label');
+    const connectionStatus = document.getElementById('connection-status');
+    const whisperFeed = document.getElementById('whisper-feed');
+    const whisperParticlesContainer = document.getElementById('whisper-particles');
+
+    // Create floating whisper particles
+    function createWhisperParticles() {
+      for (let i = 0; i < 20; i++) {
+        const particle = document.createElement('div');
+        particle.className = 'whisper-particle';
+        particle.style.left = `${Math.random() * 100}%`;
+        particle.style.setProperty('--drift-x', `${(Math.random() - 0.5) * 200}px`);
+        particle.style.animationDelay = `${Math.random() * 15}s`;
+        whisperParticlesContainer.appendChild(particle);
+      }
+    }
+
+    createWhisperParticles();
+
+    // Demo: Simulate connection states
+    let connectionState = 'disconnected';
+    const states = ['disconnected', 'reconnecting', 'connected'];
+    let stateIndex = 0;
+
+    function cycleConnectionState() {
+      stateIndex = (stateIndex + 1) % states.length;
+      connectionState = states[stateIndex];
+      connectionStatus.className = `status ${connectionState}`;
+      connectionStatus.textContent = connectionState;
+
+      if (connectionState === 'connected') {
+        // Simulate receiving whispers
+        setTimeout(() => addDemoWhisper('celebrate'), 2000);
+        setTimeout(() => addDemoWhisper('neutral'), 5000);
+        setTimeout(() => addDemoWhisper('concern'), 8000);
+      }
+    }
+
+    setInterval(cycleConnectionState, 10000);
+    cycleConnectionState();
+
+    // Demo whispers
+    function addDemoWhisper(mood) {
+      // Clear empty state
+      const emptyState = whisperFeed.querySelector('.empty-state');
+      if (emptyState) {
+        emptyState.remove();
+      }
+
+      const whisper = document.createElement('div');
+      whisper.className = `whisper ${mood}`;
+
+      const timestamp = new Date().toLocaleTimeString();
+      const messages = {
+        celebrate: {
+          text: "Excellent! That decision aligns with transparency principles and builds long-term stakeholder trust.",
+          recommendations: null
+        },
+        concern: {
+          text: "Caution: This approach prioritizes short-term gains but may compromise ethical standards and reputation.",
+          recommendations: [
+            "Consider stakeholder communication plan",
+            "Review impact on brand reputation",
+            "Consult with ethics board before proceeding"
+          ]
+        },
+        neutral: {
+          text: "Observation: The proposed timeline is ambitious. Ensure adequate resources are allocated to meet quality standards.",
+          recommendations: ["Review capacity planning", "Set realistic milestones"]
+        }
+      };
+
+      const message = messages[mood] || messages.neutral;
+
+      whisper.innerHTML = `
+        <div class="whisper-timestamp">${timestamp}</div>
+        <div class="whisper-message">${message.text}</div>
+        ${message.recommendations ? `
+          <div class="whisper-recommendations">
+            <h4>Recommendations:</h4>
+            <ul>
+              ${message.recommendations.map(rec => `<li>${rec}</li>`).join('')}
+            </ul>
+          </div>
+        ` : ''}
+      `;
+
+      whisperFeed.appendChild(whisper);
+      whisperFeed.scrollTop = whisperFeed.scrollHeight;
+
+      // Update Jimminy's mood
+      updateJimminyMood(mood);
+
+      // Limit to last 10 whispers
+      const whispers = whisperFeed.querySelectorAll('.whisper');
+      if (whispers.length > 10) {
+        whispers[0].remove();
+      }
+    }
+
+    // Update Jimminy's mood and animation
+    function updateJimminyMood(mood) {
+      jimminyFace.className = `jimminy-face ${mood}`;
+
+      const labels = {
+        idle: 'IDLE - MONITORING',
+        celebrate: 'CELEBRATING WISDOM',
+        concern: 'CAUTION ADVISED',
+        neutral: 'PROCESSING CONTEXT'
+      };
+
+      moodLabel.textContent = labels[mood] || labels.idle;
+
+      // Return to idle after 3 seconds
+      setTimeout(() => {
+        jimminyFace.className = 'jimminy-face';
+        moodLabel.textContent = labels.idle;
+      }, 3000);
+    }
+
+    // Jimminy interaction - click to trigger demo whisper
+    jimminyFace.addEventListener('click', () => {
+      const moods = ['celebrate', 'neutral', 'concern'];
+      const randomMood = moods[Math.floor(Math.random() * moods.length)];
+      if (connectionState === 'connected') {
+        addDemoWhisper(randomMood);
+      }
+    });
+  </script>
+</body>
+</html>

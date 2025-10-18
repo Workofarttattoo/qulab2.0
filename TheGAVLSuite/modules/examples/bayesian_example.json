@@ -1,0 +1,12 @@
+{
+  "problem": "Q4 revenue forecast for SaaS product",
+  "horizons": ["1d", "1w", "1m", "1q"],
+  "options": {
+    "priors": "empirical_bayes",
+    "confidence_threshold": 0.85,
+    "monte_carlo_samples": 10000,
+    "include_uncertainty": true,
+    "scenario_analysis": ["optimistic", "realistic", "pessimistic"],
+    "update_frequency": "daily"
+  }
+}

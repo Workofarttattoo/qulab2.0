@@ -1,0 +1,11 @@
+{
+  "subject": "example-corporation.com",
+  "options": {
+    "depth": 3,
+    "follow_redirects": true,
+    "timeout": 60,
+    "include_social": true,
+    "check_breaches": false,
+    "output_format": "detailed"
+  }
+}

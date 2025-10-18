@@ -1,0 +1,23 @@
+# HELLFIRE Recon Module Dependencies
+# Copyright (c) 2025 Joshua Hendricks Cole (DBA: Corporation of Light). All Rights Reserved. PATENT PENDING.
+
+# Core dependencies
+docker>=6.0.0
+
+# No additional external dependencies required
+# Standard library modules used:
+# - asyncio (built-in)
+# - xml.etree.ElementTree (built-in)
+# - json (built-in)
+# - logging (built-in)
+# - subprocess (built-in)
+# - tempfile (built-in)
+# - os (built-in)
+# - typing (built-in)
+# - dataclasses (built-in)
+# - datetime (built-in)
+# - re (built-in)
+# - time (built-in)
+# - hashlib (built-in)
+# - pathlib (built-in)
+# - urllib (built-in)

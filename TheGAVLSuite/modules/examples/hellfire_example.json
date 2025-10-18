@@ -1,0 +1,12 @@
+{
+  "client": "Acme Corporation Security Assessment",
+  "options": {
+    "scope": "external",
+    "methodology": "owasp_top10",
+    "depth": 3,
+    "include_social_engineering": true,
+    "training_materials": true,
+    "executive_summary": true,
+    "compliance_frameworks": ["NIST", "CIS"]
+  }
+}

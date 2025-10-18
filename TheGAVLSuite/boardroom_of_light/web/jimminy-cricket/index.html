@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>Jimminy Cricket Companion</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <main class="app-shell">
+      <section class="viewer">
+        <canvas id="jimminy-canvas"></canvas>
+      </section>
+      <section class="console">
+        <header>
+          <h1>Jimminy Cricket Whisper Log</h1>
+          <p class="status" id="connection-status">disconnected</p>
+        </header>
+        <article class="transcript" id="whisper-feed"></article>
+      </section>
+    </main>
+
+    <!-- GAVL Wizard Component -->
+    <script src="./wizard-component.js"></script>
+    <script>
+      window.GAVLWizardConfig = {
+        toolName: "Jimminy Cricket",
+        storageKey: "jimminy_wizard_seen",
+        steps: [
+          {
+            title: "Welcome to Jimminy Cricket! 🦗",
+            content: `
+              <p>
+                Jimminy Cricket is your <strong>conscience companion</strong> that provides
+                ethical guidance and wisdom during boardroom deliberations.
+              </p>
+              <div class="gavl-tip-box">
+                <h4>💡 What This Tool Does</h4>
+                <p>
+                  Jimminy listens to your boardroom deliberations and offers real-time ethical
+                  advice, flags potential concerns, and celebrates wise decisions. Think of him
+                  as your personal ethical advisor.
+                </p>
+              </div>
+              <div class="gavl-example-box">
+                <h4>✅ Use Cases:</h4>
+                <ul>
+                  <li><strong>Ethical Guardrails:</strong> Catch potential ethical issues before committing</li>
+                  <li><strong>Wisdom Sharing:</strong> Receive insights based on deliberation context</li>
+                  <li><strong>Conscience Checking:</strong> Get a second opinion on tough decisions</li>
+                  <li><strong>Cultural Alignment:</strong> Ensure decisions align with your values</li>
+                </ul>
+              </div>
+            `
+          },
+          {
+            title: "How Jimminy Works 🎩",
+            content: `
+              <p>
+                Jimminy Cricket connects to your Boardroom of Light sessions and provides real-time feedback.
+              </p>
+              <div class="gavl-example-box">
+                <h4>🔗 Integration with Boardroom</h4>
+                <p>
+                  Jimminy monitors your boardroom deliberations via WebSocket connection:
+                </p>
+                <ul>
+                  <li>Listens to advisor discussions and decisions</li>
+                  <li>Analyzes ethical implications in real-time</li>
+                  <li>Provides whispered guidance without interrupting flow</li>
+                  <li>Flags concerns or celebrates alignment</li>
+                </ul>
+              </div>
+              <div class="gavl-example-box">
+                <h4>🎭 Three Moods</h4>
+                <ul>
+                  <li><strong>Idle:</strong> Normal monitoring mode (gentle sway)</li>
+                  <li><strong>Celebrate:</strong> Wise decision detected (excited animation)</li>
+                  <li><strong>Concern:</strong> Ethical flag raised (cautious posture)</li>
+                </ul>
+                <p><em>Watch Jimminy's animations - they reflect his mood!</em></p>
+              </div>
+              <div class="gavl-tip-box">
+                <h4>💡 Connection Status</h4>
+                <p>
+                  The status indicator in the top-right shows connection state:
+                </p>
+                <ul>
+                  <li><strong>Connected:</strong> Live link to boardroom (green)</li>
+                  <li><strong>Reconnecting:</strong> Temporary disconnection (yellow)</li>
+                  <li><strong>Disconnected:</strong> Server offline (red)</li>
+                </ul>
+              </div>
+            `
+          },
+          {
+            title: "Reading Jimminy's Whispers 💬",
+            content: `
+              <p>
+                Jimminy communicates through the "Whisper Log" - a feed of ethical insights.
+              </p>
+              <div class="gavl-example-box">
+                <h4>📜 Whisper Log Format</h4>
+                <p>
+                  Each whisper contains:
+                </p>
+                <ul>
+                  <li><strong>Timestamp:</strong> When the guidance was given</li>
+                  <li><strong>Message:</strong> Jimminy's main insight or concern</li>
+                  <li><strong>Recommendations:</strong> Actionable suggestions (if applicable)</li>
+                  <li><strong>Mood Indicator:</strong> Color-coded based on concern level</li>
+                </ul>
+              </div>
+              <div class="gavl-example-box">
+                <h4>🎨 Mood Colors</h4>
+                <ul>
+                  <li><strong>Green:</strong> Celebration - wise decision detected</li>
+                  <li><strong>Yellow:</strong> Caution - potential concern flagged</li>
+                  <li><strong>Blue:</strong> Neutral - general observation or insight</li>
+                </ul>
+              </div>
+              <div class="gavl-example-box">
+                <h4>📊 Example Whispers</h4>
+                <p><strong>Celebration:</strong></p>
+                <p><em>"That's a principled stance! Prioritizing transparency aligns with long-term trust."</em></p>
+                <p><strong>Concern:</strong></p>
+                <p><em>"Caution: This approach may create short-term gains but compromise stakeholder trust."</em></p>
+                <ul>
+                  <li>Consider stakeholder communication plan</li>
+                  <li>Review impact on brand reputation</li>
+                  <li>Consult with ethics board before proceeding</li>
+                </ul>
+              </div>
+            `
+          },
+          {
+            title: "Setting Up Your Session 🚀",
+            content: `
+              <p>
+                To use Jimminy Cricket, you need a running Boardroom of Light session.
+              </p>
+              <div class="gavl-tip-box">
+                <h4>💡 Prerequisites</h4>
+                <ol>
+                  <li>Ensure the <strong>Boardroom of Light server</strong> is running</li>
+                  <li>Server must have <strong>WebSocket support</strong> enabled</li>
+                  <li>Jimminy connects to <code>/jimminy</code> WebSocket endpoint</li>
+                  <li>If "disconnected", check server logs and restart if needed</li>
+                </ol>
+              </div>
+              <div class="gavl-example-box">
+                <h4>🎯 Typical Workflow</h4>
+                <ol>
+                  <li><strong>Start Boardroom:</strong> Launch your boardroom simulation</li>
+                  <li><strong>Open Jimminy:</strong> Navigate to Jimminy Cricket interface</li>
+                  <li><strong>Verify Connection:</strong> Check status shows "connected"</li>
+                  <li><strong>Run Deliberation:</strong> Execute your boardroom scenario</li>
+                  <li><strong>Monitor Whispers:</strong> Watch for Jimminy's real-time guidance</li>
+                  <li><strong>Adjust Course:</strong> Act on recommendations as appropriate</li>
+                </ol>
+              </div>
+              <div class="gavl-example-box">
+                <h4>🔧 Troubleshooting</h4>
+                <ul>
+                  <li><strong>"Disconnected":</strong> Server not running - start Boardroom backend</li>
+                  <li><strong>"Reconnecting...":</strong> Temporary network issue - wait 1-2 seconds</li>
+                  <li><strong>No whispers:</strong> Run a boardroom simulation to generate events</li>
+                  <li><strong>Old whispers:</strong> Feed shows last 20 entries only (auto-pruned)</li>
+                </ul>
+              </div>
+            `
+          },
+          {
+            title: "Ready for Ethical Guidance! 🌟",
+            content: `
+              <p>
+                You're all set to use Jimminy Cricket as your conscience companion!
+              </p>
+              <div class="gavl-tip-box">
+                <h4>💡 Quick Start Recipe</h4>
+                <ol>
+                  <li>Ensure <strong>Boardroom server is running</strong></li>
+                  <li>Check <strong>connection status</strong> shows "connected"</li>
+                  <li>Run a <strong>boardroom simulation</strong> from main interface</li>
+                  <li>Watch Jimminy's <strong>3D character</strong> for mood changes</li>
+                  <li>Read <strong>whisper log</strong> for detailed guidance</li>
+                  <li>Act on <strong>recommendations</strong> as needed</li>
+                </ol>
+              </div>
+              <div class="gavl-example-box">
+                <h4>🎭 Interpreting Jimminy's Behavior</h4>
+                <ul>
+                  <li><strong>Gentle Sway:</strong> Idle monitoring, all is well</li>
+                  <li><strong>Excited Dance:</strong> Celebrating a wise decision!</li>
+                  <li><strong>Tilted Hat:</strong> Concern detected, review whispers</li>
+                  <li><strong>Cane Twirl:</strong> Processing deliberation context</li>
+                  <li><strong>Flask Sip:</strong> Contemplating complex ethics</li>
+                </ul>
+              </div>
+              <div class="gavl-tip-box">
+                <h4>📚 Best Practices</h4>
+                <ul>
+                  <li>Keep Jimminy open <strong>during all deliberations</strong></li>
+                  <li>Review whispers <strong>after each phase</strong> of boardroom</li>
+                  <li>Treat concerns as <strong>signals, not blockers</strong></li>
+                  <li>Use recommendations as <strong>discussion starters</strong></li>
+                  <li>Celebrate when Jimminy celebrates - you're on the right track!</li>
+                </ul>
+              </div>
+              <div class="gavl-example-box">
+                <h4>🌟 Philosophy</h4>
+                <p>
+                  Jimminy doesn't <em>tell</em> you what to do - he helps you think through
+                  the ethical dimensions of your decisions. He's a <strong>guide</strong>,
+                  not a gatekeeper. Use his wisdom to make more thoughtful, values-aligned choices.
+                </p>
+              </div>
+              <p style="margin-top: 20px; font-weight: 600; color: #667eea;">
+                Click "Start Using Tool" to begin your ethically-guided deliberations! 🦗
+              </p>
+            `
+          }
+        ]
+      };
+    </script>
+
+    <script type="module" src="./jimminy.js"></script>
+  </body>
+</html>

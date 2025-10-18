@@ -1,0 +1,663 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bayesian Sophiarch • Oracle's Nightmare Chamber</title>
+
+    <style>
+        /* Copyright (c) 2025 Joshua Hendricks Cole (DBA: Corporation of Light). All Rights Reserved. PATENT PENDING. */
+
+        @import url('https://fonts.googleapis.com/css2?family=Creepster&family=Bungee&family=Inter:wght@400;600&display=swap');
+
+        :root {
+            --nightmare-black: #0A0A0A;
+            --pardee-pink: #FF1493;
+            --pardee-yellow: #F4E9C3;
+            --pardee-purple: #6B46C1;
+            --flesh-tone: #E8B4A6;
+            --font-display: 'Bungee', cursive;
+            --font-creepy: 'Creepster', cursive;
+            --font-body: 'Inter', sans-serif;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: var(--pardee-yellow);
+            color: var(--nightmare-black);
+            font-family: var(--font-body);
+            position: relative;
+            overflow-x: hidden;
+            min-height: 100vh;
+        }
+
+        /* DENSE GROTESQUE BACKGROUND TEXTURE */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+            opacity: 0.15;
+            background-image:
+                radial-gradient(circle at 20% 30%, var(--pardee-pink) 0%, transparent 50%),
+                radial-gradient(circle at 80% 20%, var(--pardee-purple) 0%, transparent 40%),
+                radial-gradient(circle at 50% 80%, var(--flesh-tone) 0%, transparent 60%),
+                radial-gradient(circle at 10% 70%, var(--pardee-pink) 0%, transparent 35%);
+        }
+
+        /* BACKGROUND DRIP PATTERN SVG */
+        .background-texture {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+            pointer-events: none;
+            opacity: 0.25;
+        }
+
+        /* Main container */
+        .container {
+            position: relative;
+            z-index: 2;
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        /* NETWORK FACE - Large, detailed, data-integrated */
+        .network-face-container {
+            position: relative;
+            width: 100%;
+            max-width: 700px;
+            margin: 2rem auto;
+            display: flex;
+            justify-content: center;
+        }
+
+        .network-face {
+            position: relative;
+            width: 700px;
+            height: 800px;
+            filter: drop-shadow(8px 8px 12px rgba(0,0,0,0.4));
+        }
+
+        /* Header */
+        .oracle-header {
+            text-align: center;
+            margin: 2rem 0 3rem 0;
+            position: relative;
+        }
+
+        .oracle-header h1 {
+            font-family: var(--font-creepy);
+            font-size: clamp(3rem, 8vw, 7rem);
+            margin-bottom: 1rem;
+            color: var(--pardee-purple);
+            text-shadow:
+                4px 4px 0 var(--nightmare-black),
+                -2px -2px 0 var(--pardee-pink);
+            letter-spacing: 0.15em;
+        }
+
+        .oracle-header p {
+            font-size: 1.5rem;
+            color: var(--nightmare-black);
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+        }
+
+        /* Grid */
+        .config-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(450px, 1fr));
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+
+        /* Form cards with detailed borders */
+        .form-with-face {
+            position: relative;
+            background: var(--pardee-pink);
+            border: 5px solid var(--nightmare-black);
+            border-radius: 20px;
+            padding: 2.5rem;
+            margin: 2rem;
+            box-shadow: 10px 10px 0 var(--nightmare-black);
+        }
+
+        /* Detailed drip/tendril decorations around forms */
+        .form-drip-top, .form-drip-bottom {
+            position: absolute;
+            left: 0;
+            width: 100%;
+            height: 50px;
+            pointer-events: none;
+        }
+
+        .form-drip-top {
+            top: -25px;
+        }
+
+        .form-drip-bottom {
+            bottom: -25px;
+        }
+
+        /* Corner eye decorations */
+        .corner-eye-decoration {
+            position: absolute;
+            width: 60px;
+            height: 60px;
+        }
+
+        .corner-eye-decoration.top-left {
+            top: -15px;
+            left: -15px;
+        }
+
+        .corner-eye-decoration.top-right {
+            top: -15px;
+            right: -15px;
+        }
+
+        .corner-eye-decoration.bottom-left {
+            bottom: -15px;
+            left: -15px;
+        }
+
+        .corner-eye-decoration.bottom-right {
+            bottom: -15px;
+            right: -15px;
+        }
+
+        /* Labels and inputs */
+        label {
+            display: block;
+            color: var(--nightmare-black);
+            font-size: 1rem;
+            text-transform: uppercase;
+            margin-bottom: 0.5rem;
+            font-weight: 900;
+            font-family: var(--font-display);
+            letter-spacing: 0.05em;
+        }
+
+        textarea, input, select {
+            width: 100%;
+            padding: 0.875rem;
+            background: var(--pardee-yellow);
+            border: 4px solid var(--nightmare-black);
+            color: var(--nightmare-black);
+            font-family: var(--font-body);
+            border-radius: 10px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            transition: all 0.2s ease;
+        }
+
+        textarea:focus, input:focus, select:focus {
+            outline: none;
+            border-color: var(--pardee-purple);
+            box-shadow: 0 0 0 4px rgba(107, 70, 193, 0.3);
+            transform: scale(1.02);
+        }
+
+        /* Button */
+        button {
+            width: 100%;
+            padding: 1.5rem 2rem;
+            font-family: var(--font-display);
+            font-size: 1.4rem;
+            font-weight: 900;
+            text-transform: uppercase;
+            letter-spacing: 0.15em;
+            background: var(--pardee-purple);
+            border: 5px solid var(--nightmare-black);
+            color: var(--pardee-yellow);
+            cursor: pointer;
+            box-shadow: 6px 6px 0 var(--nightmare-black);
+            transition: all 0.15s ease;
+            margin-top: 1.5rem;
+        }
+
+        button:hover {
+            transform: translate(3px, 3px);
+            box-shadow: 3px 3px 0 var(--nightmare-black);
+        }
+
+        button:active {
+            transform: translate(6px, 6px);
+            box-shadow: 0 0 0 var(--nightmare-black);
+        }
+
+        /* Horizon tags */
+        .horizon-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.75rem;
+        }
+
+        .horizon-tag {
+            background: var(--pardee-yellow);
+            border: 4px solid var(--nightmare-black);
+            color: var(--nightmare-black);
+            padding: 0.75rem 1.25rem;
+            border-radius: 10px;
+            cursor: pointer;
+            font-family: var(--font-display);
+            font-weight: 900;
+            text-transform: uppercase;
+            font-size: 1rem;
+            transition: all 0.15s ease;
+        }
+
+        .horizon-tag.active {
+            background: var(--nightmare-black);
+            color: var(--pardee-yellow);
+            box-shadow: 4px 4px 0 var(--pardee-purple);
+        }
+
+        /* Algorithm cards */
+        .algorithm-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1.25rem;
+            margin-bottom: 2rem;
+        }
+
+        .algorithm-option {
+            background: var(--pardee-yellow);
+            border: 4px solid var(--nightmare-black);
+            padding: 1.25rem;
+            border-radius: 15px;
+            cursor: pointer;
+            text-align: center;
+            transition: all 0.15s ease;
+        }
+
+        .algorithm-option.selected {
+            background: var(--nightmare-black);
+            color: var(--pardee-yellow);
+            box-shadow: 5px 5px 0 var(--pardee-purple);
+            transform: translate(-2px, -2px);
+        }
+
+        .algorithm-option h4 {
+            color: var(--pardee-purple);
+            margin-bottom: 0.5rem;
+            font-size: 1.25rem;
+            font-family: var(--font-display);
+            font-weight: 900;
+        }
+
+        .algorithm-option.selected h4 {
+            color: var(--pardee-pink);
+        }
+
+        .algorithm-option p {
+            color: var(--nightmare-black);
+            font-size: 0.95rem;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+        }
+
+        .algorithm-option.selected p {
+            color: var(--pardee-yellow);
+        }
+
+        .algorithm-option small {
+            color: var(--pardee-purple);
+            font-weight: 700;
+            font-size: 0.9rem;
+        }
+
+        .algorithm-option.selected small {
+            color: var(--pardee-pink);
+        }
+
+        .form-field-wrapper {
+            margin-bottom: 1.75rem;
+            position: relative;
+        }
+    </style>
+</head>
+<body>
+    <!-- DENSE BACKGROUND TEXTURE - Zoomed-in grotesque details -->
+    <svg class="background-texture" viewBox="0 0 1920 1080" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice">
+        <!-- Organic dripping tendrils pattern - fills entire background -->
+        <defs>
+            <pattern id="drip-pattern" x="0" y="0" width="200" height="200" patternUnits="userSpaceOnUse">
+                <!-- Drip 1 -->
+                <path d="M50,0 Q45,30 50,60 Q45,90 50,120" stroke="#FF1493" stroke-width="4" fill="none" opacity="0.3"/>
+                <ellipse cx="50" cy="115" rx="6" ry="12" fill="#FF1493" opacity="0.3"/>
+
+                <!-- Drip 2 -->
+                <path d="M100,20 Q105,50 100,80 Q105,110 100,140" stroke="#E8B4A6" stroke-width="3" fill="none" opacity="0.25"/>
+                <ellipse cx="100" cy="135" rx="5" ry="10" fill="#E8B4A6" opacity="0.25"/>
+
+                <!-- Drip 3 -->
+                <path d="M150,10 Q145,40 150,70 Q145,100 150,130" stroke="#6B46C1" stroke-width="3" fill="none" opacity="0.2"/>
+                <ellipse cx="150" cy="125" rx="5" ry="10" fill="#6B46C1" opacity="0.2"/>
+
+                <!-- Organic blob -->
+                <ellipse cx="75" cy="50" rx="15" ry="20" fill="#FF1493" opacity="0.15"/>
+                <ellipse cx="125" cy="80" rx="12" ry="18" fill="#E8B4A6" opacity="0.12"/>
+            </pattern>
+
+            <pattern id="vein-pattern" x="0" y="0" width="150" height="150" patternUnits="userSpaceOnUse">
+                <!-- Vein network -->
+                <path d="M0,75 Q40,60 75,75 Q110,90 150,75" stroke="#FF1493" stroke-width="2" fill="none" opacity="0.2"/>
+                <path d="M75,0 Q60,40 75,75 Q90,110 75,150" stroke="#6B46C1" stroke-width="2" fill="none" opacity="0.18"/>
+                <circle cx="75" cy="75" r="4" fill="#FF1493" opacity="0.25"/>
+            </pattern>
+        </defs>
+
+        <!-- Apply patterns to fill entire SVG -->
+        <rect width="1920" height="1080" fill="url(#drip-pattern)"/>
+        <rect width="1920" height="1080" fill="url(#vein-pattern)"/>
+
+        <!-- Additional large organic shapes -->
+        <ellipse cx="200" cy="200" rx="80" ry="120" fill="#FF1493" opacity="0.08"/>
+        <ellipse cx="1720" cy="300" rx="100" ry="150" fill="#E8B4A6" opacity="0.06"/>
+        <ellipse cx="300" cy="880" rx="90" ry="130" fill="#6B46C1" opacity="0.07"/>
+        <ellipse cx="1600" cy="900" rx="110" ry="140" fill="#FF1493" opacity="0.05"/>
+    </svg>
+
+    <!-- MAIN NETWORK FACE - Large and detailed with data integration -->
+    <div class="network-face-container">
+        <svg class="network-face" viewBox="0 0 700 800" xmlns="http://www.w3.org/2000/svg">
+            <!-- Outer oval frame -->
+            <ellipse cx="350" cy="400" rx="320" ry="380" fill="#FF1493" stroke="#000" stroke-width="8"/>
+
+            <!-- Dense dripping tendrils - left side (detailed) -->
+            <g opacity="0.9">
+                <path d="M60,300 Q40,340 50,380 Q35,420 45,460 Q30,500 40,540 Q25,580 35,620"
+                      stroke="#F4E9C3" stroke-width="12" fill="none" stroke-linecap="round">
+                    <animate attributeName="d"
+                             values="M60,300 Q40,340 50,380 Q35,420 45,460 Q30,500 40,540 Q25,580 35,620;
+                                     M60,300 Q35,345 50,385 Q30,425 45,465 Q25,505 40,545 Q20,585 35,625;
+                                     M60,300 Q40,340 50,380 Q35,420 45,460 Q30,500 40,540 Q25,580 35,620"
+                             dur="4s" repeatCount="indefinite"/>
+                </path>
+                <path d="M70,250 Q55,290 65,330" stroke="#F4E9C3" stroke-width="9" fill="none" stroke-linecap="round"/>
+                <path d="M45,350 Q30,390 40,430" stroke="#E8B4A6" stroke-width="8" fill="none" stroke-linecap="round"/>
+                <!-- Drip drops on left -->
+                <ellipse cx="35" cy="615" rx="12" ry="22" fill="#F4E9C3"/>
+                <ellipse cx="50" cy="560" rx="10" ry="18" fill="#E8B4A6"/>
+            </g>
+
+            <!-- Dense dripping tendrils - right side (detailed) -->
+            <g opacity="0.9">
+                <path d="M640,300 Q660,340 650,380 Q665,420 655,460 Q670,500 660,540 Q675,580 665,620"
+                      stroke="#F4E9C3" stroke-width="12" fill="none" stroke-linecap="round">
+                    <animate attributeName="d"
+                             values="M640,300 Q660,340 650,380 Q665,420 655,460 Q670,500 660,540 Q675,580 665,620;
+                                     M640,300 Q665,345 650,385 Q670,425 655,465 Q675,505 660,545 Q680,585 665,625;
+                                     M640,300 Q660,340 650,380 Q665,420 655,460 Q670,500 660,540 Q675,580 665,620"
+                             dur="4s" repeatCount="indefinite"/>
+                </path>
+                <path d="M630,250 Q645,290 635,330" stroke="#F4E9C3" stroke-width="9" fill="none" stroke-linecap="round"/>
+                <path d="M655,350 Q670,390 660,430" stroke="#E8B4A6" stroke-width="8" fill="none" stroke-linecap="round"/>
+                <!-- Drip drops on right -->
+                <ellipse cx="665" cy="615" rx="12" ry="22" fill="#F4E9C3"/>
+                <ellipse cx="650" cy="560" rx="10" ry="18" fill="#E8B4A6"/>
+            </g>
+
+            <!-- Top area drips -->
+            <ellipse cx="200" cy="80" rx="10" ry="18" fill="#FF1493"/>
+            <ellipse cx="240" cy="100" rx="8" ry="15" fill="#F4E9C3"/>
+            <ellipse cx="460" cy="90" rx="9" ry="16" fill="#FF1493"/>
+            <ellipse cx="500" cy="110" rx="7" ry="14" fill="#E8B4A6"/>
+
+            <!-- SPIRAL HYPNOTIC EYES - Left -->
+            <g>
+                <circle cx="240" cy="320" r="70" fill="#6B46C1" stroke="#000" stroke-width="6"/>
+                <!-- Detailed spiral -->
+                <path d="M240,320 Q270,320 285,335 Q290,365 270,380 Q240,395 210,380 Q185,365 185,335 Q200,305 230,305 Q260,305 275,320"
+                      fill="none" stroke="#F4E9C3" stroke-width="4"/>
+                <circle cx="240" cy="320" r="20" fill="#000"/>
+                <!-- CVE text in spiral -->
+                <text x="240" y="300" text-anchor="middle" font-family="monospace" font-size="14" fill="#F4E9C3" font-weight="900">
+                    CVE-2024
+                </text>
+            </g>
+
+            <!-- SPIRAL HYPNOTIC EYES - Right -->
+            <g>
+                <circle cx="460" cy="320" r="70" fill="#6B46C1" stroke="#000" stroke-width="6"/>
+                <!-- Detailed spiral -->
+                <path d="M460,320 Q490,320 505,335 Q510,365 490,380 Q460,395 430,380 Q405,365 405,335 Q420,305 450,305 Q480,305 495,320"
+                      fill="none" stroke="#F4E9C3" stroke-width="4"/>
+                <circle cx="460" cy="320" r="20" fill="#000"/>
+                <!-- Network mode text in spiral -->
+                <text x="460" y="300" text-anchor="middle" font-family="monospace" font-size="13" fill="#F4E9C3" font-weight="900">
+                    SCAN-LIVE
+                </text>
+            </g>
+
+            <!-- Nose area with detailed drip -->
+            <ellipse cx="350" cy="400" rx="25" ry="40" fill="#E8B4A6" stroke="#000" stroke-width="4"/>
+            <path d="M350,440 Q352,470 350,500" stroke="#E8B4A6" stroke-width="6" fill="none"/>
+
+            <!-- GRINNING TEETH MOUTH - Detailed -->
+            <path d="M210,510 Q350,570 490,510" stroke="#000" stroke-width="7" fill="none" stroke-linecap="round">
+                <animate attributeName="d"
+                         values="M210,510 Q350,570 490,510;M210,510 Q350,580 490,510;M210,510 Q350,570 490,510"
+                         dur="3s" repeatCount="indefinite"/>
+            </path>
+
+            <!-- Exposed teeth - detailed -->
+            <rect x="235" y="508" width="20" height="35" fill="#FFF" stroke="#000" stroke-width="3" rx="2"/>
+            <rect x="260" y="508" width="20" height="40" fill="#FFF" stroke="#000" stroke-width="3" rx="2"/>
+            <rect x="285" y="508" width="20" height="43" fill="#FFF" stroke="#000" stroke-width="3" rx="2"/>
+            <rect x="310" y="508" width="20" height="46" fill="#FFF" stroke="#000" stroke-width="3" rx="2"/>
+            <rect x="335" y="508" width="20" height="48" fill="#FFF" stroke="#000" stroke-width="3" rx="2"/>
+            <rect x="360" y="508" width="20" height="46" fill="#FFF" stroke="#000" stroke-width="3" rx="2"/>
+            <rect x="385" y="508" width="20" height="43" fill="#FFF" stroke="#000" stroke-width="3" rx="2"/>
+            <rect x="410" y="508" width="20" height="40" fill="#FFF" stroke="#000" stroke-width="3" rx="2"/>
+            <rect x="435" y="508" width="20" height="37" fill="#FFF" stroke="#000" stroke-width="3" rx="2"/>
+            <rect x="460" y="508" width="20" height="35" fill="#FFF" stroke="#000" stroke-width="3" rx="2"/>
+
+            <!-- TEXT INTEGRATED INTO FACE - Top (like PRIMUS) -->
+            <text x="350" y="150" text-anchor="middle" font-family="Bungee, sans-serif" font-size="72"
+                  fill="#F4E9C3" stroke="#000" stroke-width="5" font-weight="900">
+                BAYESIAN
+            </text>
+
+            <!-- "Hat band" text -->
+            <text x="350" y="220" text-anchor="middle" font-family="Arial Black, sans-serif" font-size="38"
+                  fill="#6B46C1" stroke="#000" stroke-width="3" font-weight="900">
+                ORACLE ENGINE
+            </text>
+
+            <!-- "Bow tie" area at bottom -->
+            <ellipse cx="350" cy="680" rx="110" ry="80" fill="#6B46C1" stroke="#000" stroke-width="6"/>
+            <text x="350" y="665" text-anchor="middle" font-family="Arial Black, sans-serif" font-size="22"
+                  fill="#F4E9C3" stroke="#000" stroke-width="2" font-weight="900">
+                PARTICLE
+            </text>
+            <text x="350" y="695" text-anchor="middle" font-family="Arial Black, sans-serif" font-size="22"
+                  fill="#F4E9C3" stroke="#000" stroke-width="2" font-weight="900">
+                FILTER
+            </text>
+
+            <!-- Bottom drips - detailed -->
+            <ellipse cx="280" cy="760" rx="14" ry="26" fill="#FF1493">
+                <animate attributeName="cy" values="760;775;760" dur="2s" repeatCount="indefinite"/>
+            </ellipse>
+            <ellipse cx="420" cy="770" rx="12" ry="24" fill="#F4E9C3">
+                <animate attributeName="cy" values="770;785;770" dur="2.5s" repeatCount="indefinite"/>
+            </ellipse>
+            <ellipse cx="350" cy="765" rx="10" ry="20" fill="#E8B4A6">
+                <animate attributeName="cy" values="765;780;765" dur="2.2s" repeatCount="indefinite"/>
+            </ellipse>
+        </svg>
+    </div>
+
+    <div class="container">
+        <!-- Header -->
+        <header class="oracle-header">
+            <h1>SOPHIARCH</h1>
+            <p>Probabilistic Oracle • Network Analysis</p>
+        </header>
+
+        <!-- Configuration Section -->
+        <div class="config-grid">
+            <!-- Forecast Configuration -->
+            <div class="form-with-face">
+                <!-- Detailed drip decorations on top -->
+                <svg class="form-drip-top" viewBox="0 0 600 50" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M100,0 Q95,15 100,30" stroke="#000" stroke-width="3" fill="none"/>
+                    <ellipse cx="100" cy="28" rx="5" ry="10" fill="#F4E9C3" stroke="#000" stroke-width="2"/>
+                    <path d="M300,0 Q305,18 300,35" stroke="#000" stroke-width="3" fill="none"/>
+                    <ellipse cx="300" cy="33" rx="6" ry="11" fill="#E8B4A6" stroke="#000" stroke-width="2"/>
+                    <path d="M500,0 Q495,20 500,38" stroke="#000" stroke-width="3" fill="none"/>
+                    <ellipse cx="500" cy="36" rx="5" ry="10" fill="#F4E9C3" stroke="#000" stroke-width="2"/>
+                </svg>
+
+                <!-- Corner eye decorations -->
+                <svg class="corner-eye-decoration top-left" viewBox="0 0 60 60" xmlns="http://www.w3.org/2000/svg">
+                    <circle cx="30" cy="30" r="25" fill="#6B46C1" stroke="#000" stroke-width="3"/>
+                    <circle cx="30" cy="30" r="12" fill="#F4E9C3"/>
+                    <circle cx="30" cy="30" r="5" fill="#000"/>
+                </svg>
+
+                <svg class="corner-eye-decoration top-right" viewBox="0 0 60 60" xmlns="http://www.w3.org/2000/svg">
+                    <ellipse cx="30" cy="30" rx="20" ry="25" fill="#FF1493" stroke="#000" stroke-width="3"/>
+                    <ellipse cx="30" cy="30" rx="10" ry="12" fill="#000"/>
+                </svg>
+
+                <h2 style="margin: 0 0 1.5rem 0; color: var(--nightmare-black); font-family: var(--font-display); font-size: 1.5rem;">📊 FORECAST CONFIG</h2>
+
+                <div class="form-field-wrapper">
+                    <label>Problem Statement</label>
+                    <textarea id="problem" rows="4" placeholder="Enter your forecasting problem...">Demo probabilistic forecast</textarea>
+                </div>
+
+                <div class="form-field-wrapper">
+                    <label>Forecast Horizons</label>
+                    <div class="horizon-container">
+                        <div class="horizon-tag active">1 Day</div>
+                        <div class="horizon-tag active">1 Week</div>
+                        <div class="horizon-tag active">1 Month</div>
+                        <div class="horizon-tag">3 Months</div>
+                        <div class="horizon-tag">6 Months</div>
+                        <div class="horizon-tag">1 Year</div>
+                    </div>
+                </div>
+
+                <div class="form-field-wrapper">
+                    <label>Confidence Threshold (%)</label>
+                    <input type="number" id="confidence-threshold" min="50" max="99" value="80">
+                </div>
+
+                <button id="run-forecast">🚀 RUN FORECAST</button>
+
+                <!-- Bottom drips -->
+                <svg class="form-drip-bottom" viewBox="0 0 600 50" xmlns="http://www.w3.org/2000/svg">
+                    <ellipse cx="150" cy="22" rx="6" ry="12" fill="#FF1493" stroke="#000" stroke-width="2"/>
+                    <ellipse cx="450" cy="25" rx="5" ry="11" fill="#E8B4A6" stroke="#000" stroke-width="2"/>
+                </svg>
+            </div>
+
+            <!-- Algorithm Selection -->
+            <div class="form-with-face">
+                <!-- Detailed drip decorations on top -->
+                <svg class="form-drip-top" viewBox="0 0 600 50" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M200,0 Q195,15 200,30" stroke="#000" stroke-width="3" fill="none"/>
+                    <ellipse cx="200" cy="28" rx="5" ry="10" fill="#E8B4A6" stroke="#000" stroke-width="2"/>
+                    <path d="M400,0 Q405,18 400,35" stroke="#000" stroke-width="3" fill="none"/>
+                    <ellipse cx="400" cy="33" rx="6" ry="11" fill="#F4E9C3" stroke="#000" stroke-width="2"/>
+                </svg>
+
+                <!-- Corner decorations -->
+                <svg class="corner-eye-decoration top-left" viewBox="0 0 60 60" xmlns="http://www.w3.org/2000/svg">
+                    <ellipse cx="30" cy="30" rx="22" ry="26" fill="#E8B4A6" stroke="#000" stroke-width="3"/>
+                    <circle cx="30" cy="30" r="8" fill="#000"/>
+                </svg>
+
+                <svg class="corner-eye-decoration top-right" viewBox="0 0 60 60" xmlns="http://www.w3.org/2000/svg">
+                    <circle cx="30" cy="30" r="24" fill="#6B46C1" stroke="#000" stroke-width="3"/>
+                    <circle cx="30" cy="30" r="10" fill="#F4E9C3"/>
+                    <circle cx="30" cy="30" r="4" fill="#000"/>
+                </svg>
+
+                <h2 style="margin: 0 0 1.5rem 0; color: var(--nightmare-black); font-family: var(--font-display); font-size: 1.5rem;">🧠 ALGORITHM</h2>
+
+                <div class="algorithm-grid">
+                    <div class="algorithm-option selected">
+                        <h4>Particle Filter</h4>
+                        <p>Sequential Monte Carlo</p>
+                        <small>⚡ Fast • Real-time</small>
+                    </div>
+
+                    <div class="algorithm-option">
+                        <h4>Gaussian Process</h4>
+                        <p>Regression with uncertainty</p>
+                        <small>📊 Smooth trends</small>
+                    </div>
+
+                    <div class="algorithm-option">
+                        <h4>NUTS Sampler</h4>
+                        <p>Hamiltonian Monte Carlo</p>
+                        <small>🎯 High quality</small>
+                    </div>
+
+                    <div class="algorithm-option">
+                        <h4>Ensemble</h4>
+                        <p>Multiple algorithms</p>
+                        <small>🛡️ Robust</small>
+                    </div>
+                </div>
+
+                <div class="form-field-wrapper">
+                    <label>Number of Particles</label>
+                    <input type="number" id="num-particles" min="100" max="5000" step="100" value="500">
+                    <p style="font-size: 0.95rem; color: var(--nightmare-black); margin-top: 0.5rem; font-weight: 700;">
+                        More particles = higher accuracy, slower performance
+                    </p>
+                </div>
+
+                <!-- Bottom drips -->
+                <svg class="form-drip-bottom" viewBox="0 0 600 50" xmlns="http://www.w3.org/2000/svg">
+                    <ellipse cx="300" cy="20" rx="7" ry="13" fill="#FF1493" stroke="#000" stroke-width="2"/>
+                </svg>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Algorithm selection
+        document.querySelectorAll('.algorithm-option').forEach(option => {
+            option.addEventListener('click', function() {
+                document.querySelectorAll('.algorithm-option').forEach(opt => {
+                    opt.classList.remove('selected');
+                });
+                this.classList.add('selected');
+            });
+        });
+
+        // Horizon tag selection
+        document.querySelectorAll('.horizon-tag').forEach(tag => {
+            tag.addEventListener('click', function() {
+                this.classList.toggle('active');
+            });
+        });
+
+        // Run forecast button
+        document.getElementById('run-forecast').addEventListener('click', () => {
+            alert('Forecast running! (Demo mode)');
+        });
+    </script>
+</body>
+</html>

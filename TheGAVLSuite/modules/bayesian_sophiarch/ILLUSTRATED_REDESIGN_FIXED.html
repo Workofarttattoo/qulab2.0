@@ -1,0 +1,488 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bayesian Sophiarch • Oracle's Nightmare Chamber</title>
+
+    <style>
+        /* Copyright (c) 2025 Joshua Hendricks Cole (DBA: Corporation of Light). All Rights Reserved. PATENT PENDING. */
+
+        @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Inter:wght@400;600&display=swap');
+
+        :root {
+            --nightmare-black: #0A0A0A;
+            --void-black: #000000;
+            --deep-gray: #1A1A1A;
+            --neon-purple: #A855F7;
+            --electric-pink: #EC4899;
+            --cyber-cyan: #06B6D4;
+            --text-primary: #E0E0E0;
+            --text-secondary: #A0A0A0;
+            --font-display: 'Orbitron', monospace;
+            --font-body: 'Inter', sans-serif;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: var(--nightmare-black);
+            color: var(--text-primary);
+            font-family: var(--font-body);
+            position: relative;
+            overflow-x: hidden;
+            min-height: 100vh;
+        }
+
+        /* GROTESQUE FACE ILLUSTRATIONS - Actually Visible */
+
+        /* Top-left watching eye */
+        .corner-eye {
+            position: fixed;
+            top: 10px;
+            left: 10px;
+            width: 100px;
+            height: 70px;
+            z-index: 1000;
+            pointer-events: none;
+            opacity: 0.9;
+        }
+
+        /* Top-right dripping face */
+        .corner-drip {
+            position: fixed;
+            top: 0;
+            right: 0;
+            width: 180px;
+            height: 220px;
+            z-index: 1000;
+            pointer-events: none;
+            opacity: 0.85;
+        }
+
+        /* Bottom-left mouth */
+        .corner-mouth {
+            position: fixed;
+            bottom: 15px;
+            left: 15px;
+            width: 130px;
+            height: 90px;
+            z-index: 1000;
+            pointer-events: none;
+            opacity: 0.9;
+        }
+
+        /* Form field face borders */
+        .form-field-wrapper {
+            position: relative;
+            margin-bottom: 1.5rem;
+        }
+
+        .form-field-wrapper::before {
+            content: '';
+            position: absolute;
+            left: -15px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 10px;
+            height: 10px;
+            background: var(--electric-pink);
+            border-radius: 50%;
+            box-shadow: 0 0 10px var(--electric-pink);
+            animation: pulse-eye 2s ease-in-out infinite;
+        }
+
+        @keyframes pulse-eye {
+            0%, 100% { opacity: 0.6; transform: translateY(-50%) scale(1); }
+            50% { opacity: 1; transform: translateY(-50%) scale(1.3); }
+        }
+
+        /* Card with bleeding face edges */
+        .face-card {
+            position: relative;
+            background: var(--deep-gray);
+            border: 2px solid var(--neon-purple);
+            padding: 2rem;
+            margin: 2rem 0;
+            clip-path: polygon(0% 5%, 5% 0%, 100% 0%, 100% 95%, 95% 100%, 0% 100%);
+            box-shadow: 0 10px 40px rgba(168, 85, 247, 0.3), inset 0 0 20px rgba(168, 85, 247, 0.1);
+        }
+
+        /* Grotesque face bleeding from top-right of cards */
+        .face-bleed {
+            position: absolute;
+            top: -25px;
+            right: -25px;
+            width: 60px;
+            height: 60px;
+            z-index: 2;
+            opacity: 0.8;
+        }
+
+        /* Container */
+        .container {
+            position: relative;
+            z-index: 2;
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        /* Header */
+        .oracle-header {
+            text-align: center;
+            margin: 3rem 0 3rem 0;
+            position: relative;
+        }
+
+        .oracle-header h1 {
+            font-family: var(--font-display);
+            font-size: clamp(3rem, 6vw, 5rem);
+            margin-bottom: 1rem;
+            background: linear-gradient(90deg, var(--neon-purple), var(--electric-pink), var(--cyber-cyan));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            text-shadow: 0 0 20px var(--neon-purple);
+        }
+
+        .oracle-header p {
+            font-size: 1.25rem;
+            color: var(--cyber-cyan);
+        }
+
+        /* Grid Layout */
+        .config-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+
+        /* Labels and inputs */
+        label {
+            display: block;
+            color: var(--text-primary);
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+        }
+
+        textarea, input, select {
+            width: 100%;
+            padding: 0.75rem;
+            background: var(--nightmare-black);
+            border: 1px solid var(--neon-purple);
+            color: var(--text-primary);
+            font-family: var(--font-body);
+            border-radius: 4px;
+            transition: all 0.3s ease;
+        }
+
+        textarea:focus, input:focus, select:focus {
+            outline: none;
+            border-color: var(--electric-pink);
+            box-shadow: 0 0 15px rgba(236, 72, 153, 0.5);
+        }
+
+        /* Button */
+        button {
+            width: 100%;
+            padding: 1rem 2rem;
+            font-family: var(--font-display);
+            font-size: 1.1rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            background: linear-gradient(135deg, var(--neon-purple), var(--electric-pink));
+            border: none;
+            color: var(--text-primary);
+            cursor: pointer;
+            box-shadow: 0 5px 20px rgba(168, 85, 247, 0.5);
+            transition: all 0.3s ease;
+            margin-top: 1rem;
+        }
+
+        button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 30px rgba(168, 85, 247, 0.7);
+        }
+
+        /* Oracle face mascot - REMOVED (was blocking view) */
+
+        /* Horizon tags */
+        .horizon-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+        }
+
+        .horizon-tag {
+            background: transparent;
+            border: 2px solid var(--neon-purple);
+            color: var(--neon-purple);
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
+            cursor: pointer;
+            font-family: var(--font-display);
+            font-weight: 700;
+            text-transform: uppercase;
+            font-size: 0.875rem;
+            transition: all 0.3s ease;
+        }
+
+        .horizon-tag.active {
+            background: linear-gradient(135deg, var(--neon-purple), var(--electric-pink));
+            color: var(--nightmare-black);
+        }
+
+        /* Algorithm cards */
+        .algorithm-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .algorithm-option {
+            background: var(--deep-gray);
+            border: 2px solid rgba(168, 85, 247, 0.5);
+            padding: 1rem;
+            border-radius: 8px;
+            cursor: pointer;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+
+        .algorithm-option.selected {
+            background: linear-gradient(135deg, rgba(168, 85, 247, 0.2), rgba(236, 72, 153, 0.2));
+            border: 2px solid var(--electric-pink);
+            box-shadow: 0 0 30px rgba(236, 72, 153, 0.5);
+        }
+
+        .algorithm-option h4 {
+            color: var(--cyber-cyan);
+            margin-bottom: 0.5rem;
+            font-size: 1.1rem;
+        }
+
+        .algorithm-option p {
+            color: var(--text-secondary);
+            font-size: 0.875rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .algorithm-option small {
+            color: var(--neon-purple);
+            font-weight: 600;
+        }
+    </style>
+</head>
+<body>
+    <!-- CORNER GROTESQUE FACE ILLUSTRATIONS -->
+
+    <!-- Top-Left: Watching Eye (Actually Visible) -->
+    <div class="corner-eye">
+        <svg viewBox="0 0 120 80" xmlns="http://www.w3.org/2000/svg" width="120" height="80">
+            <!-- Eye outline -->
+            <ellipse cx="60" cy="40" rx="50" ry="30" fill="none" stroke="#A855F7" stroke-width="3">
+                <animate attributeName="rx" values="50;52;50" dur="3s" repeatCount="indefinite"/>
+            </ellipse>
+            <!-- Iris -->
+            <circle cx="60" cy="40" r="18" fill="#EC4899">
+                <animate attributeName="r" values="18;20;18" dur="2s" repeatCount="indefinite"/>
+            </circle>
+            <!-- Pupil -->
+            <circle cx="60" cy="40" r="8" fill="#0A0A0A"/>
+            <!-- Highlight -->
+            <circle cx="65" cy="35" r="3" fill="#06B6D4" opacity="0.9"/>
+            <!-- Veins -->
+            <path d="M20,40 Q30,30 40,35" stroke="#A855F7" stroke-width="2" fill="none" opacity="0.7"/>
+            <path d="M100,40 Q90,50 80,45" stroke="#EC4899" stroke-width="2" fill="none" opacity="0.7"/>
+        </svg>
+    </div>
+
+    <!-- Top-Right: Dripping Melting Face -->
+    <div class="corner-drip">
+        <svg viewBox="0 0 200 250" xmlns="http://www.w3.org/2000/svg" width="180" height="220">
+            <!-- Melting face outline -->
+            <path d="M100,20 Q150,30 160,80 Q170,130 150,180 L145,220 Q140,240 130,245 Q120,250 110,248 L90,240 Q80,235 75,220 L70,180 Q50,130 60,80 Q70,30 100,20 Z"
+                  fill="none" stroke="#EC4899" stroke-width="4" opacity="0.9">
+                <animate attributeName="d"
+                         values="M100,20 Q150,30 160,80 Q170,130 150,180 L145,220 Q140,240 130,245 Q120,250 110,248 L90,240 Q80,235 75,220 L70,180 Q50,130 60,80 Q70,30 100,20 Z;
+                                 M100,20 Q150,35 160,80 Q172,135 150,185 L145,225 Q138,243 130,248 Q118,253 110,250 L88,242 Q78,237 73,222 L68,185 Q48,135 58,82 Q68,32 100,20 Z;
+                                 M100,20 Q150,30 160,80 Q170,130 150,180 L145,220 Q140,240 130,245 Q120,250 110,248 L90,240 Q80,235 75,220 L70,180 Q50,130 60,80 Q70,30 100,20 Z"
+                         dur="4s" repeatCount="indefinite"/>
+            </path>
+
+            <!-- Eye -->
+            <ellipse cx="90" cy="60" rx="22" ry="16" fill="#A855F7" opacity="0.8"/>
+            <circle cx="90" cy="60" r="9" fill="#0A0A0A"/>
+
+            <!-- Drip lines -->
+            <path d="M130,100 Q132,140 130,180" stroke="#EC4899" stroke-width="3" fill="none" opacity="0.7">
+                <animate attributeName="opacity" values="0.7;0.3;0.7" dur="3s" repeatCount="indefinite"/>
+            </path>
+            <path d="M70,120 Q72,160 70,200" stroke="#A855F7" stroke-width="3" fill="none" opacity="0.6">
+                <animate attributeName="opacity" values="0.6;0.2;0.6" dur="3.5s" repeatCount="indefinite"/>
+            </path>
+
+            <!-- Drip drops -->
+            <ellipse cx="130" cy="200" rx="9" ry="16" fill="#EC4899" opacity="0.9">
+                <animate attributeName="cy" values="200;210;200" dur="2s" repeatCount="indefinite"/>
+            </ellipse>
+            <ellipse cx="70" cy="220" rx="7" ry="13" fill="#A855F7" opacity="0.8">
+                <animate attributeName="cy" values="220;235;220" dur="2.5s" repeatCount="indefinite"/>
+            </ellipse>
+        </svg>
+    </div>
+
+    <!-- Bottom-Left: Grotesque Mouth with Teeth -->
+    <div class="corner-mouth">
+        <svg viewBox="0 0 150 100" xmlns="http://www.w3.org/2000/svg" width="130" height="90">
+            <!-- Mouth curve -->
+            <path d="M20,50 Q75,80 130,50" stroke="#06B6D4" stroke-width="4" fill="none">
+                <animate attributeName="d"
+                         values="M20,50 Q75,80 130,50;M20,50 Q75,85 130,50;M20,50 Q75,80 130,50"
+                         dur="4s" repeatCount="indefinite"/>
+            </path>
+
+            <!-- Teeth -->
+            <rect x="40" y="48" width="8" height="15" fill="#fff" opacity="0.9"/>
+            <rect x="52" y="48" width="8" height="18" fill="#fff"/>
+            <rect x="64" y="48" width="8" height="20" fill="#fff"/>
+            <rect x="76" y="48" width="8" height="18" fill="#fff"/>
+            <rect x="88" y="48" width="8" height="15" fill="#fff" opacity="0.9"/>
+            <rect x="100" y="48" width="8" height="12" fill="#fff" opacity="0.8"/>
+
+            <!-- Network veins -->
+            <path d="M30,40 Q50,35 70,38" stroke="#06B6D4" stroke-width="2" fill="none" opacity="0.6"/>
+            <path d="M80,38 Q100,35 120,40" stroke="#EC4899" stroke-width="2" fill="none" opacity="0.6"/>
+        </svg>
+    </div>
+
+    <!-- Oracle face removed - was blocking view -->
+
+    <div class="container">
+        <!-- Header -->
+        <header class="oracle-header">
+            <h1>BAYESIAN SOPHIARCH</h1>
+            <p>Oracle's Nightmare Chamber • Probabilistic Visions</p>
+        </header>
+
+        <!-- Configuration Section -->
+        <div class="config-grid">
+            <!-- Forecast Configuration -->
+            <div class="face-card">
+                <!-- Face bleeding from corner -->
+                <svg class="face-bleed" viewBox="0 0 60 60" xmlns="http://www.w3.org/2000/svg">
+                    <circle cx="30" cy="30" r="25" fill="none" stroke="#A855F7" stroke-width="2"/>
+                    <circle cx="30" cy="30" r="12" fill="#EC4899"/>
+                    <circle cx="30" cy="30" r="5" fill="#0A0A0A"/>
+                    <path d="M10,30 Q20,25 25,28" stroke="#A855F7" stroke-width="1" fill="none"/>
+                    <path d="M50,30 Q40,35 35,32" stroke="#EC4899" stroke-width="1" fill="none"/>
+                </svg>
+
+                <h2 style="margin: 0 0 1.5rem 0; color: var(--electric-pink); font-family: var(--font-display);">📊 Forecast Configuration</h2>
+
+                <div class="form-field-wrapper">
+                    <label>Problem Statement</label>
+                    <textarea id="problem" rows="4" placeholder="Enter your forecasting problem...">Demo probabilistic forecast</textarea>
+                </div>
+
+                <div class="form-field-wrapper">
+                    <label>Forecast Horizons</label>
+                    <div class="horizon-container">
+                        <div class="horizon-tag active">1 Day</div>
+                        <div class="horizon-tag active">1 Week</div>
+                        <div class="horizon-tag active">1 Month</div>
+                        <div class="horizon-tag">3 Months</div>
+                        <div class="horizon-tag">6 Months</div>
+                        <div class="horizon-tag">1 Year</div>
+                    </div>
+                </div>
+
+                <div class="form-field-wrapper">
+                    <label>Confidence Threshold (%)</label>
+                    <input type="number" id="confidence-threshold" min="50" max="99" value="80">
+                </div>
+
+                <button id="run-forecast">🚀 Run Forecast</button>
+            </div>
+
+            <!-- Algorithm Selection -->
+            <div class="face-card">
+                <!-- Face bleeding from corner -->
+                <svg class="face-bleed" viewBox="0 0 60 60" xmlns="http://www.w3.org/2000/svg">
+                    <ellipse cx="30" cy="30" rx="20" ry="28" fill="none" stroke="#EC4899" stroke-width="2">
+                        <animate attributeName="ry" values="28;30;28" dur="3s" repeatCount="indefinite"/>
+                    </ellipse>
+                    <circle cx="30" cy="25" r="10" fill="#06B6D4"/>
+                    <circle cx="30" cy="25" r="4" fill="#0A0A0A"/>
+                    <path d="M15,35 Q30,45 45,35" stroke="#EC4899" stroke-width="2" fill="none"/>
+                </svg>
+
+                <h2 style="margin: 0 0 1.5rem 0; color: var(--electric-pink); font-family: var(--font-display);">🧠 Algorithm Selection</h2>
+
+                <div class="algorithm-grid">
+                    <div class="algorithm-option selected">
+                        <h4>Particle Filter</h4>
+                        <p>Sequential Monte Carlo</p>
+                        <small>⚡ Fast • Real-time</small>
+                    </div>
+
+                    <div class="algorithm-option">
+                        <h4>Gaussian Process</h4>
+                        <p>Regression with uncertainty</p>
+                        <small>📊 Smooth trends</small>
+                    </div>
+
+                    <div class="algorithm-option">
+                        <h4>NUTS Sampler</h4>
+                        <p>Hamiltonian Monte Carlo</p>
+                        <small>🎯 High quality</small>
+                    </div>
+
+                    <div class="algorithm-option">
+                        <h4>Ensemble</h4>
+                        <p>Multiple algorithms</p>
+                        <small>🛡️ Robust</small>
+                    </div>
+                </div>
+
+                <div class="form-field-wrapper">
+                    <label>Number of Particles</label>
+                    <input type="number" id="num-particles" min="100" max="5000" step="100" value="500">
+                    <p style="font-size: 0.875rem; color: var(--text-secondary); margin-top: 0.5rem;">
+                        More particles = higher accuracy, slower performance
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Algorithm selection
+        document.querySelectorAll('.algorithm-option').forEach(option => {
+            option.addEventListener('click', function() {
+                document.querySelectorAll('.algorithm-option').forEach(opt => {
+                    opt.classList.remove('selected');
+                });
+                this.classList.add('selected');
+            });
+        });
+
+        // Horizon tag selection
+        document.querySelectorAll('.horizon-tag').forEach(tag => {
+            tag.addEventListener('click', function() {
+                this.classList.toggle('active');
+            });
+        });
+    </script>
+</body>
+</html>

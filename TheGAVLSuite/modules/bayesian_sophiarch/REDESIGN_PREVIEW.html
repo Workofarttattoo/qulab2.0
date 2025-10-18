@@ -1,0 +1,615 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bayesian Sophiarch • Oracle's Nightmare Chamber</title>
+
+    <!-- Corporation of Light Design System -->
+    <link rel="stylesheet" href="../../corporation-of-light.css">
+
+    <style>
+        /* BAYESIAN SOPHIARCH SPECIFIC STYLES */
+        /* "Oracle's Nightmare Chamber" Theme */
+
+        /* Floating data fragments background */
+        .data-fragments {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: var(--z-particles);
+            pointer-events: none;
+            overflow: hidden;
+        }
+
+        .data-fragment {
+            position: absolute;
+            font-family: var(--font-body);
+            font-size: 12px;
+            color: var(--cyber-cyan);
+            opacity: 0.3;
+            animation: float-fragment 15s linear infinite;
+        }
+
+        @keyframes float-fragment {
+            0% {
+                transform: translateY(100vh) rotate(0deg);
+                opacity: 0;
+            }
+            10% {
+                opacity: 0.3;
+            }
+            90% {
+                opacity: 0.3;
+            }
+            100% {
+                transform: translateY(-100vh) rotate(360deg);
+                opacity: 0;
+            }
+        }
+
+        /* Oracle Network Face (placeholder for now) */
+        .oracle-face {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            width: 150px;
+            height: 150px;
+            background: radial-gradient(circle, var(--neon-purple), transparent);
+            border-radius: 50%;
+            border: 3px solid var(--electric-pink);
+            z-index: var(--z-mascot);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 60px;
+            animation: pulse-oracle 3s ease-in-out infinite;
+            box-shadow:
+                0 0 30px var(--neon-purple),
+                inset 0 0 30px rgba(236, 72, 153, 0.3);
+        }
+
+        @keyframes pulse-oracle {
+            0%, 100% {
+                transform: scale(1);
+                box-shadow:
+                    0 0 30px var(--neon-purple),
+                    inset 0 0 30px rgba(236, 72, 153, 0.3);
+            }
+            50% {
+                transform: scale(1.1);
+                box-shadow:
+                    0 0 60px var(--neon-purple),
+                    inset 0 0 50px rgba(236, 72, 153, 0.5);
+            }
+        }
+
+        .oracle-face.scanning {
+            animation: pulse-oracle 1s ease-in-out infinite, glitch 0.5s infinite;
+        }
+
+        .oracle-face.crystallized {
+            background: radial-gradient(circle, var(--glitch-green), var(--cyber-cyan));
+            border-color: var(--glitch-green);
+            box-shadow:
+                0 0 40px var(--glitch-green),
+                inset 0 0 40px rgba(16, 185, 129, 0.5);
+        }
+
+        .oracle-face.melting {
+            animation: pulse-oracle 0.5s ease-in-out infinite, drip 2s ease-in-out infinite;
+            background: radial-gradient(circle, var(--warning-red), transparent);
+            border-color: var(--warning-red);
+        }
+
+        /* Header with glitch effect */
+        .oracle-header {
+            text-align: center;
+            margin-bottom: var(--space-12);
+            position: relative;
+        }
+
+        .oracle-header h1 {
+            font-size: clamp(3rem, 6vw, 5rem);
+            margin-bottom: var(--space-4);
+        }
+
+        .oracle-header p {
+            font-size: 1.25rem;
+            color: var(--cyber-cyan);
+        }
+
+        /* Asymmetrical forecast cards */
+        .forecast-config-card {
+            clip-path: polygon(
+                0% 5%, 5% 0%, 100% 0%, 100% 95%, 95% 100%, 0% 100%
+            );
+        }
+
+        .algorithm-card {
+            clip-path: polygon(
+                10px 0%, calc(100% - 10px) 0%, 100% 10px,
+                100% calc(100% - 10px), calc(100% - 10px) 100%,
+                10px 100%, 0% calc(100% - 10px), 0% 10px
+            );
+        }
+
+        /* Horizon tags with neon effect */
+        .horizon-tag {
+            background: transparent;
+            border: 2px solid var(--ambient-purple);
+            color: var(--ambient-purple);
+            padding: var(--space-2) var(--space-4);
+            border-radius: var(--radius-md);
+            cursor: pointer;
+            transition: all var(--duration-fast) var(--ease-standard);
+            font-family: var(--font-display);
+            font-weight: 700;
+            text-transform: uppercase;
+            font-size: 0.875rem;
+            letter-spacing: 0.05em;
+        }
+
+        .horizon-tag:hover {
+            border-color: var(--electric-pink);
+            color: var(--electric-pink);
+            box-shadow: 0 0 20px var(--electric-pink);
+            transform: translateY(-2px);
+        }
+
+        .horizon-tag.active {
+            background: linear-gradient(135deg, var(--neon-purple), var(--electric-pink));
+            border-color: transparent;
+            color: var(--nightmare-black);
+            box-shadow: 0 0 30px var(--neon-purple);
+        }
+
+        /* Algorithm selection cards */
+        .algorithm-selection {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: var(--space-4);
+        }
+
+        .algorithm-option {
+            background: var(--deep-gray);
+            border: 2px solid var(--mid-gray);
+            padding: var(--space-4);
+            border-radius: var(--radius-md);
+            cursor: pointer;
+            transition: all var(--duration-standard) var(--ease-standard);
+            text-align: center;
+        }
+
+        .algorithm-option:hover {
+            border-color: var(--neon-purple);
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(168, 85, 247, 0.4);
+        }
+
+        .algorithm-option.selected {
+            background: linear-gradient(135deg, rgba(168, 85, 247, 0.2), rgba(236, 72, 153, 0.2));
+            border-color: var(--electric-pink);
+            box-shadow:
+                0 0 30px rgba(236, 72, 153, 0.5),
+                inset 0 0 20px rgba(168, 85, 247, 0.3);
+        }
+
+        .algorithm-option h4 {
+            color: var(--cyber-cyan);
+            margin-bottom: var(--space-2);
+            font-size: 1.1rem;
+        }
+
+        .algorithm-option p {
+            color: var(--silver-sheen);
+            font-size: 0.875rem;
+            margin-bottom: var(--space-2);
+        }
+
+        .algorithm-option small {
+            color: var(--ambient-purple);
+            font-weight: 600;
+        }
+
+        /* Results section with crystallization effect */
+        .results-container {
+            display: none;
+            animation: crystallize-in var(--duration-reveal) var(--ease-reveal);
+        }
+
+        .results-container.show {
+            display: block;
+        }
+
+        @keyframes crystallize-in {
+            0% {
+                opacity: 0;
+                transform: scale(0.8) rotateX(-30deg);
+                filter: blur(10px);
+            }
+            100% {
+                opacity: 1;
+                transform: scale(1) rotateX(0deg);
+                filter: blur(0);
+            }
+        }
+
+        /* Forecast summary with organic growth */
+        .forecast-summary {
+            background: linear-gradient(135deg, var(--neon-purple), var(--electric-pink), var(--cyber-cyan));
+            padding: var(--space-8);
+            border-radius: var(--radius-lg);
+            margin-bottom: var(--space-8);
+            position: relative;
+            overflow: hidden;
+            animation: organic-pulse 4s ease-in-out infinite;
+        }
+
+        @keyframes organic-pulse {
+            0%, 100% {
+                box-shadow:
+                    0 0 40px rgba(168, 85, 247, 0.6),
+                    inset 0 0 30px rgba(255, 255, 255, 0.1);
+            }
+            50% {
+                box-shadow:
+                    0 0 60px rgba(236, 72, 153, 0.8),
+                    inset 0 0 50px rgba(255, 255, 255, 0.2);
+            }
+        }
+
+        .forecast-summary h3 {
+            color: white;
+            margin-bottom: var(--space-4);
+            text-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+        }
+
+        /* Confidence meter as organic vein */
+        .confidence-vein {
+            height: 20px;
+            background: var(--deep-gray);
+            border-radius: var(--radius-md);
+            overflow: hidden;
+            position: relative;
+            margin-top: var(--space-2);
+        }
+
+        .confidence-vein::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            height: 100%;
+            width: var(--confidence, 0%);
+            background: linear-gradient(90deg, var(--glitch-green), var(--cyber-cyan));
+            box-shadow: 0 0 20px var(--glitch-green);
+            animation: pulse-vein 2s ease-in-out infinite;
+        }
+
+        @keyframes pulse-vein {
+            0%, 100% {
+                opacity: 0.8;
+            }
+            50% {
+                opacity: 1;
+            }
+        }
+
+        /* Loading spinner with glitch */
+        .loading-oracle {
+            text-align: center;
+            padding: var(--space-16);
+        }
+
+        .loading-oracle .spinner {
+            width: 80px;
+            height: 80px;
+            border: 4px solid var(--deep-gray);
+            border-top: 4px solid var(--neon-purple);
+            border-right: 4px solid var(--electric-pink);
+            border-radius: 50%;
+            animation: spin 1s linear infinite, glitch 0.3s infinite;
+            margin: 0 auto var(--space-6);
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .loading-oracle p {
+            color: var(--cyber-cyan);
+            font-size: 1.25rem;
+            animation: glitch-text 2s infinite;
+        }
+
+        /* Insight cards with drip effect */
+        .insight-card {
+            background: var(--deep-gray);
+            border-left: 4px solid var(--neon-purple);
+            padding: var(--space-4);
+            margin-bottom: var(--space-4);
+            border-radius: var(--radius-sm);
+            position: relative;
+            overflow: visible;
+        }
+
+        .insight-card::after {
+            content: '';
+            position: absolute;
+            bottom: -8px;
+            left: 20%;
+            width: 60%;
+            height: 12px;
+            background: linear-gradient(to bottom, var(--neon-purple), transparent);
+            filter: blur(4px);
+            animation: drip-slow 3s ease-in-out infinite;
+        }
+
+        /* Mobile responsive */
+        @media (max-width: 768px) {
+            .oracle-face {
+                width: 80px;
+                height: 80px;
+                font-size: 30px;
+                top: 10px;
+                right: 10px;
+            }
+
+            .oracle-header h1 {
+                font-size: 2.5rem;
+            }
+
+            .algorithm-selection {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Data Fragments Background -->
+    <div class="data-fragments" id="data-fragments"></div>
+
+    <!-- Oracle Network Face Mascot -->
+    <div class="oracle-face" id="oracle-face">
+        🔮
+    </div>
+
+    <div class="container">
+        <!-- Header -->
+        <header class="oracle-header">
+            <h1 class="neon-text glitch-text" data-text="BAYESIAN SOPHIARCH">BAYESIAN SOPHIARCH</h1>
+            <p class="drip-text" data-text="Oracle's Nightmare Chamber • Probabilistic Visions">
+                Oracle's Nightmare Chamber • Probabilistic Visions
+            </p>
+        </header>
+
+        <!-- Configuration Section -->
+        <div class="grid grid-2">
+            <!-- Forecast Configuration -->
+            <div class="grotesque-card melting-card forecast-config-card">
+                <h2>📊 Forecast Configuration</h2>
+
+                <div class="form-group">
+                    <label class="form-label">Problem Statement</label>
+                    <textarea class="form-textarea" id="problem" rows="4" placeholder="Enter your forecasting problem (e.g., Q4 revenue forecast, market trend analysis)">Demo probabilistic forecast</textarea>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">Forecast Horizons</label>
+                    <div class="flex" style="flex-wrap: wrap; gap: var(--space-2);">
+                        <div class="horizon-tag active" data-horizon="1d">1 Day</div>
+                        <div class="horizon-tag active" data-horizon="1w">1 Week</div>
+                        <div class="horizon-tag active" data-horizon="1m">1 Month</div>
+                        <div class="horizon-tag" data-horizon="3m">3 Months</div>
+                        <div class="horizon-tag" data-horizon="6m">6 Months</div>
+                        <div class="horizon-tag" data-horizon="1y">1 Year</div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">Confidence Threshold (%)</label>
+                    <input type="number" class="form-input" id="confidence-threshold" min="50" max="99" value="80">
+                </div>
+
+                <button class="neon-button" id="run-forecast" style="width: 100%;">
+                    🚀 Run Forecast
+                </button>
+            </div>
+
+            <!-- Algorithm Selection -->
+            <div class="grotesque-card algorithm-card">
+                <h2>🧠 Algorithm Selection</h2>
+
+                <div class="algorithm-selection">
+                    <div class="algorithm-option selected" data-algorithm="particle_filter">
+                        <h4>Particle Filter</h4>
+                        <p>Sequential Monte Carlo</p>
+                        <small>⚡ Fast • Real-time</small>
+                    </div>
+
+                    <div class="algorithm-option" data-algorithm="gaussian_process">
+                        <h4>Gaussian Process</h4>
+                        <p>Regression with uncertainty</p>
+                        <small>📊 Smooth trends</small>
+                    </div>
+
+                    <div class="algorithm-option" data-algorithm="nuts_sampler">
+                        <h4>NUTS Sampler</h4>
+                        <p>Hamiltonian Monte Carlo</p>
+                        <small>🎯 High quality</small>
+                    </div>
+
+                    <div class="algorithm-option" data-algorithm="ensemble">
+                        <h4>Ensemble</h4>
+                        <p>Multiple algorithms</p>
+                        <small>🛡️ Robust</small>
+                    </div>
+                </div>
+
+                <div class="form-group mt-6">
+                    <label class="form-label">Number of Particles</label>
+                    <input type="number" class="form-input" id="num-particles" min="100" max="5000" step="100" value="500">
+                    <p style="font-size: 0.875rem; color: var(--silver-sheen); margin-top: var(--space-2);">
+                        More particles = higher accuracy, slower performance
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Results Section -->
+        <div class="results-container mt-8" id="results-section">
+            <!-- Loading State -->
+            <div class="loading-oracle" id="loading-indicator">
+                <div class="spinner"></div>
+                <p>RUNNING BAYESIAN INFERENCE...</p>
+                <p class="glitch-text" style="font-size: 1rem; margin-top: var(--space-4);">
+                    Exploring probability space...
+                </p>
+            </div>
+
+            <!-- Error Container -->
+            <div id="error-container"></div>
+
+            <!-- Results -->
+            <div id="results-container" style="display: none;">
+                <!-- Forecast Summary -->
+                <div class="forecast-summary">
+                    <h3>📊 ORACLE'S VISION</h3>
+                    <div class="grid grid-2">
+                        <div>
+                            <p style="color: rgba(255, 255, 255, 0.9); margin: 0; font-size: 0.875rem;">Overall Trend</p>
+                            <p style="color: white; font-size: 2rem; font-weight: 900; margin: 0;">POSITIVE</p>
+                        </div>
+                        <div>
+                            <p style="color: rgba(255, 255, 255, 0.9); margin: 0; font-size: 0.875rem;">Confidence</p>
+                            <p style="color: white; font-size: 2rem; font-weight: 900; margin: 0;">92.5%</p>
+                            <div class="confidence-vein" style="--confidence: 92.5%;"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Horizon Results -->
+                <h2 class="neon-text mb-6">HORIZON FORECASTS</h2>
+                <div class="grid grid-3">
+                    <div class="grotesque-card">
+                        <h3 style="color: var(--cyber-cyan);">⏱️ 1 WEEK</h3>
+                        <div class="insight-card">
+                            <p style="margin: 0; color: var(--silver-sheen);"><strong>Mean:</strong> +0.15</p>
+                            <p style="margin: 0; color: var(--silver-sheen);"><strong>Uncertainty:</strong> ±0.03</p>
+                            <p style="margin: 0; color: var(--glitch-green);"><strong>Confidence:</strong> 94.2%</p>
+                        </div>
+                    </div>
+
+                    <div class="grotesque-card">
+                        <h3 style="color: var(--electric-pink);">⏱️ 1 MONTH</h3>
+                        <div class="insight-card">
+                            <p style="margin: 0; color: var(--silver-sheen);"><strong>Mean:</strong> +0.22</p>
+                            <p style="margin: 0; color: var(--silver-sheen);"><strong>Uncertainty:</strong> ±0.05</p>
+                            <p style="margin: 0; color: var(--glitch-green);"><strong>Confidence:</strong> 89.7%</p>
+                        </div>
+                    </div>
+
+                    <div class="grotesque-card">
+                        <h3 style="color: var(--ambient-purple);">⏱️ 3 MONTHS</h3>
+                        <div class="insight-card">
+                            <p style="margin: 0; color: var(--silver-sheen);"><strong>Mean:</strong> +0.35</p>
+                            <p style="margin: 0; color: var(--silver-sheen);"><strong>Uncertainty:</strong> ±0.08</p>
+                            <p style="margin: 0; color: var(--alert-orange);"><strong>Confidence:</strong> 76.3%</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Export Buttons -->
+                <div class="flex mt-8" style="gap: var(--space-4);">
+                    <button class="neon-button cyan">📄 Export JSON</button>
+                    <button class="neon-button pink">📝 Export Markdown</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Initialize data fragments
+        function createDataFragments() {
+            const container = document.getElementById('data-fragments');
+            const fragments = [
+                'Σ(x)', 'β=0.95', 'p(θ|D)', '∫f(x)dx', 'N(μ,σ²)',
+                'MCMC', 'HMC', 'P(A|B)', 'λ=2.5', 'KL-DIV',
+                'Bayes', '∇L', 'ESS', 'NUTS', 'GP'
+            ];
+
+            for (let i = 0; i < 30; i++) {
+                const fragment = document.createElement('div');
+                fragment.className = 'data-fragment';
+                fragment.textContent = fragments[Math.floor(Math.random() * fragments.length)];
+                fragment.style.left = Math.random() * 100 + '%';
+                fragment.style.top = Math.random() * 100 + '%';
+                fragment.style.animationDelay = Math.random() * 15 + 's';
+                fragment.style.fontSize = (Math.random() * 8 + 10) + 'px';
+                container.appendChild(fragment);
+            }
+        }
+
+        // Oracle face animation
+        const oracleFace = document.getElementById('oracle-face');
+        const runButton = document.getElementById('run-forecast');
+        const resultsSection = document.getElementById('results-section');
+        const loadingIndicator = document.getElementById('loading-indicator');
+        const resultsContainer = document.getElementById('results-container');
+
+        runButton.addEventListener('click', () => {
+            // Change oracle to scanning mode
+            oracleFace.classList.add('scanning');
+            oracleFace.textContent = '👁️';
+
+            // Show results section with loading
+            resultsSection.classList.add('show');
+            loadingIndicator.style.display = 'block';
+            resultsContainer.style.display = 'none';
+
+            // Simulate forecast (replace with actual API call)
+            setTimeout(() => {
+                loadingIndicator.style.display = 'none';
+                resultsContainer.style.display = 'block';
+
+                // Crystallize oracle (success state)
+                oracleFace.classList.remove('scanning');
+                oracleFace.classList.add('crystallized');
+                oracleFace.textContent = '💎';
+
+                // Reset after 5 seconds
+                setTimeout(() => {
+                    oracleFace.classList.remove('crystallized');
+                    oracleFace.textContent = '🔮';
+                }, 5000);
+            }, 3000);
+        });
+
+        // Horizon tag selection
+        document.querySelectorAll('.horizon-tag').forEach(tag => {
+            tag.addEventListener('click', () => {
+                tag.classList.toggle('active');
+            });
+        });
+
+        // Algorithm selection
+        document.querySelectorAll('.algorithm-option').forEach(option => {
+            option.addEventListener('click', () => {
+                document.querySelectorAll('.algorithm-option').forEach(opt => {
+                    opt.classList.remove('selected');
+                });
+                option.classList.add('selected');
+            });
+        });
+
+        // Initialize on load
+        document.addEventListener('DOMContentLoaded', () => {
+            createDataFragments();
+        });
+    </script>
+</body>
+</html>

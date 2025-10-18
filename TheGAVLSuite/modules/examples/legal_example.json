@@ -1,0 +1,13 @@
+{
+  "matter": "Software licensing compliance review",
+  "jurisdiction": "CA",
+  "client": "TechStart Inc.",
+  "options": {
+    "research_depth": "comprehensive",
+    "include_precedents": true,
+    "regulatory_frameworks": ["CCPA", "GDPR"],
+    "contract_analysis": true,
+    "risk_assessment": true,
+    "remediation_plan": true
+  }
+}

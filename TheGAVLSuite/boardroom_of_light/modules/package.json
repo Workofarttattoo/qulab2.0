@@ -1,0 +1,12 @@
+{
+  "name": "@gavl/noigela",
+  "version": "0.1.0",
+  "description": "No'iGeL(a) conscience advisor module",
+  "type": "module",
+  "main": "src/noigela.js",
+  "exports": {
+    ".": "./src/noigela.js"
+  },
+  "keywords": ["gavel", "advisor", "boardroom", "ai"],
+  "license": "UNLICENSED"
+}

@@ -1,0 +1,20 @@
+{
+  "name": "boardroom-of-light",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "Boardroom of Light simulation suite with reactive personas and consensus modeling.",
+  "scripts": {
+    "simulate": "node src/boardroom-simulator.js",
+    "multiverse": "node src/boardroom-multiverse.js",
+    "lint": "echo 'TODO: add linting'",
+    "gui": "node web/server.js",
+    "conscience": "node src/jimminy-cricket-server.mjs",
+    "jury": "node src/quantum-jury-cli.js",
+    "test:smoke": "node tests/jimminy-smoke.mjs"
+  },
+  "dependencies": {
+    "@gavl/noigela": "file:modules",
+    "express": "^4.19.2"
+  }
+}

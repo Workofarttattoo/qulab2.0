@@ -1,0 +1,1019 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Boardroom of Light - Corporation of Light</title>
+
+  <!-- Corporation of Light Design System -->
+  <link rel="stylesheet" href="/Users/noone/TheGAVLSuite/corporation-of-light.css" />
+
+  <style>
+    /* Copyright (c) 2025 Joshua Hendricks Cole (DBA: Corporation of Light). All Rights Reserved. PATENT PENDING. */
+
+    /* Boardroom-Specific: Multiverse Boardroom Horror Theme */
+    body {
+      background: linear-gradient(180deg, var(--nightmare-black) 0%, var(--void-black) 100%);
+      position: relative;
+      overflow-x: hidden;
+    }
+
+    /* Reality Tear Background Effect */
+    .reality-tear {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 0;
+      overflow: hidden;
+    }
+
+    .reality-tear::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 50%;
+      width: 4px;
+      height: 100%;
+      background: linear-gradient(180deg,
+        var(--neon-purple) 0%,
+        var(--electric-pink) 50%,
+        var(--cyber-cyan) 100%);
+      box-shadow: 0 0 30px var(--neon-purple), 0 0 60px var(--electric-pink);
+      animation: reality-pulse 3s ease-in-out infinite;
+    }
+
+    @keyframes reality-pulse {
+      0%, 100% { transform: translateX(-50%) scaleY(1); opacity: 0.6; }
+      50% { transform: translateX(-50%) scaleY(1.1); opacity: 1; }
+    }
+
+    .reality-tear::after {
+      content: 'LIGHT REALM ← → AUTHENTIC REALM';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%) rotate(-90deg);
+      font-family: var(--font-display);
+      font-size: 0.7rem;
+      letter-spacing: 0.3em;
+      color: var(--cyber-cyan);
+      text-shadow: 0 0 10px var(--cyber-cyan);
+      opacity: 0.5;
+      animation: glitch 4s infinite;
+    }
+
+    /* Main Content Container */
+    main {
+      position: relative;
+      z-index: 1;
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 2rem;
+    }
+
+    /* Header with Multiverse Title */
+    .multiverse-header {
+      text-align: center;
+      margin-bottom: 3rem;
+      position: relative;
+    }
+
+    .multiverse-header h1 {
+      font-size: 3rem;
+      margin: 0 0 1rem 0;
+      background: linear-gradient(90deg, var(--neon-purple), var(--electric-pink), var(--cyber-cyan));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      animation: glitch 2s infinite;
+      position: relative;
+    }
+
+    .multiverse-header h1::before {
+      content: attr(data-text);
+      position: absolute;
+      left: -2px;
+      text-shadow: 2px 0 var(--glitch-red);
+      animation: glitch-1 0.65s infinite;
+      clip-path: polygon(0 0, 100% 0, 100% 45%, 0 45%);
+    }
+
+    .multiverse-header h1::after {
+      content: attr(data-text);
+      position: absolute;
+      left: 2px;
+      text-shadow: -2px 0 var(--cyber-cyan);
+      animation: glitch-2 0.65s infinite;
+      clip-path: polygon(0 55%, 100% 55%, 100% 100%, 0 100%);
+    }
+
+    /* Control Cards with Asymmetrical Grotesque Design */
+    .controls {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+      gap: 2rem;
+      margin-bottom: 3rem;
+    }
+
+    .control-card {
+      background: var(--deep-gray);
+      border: 2px solid transparent;
+      border-image: linear-gradient(135deg, var(--neon-purple), var(--electric-pink)) 1;
+      padding: 2rem;
+      clip-path: polygon(0 0, 100% 0, 100% 85%, 95% 100%, 0 100%, 0 10%);
+      box-shadow:
+        0 10px 40px rgba(168, 85, 247, 0.3),
+        inset 0 0 20px rgba(168, 85, 247, 0.1);
+      position: relative;
+      transition: all 0.3s ease;
+    }
+
+    .control-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: linear-gradient(135deg, var(--neon-purple) 0%, transparent 50%);
+      opacity: 0;
+      transition: opacity 0.3s ease;
+      pointer-events: none;
+    }
+
+    .control-card:hover::before {
+      opacity: 0.1;
+    }
+
+    .control-card:hover {
+      transform: translateY(-5px);
+      box-shadow:
+        0 15px 50px rgba(168, 85, 247, 0.5),
+        inset 0 0 30px rgba(168, 85, 247, 0.2);
+    }
+
+    .control-card h2 {
+      margin: 0 0 1.5rem 0;
+      color: var(--electric-pink);
+      font-size: 1.5rem;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      text-shadow: 0 0 10px var(--electric-pink);
+    }
+
+    /* Form Controls with Cyberpunk Aesthetic */
+    label {
+      display: block;
+      margin-bottom: 1.5rem;
+      font-family: var(--font-body);
+      color: var(--text-primary);
+      font-size: 0.9rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    select, input[type="number"] {
+      width: 100%;
+      margin-top: 0.5rem;
+      padding: 0.75rem 1rem;
+      background: var(--nightmare-black);
+      border: 1px solid var(--neon-purple);
+      color: var(--text-primary);
+      font-family: var(--font-body);
+      font-size: 1rem;
+      border-radius: 0;
+      transition: all 0.3s ease;
+    }
+
+    select:focus, input[type="number"]:focus {
+      outline: none;
+      border-color: var(--electric-pink);
+      box-shadow: 0 0 20px rgba(236, 72, 153, 0.5);
+      background: rgba(168, 85, 247, 0.05);
+    }
+
+    /* Quantum Toggle Switch */
+    .switch {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      cursor: pointer;
+      user-select: none;
+    }
+
+    .switch input[type="checkbox"] {
+      width: 50px;
+      height: 26px;
+      appearance: none;
+      background: var(--nightmare-black);
+      border: 2px solid var(--neon-purple);
+      position: relative;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .switch input[type="checkbox"]::before {
+      content: '';
+      position: absolute;
+      width: 18px;
+      height: 18px;
+      background: var(--neon-purple);
+      top: 2px;
+      left: 2px;
+      transition: all 0.3s ease;
+      box-shadow: 0 0 10px var(--neon-purple);
+    }
+
+    .switch input[type="checkbox"]:checked {
+      background: rgba(168, 85, 247, 0.3);
+      border-color: var(--cyber-cyan);
+    }
+
+    .switch input[type="checkbox"]:checked::before {
+      left: 24px;
+      background: var(--cyber-cyan);
+      box-shadow: 0 0 15px var(--cyber-cyan);
+    }
+
+    /* Action Buttons */
+    button {
+      width: 100%;
+      padding: 1rem 2rem;
+      font-family: var(--font-display);
+      font-size: 1.1rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      border: none;
+      cursor: pointer;
+      position: relative;
+      overflow: hidden;
+      transition: all 0.3s ease;
+      margin-top: 1rem;
+    }
+
+    button.primary {
+      background: linear-gradient(135deg, var(--neon-purple), var(--electric-pink));
+      color: var(--text-primary);
+      box-shadow: 0 5px 20px rgba(168, 85, 247, 0.5);
+    }
+
+    button.accent {
+      background: linear-gradient(135deg, var(--electric-pink), var(--cyber-cyan));
+      color: var(--nightmare-black);
+      box-shadow: 0 5px 20px rgba(236, 72, 153, 0.5);
+    }
+
+    button::before {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 0;
+      height: 0;
+      background: rgba(255, 255, 255, 0.3);
+      border-radius: 50%;
+      transform: translate(-50%, -50%);
+      transition: width 0.6s, height 0.6s;
+    }
+
+    button:hover::before {
+      width: 300px;
+      height: 300px;
+    }
+
+    button:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 30px rgba(168, 85, 247, 0.7);
+    }
+
+    button:active {
+      transform: translateY(0);
+    }
+
+    /* Advisor Card - Network Face Variant */
+    .advisor-card {
+      background: var(--deep-gray);
+      border: 2px solid var(--neon-purple);
+      padding: 1.5rem;
+      clip-path: polygon(5% 0%, 100% 0%, 100% 80%, 95% 100%, 0% 100%, 0% 20%);
+      position: relative;
+      transition: all 0.3s ease;
+      cursor: pointer;
+    }
+
+    .advisor-card::before {
+      content: '👁️';
+      position: absolute;
+      top: -10px;
+      right: -10px;
+      font-size: 2rem;
+      opacity: 0;
+      transition: opacity 0.3s ease;
+      filter: drop-shadow(0 0 10px var(--neon-purple));
+    }
+
+    .advisor-card:hover::before {
+      opacity: 1;
+      animation: pulse-oracle 1s ease-in-out infinite;
+    }
+
+    .advisor-card:hover {
+      border-color: var(--electric-pink);
+      transform: translateY(-5px) rotate(1deg);
+      box-shadow: 0 15px 40px rgba(236, 72, 153, 0.6);
+    }
+
+    .advisor-role {
+      font-size: 1.2rem;
+      font-weight: 700;
+      color: var(--electric-pink);
+      text-transform: uppercase;
+      margin-bottom: 0.5rem;
+      text-shadow: 0 0 10px var(--electric-pink);
+    }
+
+    .advisor-thoughts {
+      font-size: 0.9rem;
+      color: var(--text-secondary);
+      font-family: var(--font-body);
+      margin-bottom: 1rem;
+      font-style: italic;
+    }
+
+    .advisor-pressure {
+      font-size: 0.8rem;
+      color: var(--cyber-cyan);
+      border-top: 1px solid rgba(6, 182, 212, 0.3);
+      padding-top: 0.5rem;
+      margin-top: 0.5rem;
+    }
+
+    /* Roster Grid */
+    .roster-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 1.5rem;
+      margin-bottom: 3rem;
+    }
+
+    /* Phase Ledger - DNA Strand Timeline */
+    .ledger-timeline {
+      position: relative;
+      padding: 2rem 0;
+      margin: 2rem 0;
+    }
+
+    .ledger-timeline::before {
+      content: '';
+      position: absolute;
+      left: 50%;
+      top: 0;
+      bottom: 0;
+      width: 4px;
+      background: linear-gradient(180deg, var(--neon-purple), var(--electric-pink), var(--cyber-cyan));
+      transform: translateX(-50%);
+      animation: dna-pulse 2s ease-in-out infinite;
+    }
+
+    @keyframes dna-pulse {
+      0%, 100% { box-shadow: 0 0 10px var(--neon-purple); }
+      33% { box-shadow: 0 0 20px var(--electric-pink); }
+      66% { box-shadow: 0 0 15px var(--cyber-cyan); }
+    }
+
+    .phase-node {
+      position: relative;
+      margin: 2rem 0;
+      padding: 1.5rem;
+      background: var(--deep-gray);
+      border: 2px solid var(--neon-purple);
+      clip-path: polygon(0% 0%, 95% 0%, 100% 50%, 95% 100%, 0% 100%);
+      margin-left: calc(50% + 30px);
+      width: calc(50% - 40px);
+      transition: all 0.3s ease;
+    }
+
+    .phase-node:nth-child(even) {
+      margin-left: 0;
+      margin-right: calc(50% + 30px);
+      clip-path: polygon(5% 0%, 100% 0%, 100% 100%, 5% 100%, 0% 50%);
+    }
+
+    .phase-node::before {
+      content: '';
+      position: absolute;
+      width: 20px;
+      height: 20px;
+      background: var(--electric-pink);
+      border-radius: 50%;
+      box-shadow: 0 0 20px var(--electric-pink);
+      top: 50%;
+      transform: translateY(-50%);
+    }
+
+    .phase-node:nth-child(odd)::before {
+      left: -30px;
+    }
+
+    .phase-node:nth-child(even)::before {
+      right: -30px;
+    }
+
+    .phase-node:hover {
+      background: rgba(168, 85, 247, 0.2);
+      border-color: var(--electric-pink);
+      transform: scale(1.05);
+    }
+
+    .phase-round {
+      font-size: 0.8rem;
+      color: var(--cyber-cyan);
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      margin-bottom: 0.5rem;
+    }
+
+    .phase-content {
+      color: var(--text-primary);
+      font-family: var(--font-body);
+      font-size: 0.9rem;
+      line-height: 1.6;
+    }
+
+    /* Multiverse View with Reality Split */
+    .multiverse-view {
+      margin-top: 4rem;
+      position: relative;
+    }
+
+    .comparison-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 4rem;
+      position: relative;
+    }
+
+    .comparison-grid::before {
+      content: '';
+      position: absolute;
+      left: 50%;
+      top: -2rem;
+      bottom: -2rem;
+      width: 3px;
+      background: linear-gradient(180deg, var(--neon-purple), var(--electric-pink));
+      transform: translateX(-50%);
+      box-shadow: 0 0 30px var(--electric-pink);
+      animation: reality-pulse 3s ease-in-out infinite;
+    }
+
+    .realm-section h3 {
+      text-align: center;
+      font-size: 1.8rem;
+      margin-bottom: 2rem;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+    }
+
+    .realm-section.light h3 {
+      color: var(--neon-purple);
+      text-shadow: 0 0 20px var(--neon-purple);
+    }
+
+    .realm-section.authentic h3 {
+      color: var(--cyber-cyan);
+      text-shadow: 0 0 20px var(--cyber-cyan);
+    }
+
+    /* Evidence List with Organic Cards */
+    .evidence-list {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+      margin-top: 2rem;
+    }
+
+    .evidence-card {
+      background: var(--deep-gray);
+      border-left: 4px solid var(--electric-pink);
+      padding: 1.5rem;
+      position: relative;
+      animation: drip-in 0.5s ease-out;
+    }
+
+    @keyframes drip-in {
+      from {
+        opacity: 0;
+        transform: translateY(-20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .evidence-card::before {
+      content: '⚠️';
+      position: absolute;
+      left: -20px;
+      top: 50%;
+      transform: translateY(-50%);
+      font-size: 1.5rem;
+      animation: pulse-oracle 2s ease-in-out infinite;
+    }
+
+    .evidence-title {
+      font-size: 1rem;
+      font-weight: 700;
+      color: var(--electric-pink);
+      margin-bottom: 0.5rem;
+      text-transform: uppercase;
+    }
+
+    .evidence-description {
+      color: var(--text-secondary);
+      font-family: var(--font-body);
+      font-size: 0.9rem;
+      line-height: 1.6;
+    }
+
+    /* Loading State - Crystallization Effect */
+    .loading-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(10, 10, 10, 0.95);
+      z-index: 9999;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 2rem;
+    }
+
+    .loading-spinner {
+      width: 100px;
+      height: 100px;
+      border: 4px solid transparent;
+      border-top-color: var(--neon-purple);
+      border-right-color: var(--electric-pink);
+      border-bottom-color: var(--cyber-cyan);
+      border-radius: 50%;
+      animation: spin 1s linear infinite, crystallize 2s ease-in-out infinite;
+    }
+
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+
+    .loading-text {
+      font-family: var(--font-display);
+      font-size: 1.5rem;
+      color: var(--electric-pink);
+      text-transform: uppercase;
+      letter-spacing: 0.2em;
+      animation: glitch 0.5s infinite;
+    }
+
+    /* Hidden State */
+    .hidden {
+      display: none;
+    }
+
+    /* Responsive Design */
+    @media (max-width: 768px) {
+      .controls {
+        grid-template-columns: 1fr;
+      }
+
+      .comparison-grid {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+      }
+
+      .phase-node,
+      .phase-node:nth-child(even) {
+        margin-left: 30px;
+        margin-right: 0;
+        width: calc(100% - 40px);
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Reality Tear Background -->
+  <div class="reality-tear"></div>
+
+  <!-- Main Content -->
+  <main>
+    <!-- Header -->
+    <header class="multiverse-header">
+      <h1 class="neon-text" data-text="BOARDROOM OF LIGHT">BOARDROOM OF LIGHT</h1>
+      <p style="color: var(--text-secondary); font-family: var(--font-body); text-align: center; font-size: 1.1rem;">
+        Navigate the multiverse where executives deliberate in parallel realities
+      </p>
+    </header>
+
+    <!-- Controls Section -->
+    <section class="controls">
+      <!-- Single Boardroom Card -->
+      <div class="control-card">
+        <h2>⚡ Single Realm</h2>
+        <label>
+          Reality Selection
+          <select id="realm-select">
+            <option value="light">🔮 Boardroom of Light</option>
+            <option value="authentic">🌑 Adjacent Boardroom</option>
+          </select>
+        </label>
+        <label>
+          Advisor Seats
+          <input id="seats-input" type="number" min="3" max="12" value="7" />
+        </label>
+        <label>
+          Deliberation Rounds
+          <input id="rounds-input" type="number" min="1" max="6" value="3" />
+        </label>
+        <label class="switch">
+          <input id="quantum-toggle" type="checkbox" />
+          <span>⚛️ Quantum Consensus</span>
+        </label>
+        <button id="run-single" class="primary">▶ Enter Boardroom</button>
+      </div>
+
+      <!-- Multiverse Comparison Card -->
+      <div class="control-card">
+        <h2>🌀 Multiverse Split</h2>
+        <p style="color: var(--text-secondary); font-size: 0.9rem; margin-bottom: 1.5rem; font-style: italic;">
+          Tear reality open. Run both boardrooms simultaneously and witness the divergence.
+        </p>
+        <label>
+          Advisor Seats
+          <input id="multi-seats" type="number" min="3" max="12" value="7" />
+        </label>
+        <label>
+          Deliberation Rounds
+          <input id="multi-rounds" type="number" min="1" max="6" value="3" />
+        </label>
+        <label class="switch">
+          <input id="multi-quantum" type="checkbox" />
+          <span>⚛️ Quantum Consensus</span>
+        </label>
+        <button id="run-multiverse" class="accent">🔀 Split Realities</button>
+      </div>
+    </section>
+
+    <!-- Single Boardroom View -->
+    <section id="boardroom-view" class="panel hidden">
+      <h2 style="color: var(--neon-purple); font-size: 2rem; margin-bottom: 2rem; text-align: center; text-transform: uppercase;">
+        👥 Advisor Roster
+      </h2>
+      <div id="roster" class="roster-grid"></div>
+
+      <h3 style="color: var(--electric-pink); font-size: 1.8rem; margin: 3rem 0 2rem 0; text-align: center; text-transform: uppercase;">
+        🧬 Phase Ledger - DNA Timeline
+      </h3>
+      <div id="ledger" class="ledger-timeline"></div>
+    </section>
+
+    <!-- Multiverse Comparison View -->
+    <section id="multiverse-view" class="panel multiverse-view hidden">
+      <h2 style="color: var(--electric-pink); font-size: 2.5rem; margin-bottom: 3rem; text-align: center; text-transform: uppercase;">
+        🌐 Multiverse Insights
+      </h2>
+
+      <!-- Comparison Grid -->
+      <div class="comparison-grid">
+        <div class="realm-section light">
+          <h3>🔮 Light Realm</h3>
+          <div id="light-roster" class="roster-grid"></div>
+        </div>
+
+        <div class="realm-section authentic">
+          <h3>🌑 Authentic Realm</h3>
+          <div id="authentic-roster" class="roster-grid"></div>
+        </div>
+      </div>
+
+      <!-- Evidence & Discrepancies -->
+      <h3 style="color: var(--cyber-cyan); font-size: 1.8rem; margin: 4rem 0 2rem 0; text-align: center; text-transform: uppercase;">
+        ⚠️ Reality Fractures - Evidence & Accusations
+      </h3>
+      <div id="evidence" class="evidence-list"></div>
+    </section>
+  </main>
+
+  <!-- Loading Overlay -->
+  <div id="loading-overlay" class="loading-overlay hidden">
+    <div class="loading-spinner"></div>
+    <div class="loading-text">SIMULATING BOARDROOM...</div>
+    <p style="color: var(--text-secondary); font-family: var(--font-body); text-align: center;">
+      Advisors are deliberating across quantum timelines
+    </p>
+  </div>
+
+  <!-- GAVL Wizard Component -->
+  <script src="/wizard-component.js"></script>
+  <script>
+    window.GAVLWizardConfig = {
+      toolName: "Boardroom of Light",
+      storageKey: "boardroom_wizard_seen",
+      steps: [
+        {
+          title: "Welcome to the Boardroom of Light! 🏛️",
+          content: `
+            <p>
+              The Boardroom of Light simulates <strong>executive deliberations</strong> using AI advisors
+              to help you explore decisions from multiple perspectives across parallel realities.
+            </p>
+            <div class="gavl-tip-box">
+              <h4>💡 What This Tool Does</h4>
+              <p>
+                Run simulated board meetings with 3-12 virtual advisors who debate issues,
+                share perspectives, and reach consensus. Compare different "realities" to
+                see how decisions might differ in alternate scenarios.
+              </p>
+            </div>
+            <div class="gavl-example-box">
+              <h4>✅ Use Cases:</h4>
+              <ul>
+                <li><strong>Strategic Planning:</strong> Test business strategies with diverse viewpoints</li>
+                <li><strong>Risk Analysis:</strong> Explore potential pitfalls before committing</li>
+                <li><strong>Decision Validation:</strong> See if your idea holds up to scrutiny</li>
+                <li><strong>Scenario Comparison:</strong> Compare "light" vs "authentic" realities</li>
+              </ul>
+            </div>
+          `
+        },
+        {
+          title: "Two Modes: Single vs Multiverse 🌐",
+          content: `
+            <p>
+              The tool offers two simulation modes, each with different purposes.
+            </p>
+            <div class="gavl-example-box">
+              <h4>🎯 Single Boardroom Mode</h4>
+              <p>
+                Run one boardroom deliberation in either the "Light" or "Authentic" realm.
+              </p>
+              <ul>
+                <li><strong>Light Realm:</strong> Optimistic, collaborative advisors</li>
+                <li><strong>Authentic Realm:</strong> Realistic, sometimes contentious advisors</li>
+                <li><strong>Best for:</strong> Quick validation of a single scenario</li>
+              </ul>
+            </div>
+            <div class="gavl-example-box">
+              <h4>🌍 Multiverse Comparison Mode</h4>
+              <p>
+                Runs both Light and Authentic boardrooms side-by-side, then compares results.
+              </p>
+              <ul>
+                <li>See how optimistic vs realistic advisors differ</li>
+                <li>Identify areas of agreement and conflict</li>
+                <li>Get "evidence" of discrepancies between realities</li>
+                <li><strong>Best for:</strong> Comprehensive scenario analysis</li>
+              </ul>
+            </div>
+          `
+        },
+        {
+          title: "Configuration Options ⚙️",
+          content: `
+            <p>
+              Customize your boardroom simulation with these settings:
+            </p>
+            <div class="gavl-example-box">
+              <h4>🪑 Seats (3-12)</h4>
+              <p>
+                Number of virtual advisors in the boardroom.
+              </p>
+              <ul>
+                <li><strong>3-5:</strong> Quick, focused deliberations</li>
+                <li><strong>7:</strong> Balanced (recommended default)</li>
+                <li><strong>9-12:</strong> Diverse perspectives, longer runtime</li>
+              </ul>
+            </div>
+            <div class="gavl-example-box">
+              <h4>🔄 Rounds (1-6)</h4>
+              <p>
+                Number of discussion rounds. More rounds = deeper analysis.
+              </p>
+              <ul>
+                <li><strong>1-2:</strong> Quick opinions</li>
+                <li><strong>3:</strong> Standard deliberation (recommended)</li>
+                <li><strong>4-6:</strong> Thorough debate with consensus building</li>
+              </ul>
+            </div>
+            <div class="gavl-tip-box">
+              <h4>⚛️ Quantum Consensus (Optional)</h4>
+              <p>
+                Enable to use quantum-inspired algorithms for decision-making.
+                Adds superposition and entanglement effects to advisor interactions.
+              </p>
+            </div>
+          `
+        },
+        {
+          title: "Reading the Results 📊",
+          content: `
+            <p>
+              After running a simulation, you'll see several sections with insights.
+            </p>
+            <div class="gavl-example-box">
+              <h4>👥 Boardroom Roster</h4>
+              <p>
+                Shows all advisors with their:
+              </p>
+              <ul>
+                <li><strong>Role:</strong> CEO, CFO, CTO, etc.</li>
+                <li><strong>Inner Thoughts:</strong> Private considerations</li>
+                <li><strong>Pressure Points:</strong> What influences them</li>
+                <li><strong>Votes/Stance:</strong> Their position on issues</li>
+              </ul>
+              <p><em>Hover over cards to see Network Face come alive!</em></p>
+            </div>
+            <div class="gavl-example-box">
+              <h4>🧬 DNA Phase Ledger</h4>
+              <p>
+                Timeline showing how the discussion evolved:
+              </p>
+              <ul>
+                <li>Round-by-round progression</li>
+                <li>Key arguments made</li>
+                <li>Voting patterns</li>
+                <li>Consensus formation</li>
+              </ul>
+            </div>
+            <div class="gavl-example-box">
+              <h4>🌐 Multiverse Insights (Comparison Mode)</h4>
+              <p>
+                When comparing realities, you'll also see:
+              </p>
+              <ul>
+                <li><strong>Reality Fractures:</strong> Key differences between realms</li>
+                <li><strong>Evidence:</strong> Specific discrepancies found</li>
+                <li><strong>Accusations:</strong> Conflicting advisor positions</li>
+              </ul>
+            </div>
+          `
+        },
+        {
+          title: "Ready to Simulate! 🚀",
+          content: `
+            <p>
+              You're all set to run your first boardroom simulation in the multiverse!
+            </p>
+            <div class="gavl-tip-box">
+              <h4>💡 Quick Start Recipe</h4>
+              <ol>
+                <li>Start with <strong>Single Realm</strong> mode</li>
+                <li>Choose <strong>🔮 Light realm</strong> for optimistic analysis</li>
+                <li>Set <strong>7 seats</strong> and <strong>3 rounds</strong></li>
+                <li>Click <strong>"▶ Enter Boardroom"</strong></li>
+                <li>Wait 5-10 seconds for simulation</li>
+                <li>Review roster and DNA phase ledger</li>
+                <li>Try <strong>🔀 Split Realities</strong> next!</li>
+              </ol>
+            </div>
+            <div class="gavl-example-box">
+              <h4>🎨 New Visual Features</h4>
+              <ul>
+                <li><strong>Reality Tear:</strong> Visual split showing parallel realms</li>
+                <li><strong>Network Face Advisors:</strong> Hover to see them activate</li>
+                <li><strong>DNA Timeline:</strong> Organic phase progression</li>
+                <li><strong>Glitch Effects:</strong> Reality distortions during transitions</li>
+              </ul>
+            </div>
+            <p style="margin-top: 20px; font-weight: 600; color: #764ba2;">
+              Click "Start Using Tool" to tear open the multiverse! 🌀
+            </p>
+          `
+        }
+      ]
+    };
+  </script>
+
+  <script>
+    /* Copyright (c) 2025 Joshua Hendricks Cole (DBA: Corporation of Light). All Rights Reserved. PATENT PENDING. */
+
+    // Demo functionality for preview
+    const runSingleBtn = document.getElementById('run-single');
+    const runMultiverseBtn = document.getElementById('run-multiverse');
+    const boardroomView = document.getElementById('boardroom-view');
+    const multiverseView = document.getElementById('multiverse-view');
+    const loadingOverlay = document.getElementById('loading-overlay');
+
+    // Mock advisors for demonstration
+    const mockAdvisors = [
+      { role: 'CEO', thoughts: 'Growth at all costs', pressure: 'Shareholder expectations' },
+      { role: 'CFO', thoughts: 'Maintain fiscal discipline', pressure: 'Budget constraints' },
+      { role: 'CTO', thoughts: 'Innovation drives value', pressure: 'Technical debt' },
+      { role: 'COO', thoughts: 'Operational excellence', pressure: 'Efficiency metrics' },
+      { role: 'CMO', thoughts: 'Brand positioning critical', pressure: 'Market share' },
+      { role: 'CHRO', thoughts: 'Talent retention key', pressure: 'Culture alignment' },
+      { role: 'Legal', thoughts: 'Risk mitigation paramount', pressure: 'Compliance requirements' }
+    ];
+
+    const mockPhases = [
+      { round: 'Round 1', content: 'Initial positions shared. CEO advocates aggressive expansion. CFO expresses caution.' },
+      { round: 'Round 2', content: 'CTO proposes phased approach. COO seconds with operational safeguards.' },
+      { round: 'Round 3', content: 'Consensus emerging. Modified proposal gains 85% support across advisors.' }
+    ];
+
+    function createAdvisorCard(advisor) {
+      return `
+        <div class="advisor-card">
+          <div class="advisor-role">${advisor.role}</div>
+          <div class="advisor-thoughts">"${advisor.thoughts}"</div>
+          <div class="advisor-pressure">⚡ Pressure: ${advisor.pressure}</div>
+        </div>
+      `;
+    }
+
+    function createPhaseNode(phase, index) {
+      return `
+        <div class="phase-node">
+          <div class="phase-round">${phase.round}</div>
+          <div class="phase-content">${phase.content}</div>
+        </div>
+      `;
+    }
+
+    function createEvidenceCard(title, description) {
+      return `
+        <div class="evidence-card">
+          <div class="evidence-title">${title}</div>
+          <div class="evidence-description">${description}</div>
+        </div>
+      `;
+    }
+
+    // Single Boardroom Handler
+    runSingleBtn.addEventListener('click', () => {
+      loadingOverlay.classList.remove('hidden');
+      boardroomView.classList.add('hidden');
+      multiverseView.classList.add('hidden');
+
+      setTimeout(() => {
+        loadingOverlay.classList.add('hidden');
+        boardroomView.classList.remove('hidden');
+
+        // Populate roster
+        const roster = document.getElementById('roster');
+        roster.innerHTML = mockAdvisors.map(createAdvisorCard).join('');
+
+        // Populate ledger
+        const ledger = document.getElementById('ledger');
+        ledger.innerHTML = mockPhases.map(createPhaseNode).join('');
+      }, 2000);
+    });
+
+    // Multiverse Comparison Handler
+    runMultiverseBtn.addEventListener('click', () => {
+      loadingOverlay.classList.remove('hidden');
+      boardroomView.classList.add('hidden');
+      multiverseView.classList.add('hidden');
+
+      setTimeout(() => {
+        loadingOverlay.classList.add('hidden');
+        multiverseView.classList.remove('hidden');
+
+        // Populate light realm roster
+        const lightRoster = document.getElementById('light-roster');
+        lightRoster.innerHTML = mockAdvisors.slice(0, 4).map(createAdvisorCard).join('');
+
+        // Populate authentic realm roster
+        const authenticRoster = document.getElementById('authentic-roster');
+        const authenticAdvisors = mockAdvisors.slice(0, 4).map(advisor => ({
+          ...advisor,
+          thoughts: advisor.thoughts + ' (authentic variant)',
+          pressure: advisor.pressure + ' + market volatility'
+        }));
+        authenticRoster.innerHTML = authenticAdvisors.map(createAdvisorCard).join('');
+
+        // Populate evidence
+        const evidence = document.getElementById('evidence');
+        evidence.innerHTML = [
+          createEvidenceCard(
+            'Reality Fracture #1: Risk Tolerance Divergence',
+            'Light realm CEO shows 87% risk tolerance. Authentic realm CEO shows 34% risk tolerance. Delta: 53 percentage points.'
+          ),
+          createEvidenceCard(
+            'Reality Fracture #2: Budget Allocation Conflict',
+            'CFO recommendations differ by $2.3M in R&D allocation. Light realm: $8M. Authentic realm: $5.7M.'
+          ),
+          createEvidenceCard(
+            'Reality Fracture #3: Timeline Consensus Mismatch',
+            'Light realm achieved consensus in Round 2. Authentic realm required 4 rounds. Deliberation efficiency gap detected.'
+          )
+        ].join('');
+      }, 3000);
+    });
+  </script>
+</body>
+</html>
