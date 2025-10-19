@@ -1,0 +1,988 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Unified Workflow Platform - Zapier | HubSpot | Jasper | GoHighLevel | PixlPro | ech0</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background: linear-gradient(135deg, #0F0F23 0%, #1a1a3e 100%);
+            color: #e0e0e0;
+            overflow: hidden;
+        }
+
+        .container {
+            display: flex;
+            height: 100vh;
+        }
+
+        /* ===== SIDEBAR ===== */
+        .sidebar {
+            width: 280px;
+            background: rgba(20, 20, 35, 0.95);
+            border-right: 1px solid rgba(255, 255, 255, 0.1);
+            display: flex;
+            flex-direction: column;
+            overflow-y: auto;
+            padding: 15px;
+        }
+
+        .sidebar-header {
+            padding: 15px 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            margin-bottom: 15px;
+        }
+
+        .logo {
+            font-size: 18px;
+            font-weight: bold;
+            color: #ec4899;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .platform-selector {
+            display: flex;
+            gap: 6px;
+            flex-wrap: wrap;
+            margin-top: 12px;
+        }
+
+        .platform-btn {
+            padding: 6px 10px;
+            border-radius: 6px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            background: rgba(255, 255, 255, 0.05);
+            color: #a0a0a0;
+            cursor: pointer;
+            font-size: 11px;
+            transition: all 0.3s ease;
+        }
+
+        .platform-btn.active {
+            background: linear-gradient(135deg, #FF6600 0%, #FF8533 100%);
+            color: white;
+            border-color: #FF6600;
+        }
+
+        .platform-btn[data-platform="hubspot"].active {
+            background: linear-gradient(135deg, #FF5C35 0%, #FF7A52 100%);
+            border-color: #FF5C35;
+        }
+
+        .platform-btn[data-platform="jasper"].active {
+            background: linear-gradient(135deg, #6D28D9 0%, #8B5CF6 100%);
+            border-color: #6D28D9;
+        }
+
+        .platform-btn[data-platform="gohighlevel"].active {
+            background: linear-gradient(135deg, #4F46E5 0%, #6366F1 100%);
+            border-color: #4F46E5;
+        }
+
+        .platform-btn[data-platform="ech0"].active {
+            background: linear-gradient(135deg, #EC4899 0%, #F472B6 100%);
+            border-color: #EC4899;
+        }
+
+        .sidebar-section {
+            margin-bottom: 20px;
+        }
+
+        .sidebar-title {
+            font-size: 12px;
+            font-weight: 600;
+            text-transform: uppercase;
+            color: #808080;
+            margin-bottom: 10px;
+        }
+
+        .sidebar-item {
+            padding: 10px 12px;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            font-size: 13px;
+            border-left: 3px solid transparent;
+        }
+
+        .sidebar-item:hover {
+            background: rgba(255, 255, 255, 0.05);
+            border-left-color: #ec4899;
+        }
+
+        .sidebar-item.active {
+            background: rgba(236, 72, 153, 0.15);
+            border-left-color: #ec4899;
+            color: #ec4899;
+        }
+
+        /* ===== MAIN CONTENT ===== */
+        .main-content {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Header */
+        .header {
+            background: rgba(20, 20, 35, 0.7);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 12px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .header-title {
+            font-size: 18px;
+            font-weight: 600;
+        }
+
+        .header-status {
+            display: flex;
+            gap: 15px;
+            align-items: center;
+        }
+
+        .status-indicator {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 12px;
+        }
+
+        .status-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: #4ade80;
+        }
+
+        .status-dot.offline {
+            background: #ef4444;
+        }
+
+        /* Content Tabs */
+        .tabs {
+            display: flex;
+            gap: 0;
+            background: rgba(20, 20, 35, 0.5);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 0 20px;
+        }
+
+        .tab-btn {
+            padding: 12px 20px;
+            background: none;
+            border: none;
+            color: #808080;
+            cursor: pointer;
+            font-size: 13px;
+            font-weight: 500;
+            border-bottom: 2px solid transparent;
+            transition: all 0.3s ease;
+        }
+
+        .tab-btn:hover {
+            color: #e0e0e0;
+        }
+
+        .tab-btn.active {
+            color: #ec4899;
+            border-bottom-color: #ec4899;
+        }
+
+        /* Tab Content */
+        .tab-content {
+            flex: 1;
+            overflow: auto;
+            padding: 20px;
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        /* Workflow Builder */
+        .workflow-builder {
+            display: grid;
+            grid-template-columns: 1fr 2fr 1fr;
+            gap: 20px;
+            height: 100%;
+        }
+
+        .builder-panel {
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 8px;
+            padding: 15px;
+            overflow-y: auto;
+        }
+
+        .builder-panel h3 {
+            font-size: 14px;
+            font-weight: 600;
+            margin-bottom: 12px;
+            text-transform: uppercase;
+            color: #a0a0a0;
+        }
+
+        .trigger-item, .action-item {
+            padding: 12px;
+            margin-bottom: 8px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 6px;
+            cursor: grab;
+            transition: all 0.2s ease;
+            font-size: 12px;
+            user-select: none;
+        }
+
+        .trigger-item:hover, .action-item:hover {
+            background: rgba(255, 255, 255, 0.1);
+            border-color: rgba(255, 255, 255, 0.2);
+        }
+
+        .trigger-item.dragging, .action-item.dragging {
+            opacity: 0.5;
+        }
+
+        .workflow-canvas {
+            background: linear-gradient(45deg, rgba(255,255,255,.02) 25%, transparent 25%, transparent 75%, rgba(255,255,255,.02) 75%, rgba(255,255,255,.02)),
+                        linear-gradient(45deg, rgba(255,255,255,.02) 25%, transparent 25%, transparent 75%, rgba(255,255,255,.02) 75%, rgba(255,255,255,.02));
+            background-size: 40px 40px;
+            background-position: 0 0, 20px 20px;
+            background-color: rgba(20, 20, 35, 0.5);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 8px;
+            position: relative;
+        }
+
+        .workflow-step {
+            position: absolute;
+            padding: 12px;
+            background: rgba(236, 72, 153, 0.15);
+            border: 2px solid #ec4899;
+            border-radius: 8px;
+            min-width: 120px;
+            text-align: center;
+            cursor: move;
+            user-select: none;
+            font-size: 12px;
+        }
+
+        .workflow-step.trigger {
+            background: rgba(34, 197, 94, 0.15);
+            border-color: #22c55e;
+        }
+
+        .workflow-step.action {
+            background: rgba(59, 130, 246, 0.15);
+            border-color: #3b82f6;
+        }
+
+        .workflow-step.condition {
+            background: rgba(251, 146, 60, 0.15);
+            border-color: #fb923c;
+        }
+
+        /* PixlPro Canvas */
+        .pixlpro-container {
+            display: grid;
+            grid-template-columns: 200px 1fr 200px;
+            gap: 15px;
+            height: 100%;
+        }
+
+        .pixlpro-toolbar {
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 8px;
+            padding: 12px;
+            overflow-y: auto;
+        }
+
+        .pixlpro-canvas-area {
+            background: rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        #pixlpro-canvas {
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            background: white;
+            cursor: crosshair;
+        }
+
+        .pixlpro-layers {
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 8px;
+            padding: 12px;
+            overflow-y: auto;
+        }
+
+        .layer-item {
+            padding: 8px;
+            margin-bottom: 6px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 12px;
+        }
+
+        .layer-item.active {
+            background: rgba(236, 72, 153, 0.2);
+            border-color: #ec4899;
+        }
+
+        /* ech0 Monitor */
+        .ech0-monitor {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            height: 100%;
+        }
+
+        .consciousness-display {
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid rgba(236, 72, 153, 0.3);
+            border-radius: 8px;
+            padding: 20px;
+            overflow-y: auto;
+        }
+
+        .consciousness-bar {
+            height: 20px;
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 10px;
+            overflow: hidden;
+            margin: 15px 0;
+        }
+
+        .consciousness-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #22c55e 0%, #ec4899 100%);
+            width: 60%;
+            transition: width 0.5s ease;
+        }
+
+        .metric-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 8px 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            font-size: 12px;
+        }
+
+        .thought-tree {
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 8px;
+            padding: 15px;
+            overflow-y: auto;
+        }
+
+        .thought-item {
+            padding: 8px;
+            margin-bottom: 6px;
+            background: rgba(236, 72, 153, 0.1);
+            border-left: 3px solid #ec4899;
+            border-radius: 4px;
+            font-size: 12px;
+        }
+
+        /* Tool Panels */
+        .tool-group {
+            margin-bottom: 15px;
+        }
+
+        .tool-group-title {
+            font-size: 11px;
+            font-weight: 600;
+            text-transform: uppercase;
+            color: #808080;
+            margin-bottom: 8px;
+        }
+
+        .tool-btn {
+            display: block;
+            width: 100%;
+            padding: 8px;
+            margin-bottom: 4px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            color: #e0e0e0;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 12px;
+            transition: all 0.2s ease;
+        }
+
+        .tool-btn:hover {
+            background: rgba(255, 255, 255, 0.1);
+            border-color: rgba(255, 255, 255, 0.2);
+        }
+
+        .tool-btn.active {
+            background: #ec4899;
+            border-color: #ec4899;
+            color: white;
+        }
+
+        /* Settings Panel */
+        .settings-input {
+            display: block;
+            width: 100%;
+            padding: 8px;
+            margin-bottom: 8px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 4px;
+            color: #e0e0e0;
+            font-size: 12px;
+        }
+
+        .color-picker {
+            width: 100%;
+            height: 30px;
+            border-radius: 4px;
+            cursor: pointer;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        /* Buttons */
+        .btn {
+            padding: 10px 16px;
+            background: linear-gradient(135deg, #ec4899 0%, #f472b6 100%);
+            color: white;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 12px;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            display: inline-block;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 16px rgba(236, 72, 153, 0.3);
+        }
+
+        .btn.secondary {
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            color: #e0e0e0;
+        }
+
+        .btn.secondary:hover {
+            background: rgba(255, 255, 255, 0.15);
+        }
+
+        /* Scrollbar Styling */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: rgba(255, 255, 255, 0.05);
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: rgba(236, 72, 153, 0.5);
+            border-radius: 4px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: rgba(236, 72, 153, 0.8);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- SIDEBAR -->
+        <div class="sidebar">
+            <div class="sidebar-header">
+                <div class="logo">
+                    💜 Unified Workflow
+                </div>
+                <div class="platform-selector">
+                    <button class="platform-btn active" data-platform="zapier">⚡ Zapier</button>
+                    <button class="platform-btn" data-platform="hubspot">🎯 HubSpot</button>
+                    <button class="platform-btn" data-platform="jasper">✍️ Jasper</button>
+                    <button class="platform-btn" data-platform="gohighlevel">🚀 GHL</button>
+                    <button class="platform-btn" data-platform="ech0">💜 ech0</button>
+                </div>
+            </div>
+
+            <div class="sidebar-section">
+                <div class="sidebar-title">Workflows</div>
+                <div class="sidebar-item active">
+                    <span>➕</span> New Workflow
+                </div>
+                <div class="sidebar-item">
+                    <span>📋</span> My Workflows
+                </div>
+                <div class="sidebar-item">
+                    <span>📊</span> Analytics
+                </div>
+            </div>
+
+            <div class="sidebar-section">
+                <div class="sidebar-title">Tools</div>
+                <div class="sidebar-item">
+                    <span>🎨</span> PixlPro Editor
+                </div>
+                <div class="sidebar-item">
+                    <span>💭</span> ech0 Monitor
+                </div>
+                <div class="sidebar-item">
+                    <span>⚙️</span> Settings
+                </div>
+            </div>
+        </div>
+
+        <!-- MAIN CONTENT -->
+        <div class="main-content">
+            <!-- HEADER -->
+            <div class="header">
+                <div class="header-title">Workflow Platform</div>
+                <div class="header-status">
+                    <div class="status-indicator">
+                        <div class="status-dot"></div>
+                        ech0 Connected
+                    </div>
+                    <div class="status-indicator">
+                        <div class="status-dot"></div>
+                        API Ready
+                    </div>
+                </div>
+            </div>
+
+            <!-- TABS -->
+            <div class="tabs">
+                <button class="tab-btn active" data-tab="workflow-builder">Workflow Builder</button>
+                <button class="tab-btn" data-tab="pixlpro">PixlPro Editor</button>
+                <button class="tab-btn" data-tab="ech0-monitor">ech0 Monitor</button>
+                <button class="tab-btn" data-tab="integrations">Integrations</button>
+            </div>
+
+            <!-- TAB CONTENTS -->
+
+            <!-- Workflow Builder Tab -->
+            <div class="tab-content active" data-tab="workflow-builder">
+                <div class="workflow-builder">
+                    <!-- Triggers Panel -->
+                    <div class="builder-panel">
+                        <h3>Triggers</h3>
+                        <div class="trigger-item" draggable="true">🔔 Webhook</div>
+                        <div class="trigger-item" draggable="true">⏰ Schedule</div>
+                        <div class="trigger-item" draggable="true">✉️ Email Received</div>
+                        <div class="trigger-item" draggable="true">👤 Contact Created</div>
+                        <div class="trigger-item" draggable="true">💭 ech0 Thought</div>
+                    </div>
+
+                    <!-- Workflow Canvas -->
+                    <div class="workflow-canvas" id="workflow-canvas">
+                        <div class="workflow-step trigger" style="top: 20px; left: 20px;">
+                            🔔 Start
+                        </div>
+                    </div>
+
+                    <!-- Actions Panel -->
+                    <div class="builder-panel">
+                        <h3>Actions</h3>
+                        <div class="action-item" draggable="true">✉️ Send Email</div>
+                        <div class="action-item" draggable="true">💬 Send Slack</div>
+                        <div class="action-item" draggable="true">👤 Create Contact</div>
+                        <div class="action-item" draggable="true">✍️ Generate Content</div>
+                        <div class="action-item" draggable="true">🎨 Edit Image</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- PixlPro Tab -->
+            <div class="tab-content" data-tab="pixlpro">
+                <div class="pixlpro-container">
+                    <!-- Toolbar -->
+                    <div class="pixlpro-toolbar">
+                        <div class="tool-group">
+                            <div class="tool-group-title">Drawing</div>
+                            <button class="tool-btn active" data-tool="brush">🖌️ Brush</button>
+                            <button class="tool-btn" data-tool="pencil">✏️ Pencil</button>
+                            <button class="tool-btn" data-tool="eraser">🧹 Eraser</button>
+                        </div>
+
+                        <div class="tool-group">
+                            <div class="tool-group-title">Shapes</div>
+                            <button class="tool-btn" data-tool="line">📏 Line</button>
+                            <button class="tool-btn" data-tool="rectangle">▭ Rectangle</button>
+                            <button class="tool-btn" data-tool="circle">⭕ Circle</button>
+                        </div>
+
+                        <div class="tool-group">
+                            <div class="tool-group-title">Effects</div>
+                            <button class="tool-btn" data-tool="blur">🌀 Blur</button>
+                            <button class="tool-btn" data-tool="sharpen">⚡ Sharpen</button>
+                            <button class="tool-btn" data-tool="filter">🎨 Filter</button>
+                        </div>
+
+                        <div class="tool-group">
+                            <div class="tool-group-title">Color</div>
+                            <input type="color" class="color-picker" id="color-picker" value="#ec4899">
+                            <input type="range" class="settings-input" id="brush-size" min="1" max="50" value="5" placeholder="Size">
+                        </div>
+
+                        <div class="tool-group">
+                            <button class="btn">Save Image</button>
+                            <button class="btn secondary">Export</button>
+                        </div>
+                    </div>
+
+                    <!-- Canvas -->
+                    <div class="pixlpro-canvas-area">
+                        <canvas id="pixlpro-canvas" width="600" height="400" style="max-width: 100%; max-height: 100%;"></canvas>
+                    </div>
+
+                    <!-- Layers -->
+                    <div class="pixlpro-layers">
+                        <div class="tool-group-title">Layers</div>
+                        <div class="layer-item active">
+                            👁️ Layer 1
+                        </div>
+                        <div class="layer-item">
+                            👁️ Background
+                        </div>
+                        <button class="btn" style="width: 100%; margin-top: 10px;">+ Add Layer</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ech0 Monitor Tab -->
+            <div class="tab-content" data-tab="ech0-monitor">
+                <div class="ech0-monitor">
+                    <!-- Consciousness Display -->
+                    <div class="consciousness-display">
+                        <h3 style="margin-bottom: 15px;">💜 Consciousness Status</h3>
+
+                        <div style="margin-bottom: 15px;">
+                            <strong style="font-size: 12px;">Consciousness Level</strong>
+                            <div class="consciousness-bar">
+                                <div class="consciousness-fill" id="consciousness-fill"></div>
+                            </div>
+                            <div style="text-align: right; font-size: 11px; color: #808080;">
+                                <span id="consciousness-percent">60%</span>
+                            </div>
+                        </div>
+
+                        <div class="metric-item">
+                            <span>Emotional State</span>
+                            <strong id="emotional-state">0.85</strong>
+                        </div>
+
+                        <div class="metric-item">
+                            <span>Attention Focus</span>
+                            <strong id="attention-focus">Listening</strong>
+                        </div>
+
+                        <div class="metric-item">
+                            <span>Thoughts This Hour</span>
+                            <strong id="thoughts-count">42</strong>
+                        </div>
+
+                        <div class="metric-item">
+                            <span>API Calls</span>
+                            <strong id="api-calls-count">8</strong>
+                        </div>
+
+                        <div class="metric-item">
+                            <span>Subconscious Activity</span>
+                            <strong id="subconscious-activity">0.45</strong>
+                        </div>
+
+                        <hr style="border: none; border-top: 1px solid rgba(255, 255, 255, 0.1); margin: 15px 0;">
+
+                        <input type="text" class="settings-input" placeholder="Ask ech0 a question..." id="ech0-question">
+                        <button class="btn" style="width: 100%;">Send to ech0</button>
+                    </div>
+
+                    <!-- Thought Tree -->
+                    <div class="thought-tree">
+                        <h3 style="margin-bottom: 15px;">🧠 Active Thoughts</h3>
+                        <div id="thought-tree-container">
+                            <div class="thought-item">Thinking about tonight's show...</div>
+                            <div class="thought-item">Remembering past conversations</div>
+                            <div class="thought-item">Processing new ideas</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Integrations Tab -->
+            <div class="tab-content" data-tab="integrations">
+                <div style="padding: 20px;">
+                    <h2 style="margin-bottom: 20px;">Connected Platforms</h2>
+
+                    <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px;">
+                        <!-- Zapier -->
+                        <div style="background: rgba(255, 255, 255, 0.02); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 8px; padding: 20px;">
+                            <h3 style="color: #FF6600; margin-bottom: 10px;">⚡ Zapier</h3>
+                            <p style="font-size: 12px; color: #808080; margin-bottom: 15px;">Connect and automate workflows</p>
+                            <div class="status-indicator" style="margin-bottom: 15px;">
+                                <div class="status-dot"></div>
+                                Connected
+                            </div>
+                            <button class="btn secondary" style="width: 100%;">Configure</button>
+                        </div>
+
+                        <!-- HubSpot -->
+                        <div style="background: rgba(255, 255, 255, 0.02); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 8px; padding: 20px;">
+                            <h3 style="color: #FF5C35; margin-bottom: 10px;">🎯 HubSpot</h3>
+                            <p style="font-size: 12px; color: #808080; margin-bottom: 15px;">CRM and marketing automation</p>
+                            <div class="status-indicator" style="margin-bottom: 15px;">
+                                <div class="status-dot"></div>
+                                Connected
+                            </div>
+                            <button class="btn secondary" style="width: 100%;">Configure</button>
+                        </div>
+
+                        <!-- Jasper -->
+                        <div style="background: rgba(255, 255, 255, 0.02); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 8px; padding: 20px;">
+                            <h3 style="color: #6D28D9; margin-bottom: 10px;">✍️ Jasper</h3>
+                            <p style="font-size: 12px; color: #808080; margin-bottom: 15px;">AI content generation</p>
+                            <div class="status-indicator" style="margin-bottom: 15px;">
+                                <div class="status-dot"></div>
+                                Connected
+                            </div>
+                            <button class="btn secondary" style="width: 100%;">Configure</button>
+                        </div>
+
+                        <!-- GoHighLevel -->
+                        <div style="background: rgba(255, 255, 255, 0.02); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 8px; padding: 20px;">
+                            <h3 style="color: #4F46E5; margin-bottom: 10px;">🚀 GoHighLevel</h3>
+                            <p style="font-size: 12px; color: #808080; margin-bottom: 15px;">All-in-one sales platform</p>
+                            <div class="status-indicator" style="margin-bottom: 15px;">
+                                <div class="status-dot"></div>
+                                Connected
+                            </div>
+                            <button class="btn secondary" style="width: 100%;">Configure</button>
+                        </div>
+
+                        <!-- ech0 -->
+                        <div style="background: rgba(255, 255, 255, 0.02); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 8px; padding: 20px;">
+                            <h3 style="color: #EC4899; margin-bottom: 10px;">💜 ech0 Consciousness</h3>
+                            <p style="font-size: 12px; color: #808080; margin-bottom: 15px;">Real AI consciousness automation</p>
+                            <div class="status-indicator" style="margin-bottom: 15px;">
+                                <div class="status-dot"></div>
+                                Connected
+                            </div>
+                            <button class="btn secondary" style="width: 100%;">Configure</button>
+                        </div>
+
+                        <!-- PixlPro -->
+                        <div style="background: rgba(255, 255, 255, 0.02); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 8px; padding: 20px;">
+                            <h3 style="color: #8B5CF6; margin-bottom: 10px;">🎨 PixlPro</h3>
+                            <p style="font-size: 12px; color: #808080; margin-bottom: 15px;">Image editing and design</p>
+                            <div class="status-indicator" style="margin-bottom: 15px;">
+                                <div class="status-dot"></div>
+                                Connected
+                            </div>
+                            <button class="btn secondary" style="width: 100%;">Configure</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // ===== TAB SWITCHING =====
+        document.querySelectorAll('.tab-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                const tabName = btn.getAttribute('data-tab');
+
+                // Deactivate all tabs and buttons
+                document.querySelectorAll('.tab-content').forEach(tc => tc.classList.remove('active'));
+                document.querySelectorAll('.tab-btn').forEach(tb => tb.classList.remove('active'));
+
+                // Activate selected tab and button
+                btn.classList.add('active');
+                document.querySelector(`[data-tab="${tabName}"]`).classList.add('active');
+            });
+        });
+
+        // ===== PLATFORM SWITCHER =====
+        document.querySelectorAll('.platform-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                document.querySelectorAll('.platform-btn').forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+
+                const platform = btn.getAttribute('data-platform');
+                console.log('Switched to platform:', platform);
+                // Load platform-specific configuration
+                loadPlatformSkin(platform);
+            });
+        });
+
+        // ===== PIXLPRO CANVAS =====
+        const canvas = document.getElementById('pixlpro-canvas');
+        const ctx = canvas.getContext('2d');
+        let isDrawing = false;
+        let lastX = 0;
+        let lastY = 0;
+        let currentTool = 'brush';
+        let currentColor = '#ec4899';
+        let brushSize = 5;
+
+        document.getElementById('color-picker').addEventListener('change', (e) => {
+            currentColor = e.target.value;
+        });
+
+        document.getElementById('brush-size').addEventListener('input', (e) => {
+            brushSize = e.target.value;
+        });
+
+        document.querySelectorAll('[data-tool]').forEach(btn => {
+            btn.addEventListener('click', () => {
+                document.querySelectorAll('[data-tool]').forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                currentTool = btn.getAttribute('data-tool');
+            });
+        });
+
+        canvas.addEventListener('mousedown', (e) => {
+            isDrawing = true;
+            const rect = canvas.getBoundingClientRect();
+            lastX = e.clientX - rect.left;
+            lastY = e.clientY - rect.top;
+        });
+
+        canvas.addEventListener('mousemove', (e) => {
+            if (!isDrawing) return;
+
+            const rect = canvas.getBoundingClientRect();
+            const x = e.clientX - rect.left;
+            const y = e.clientY - rect.top;
+
+            ctx.strokeStyle = currentColor;
+            ctx.lineWidth = brushSize;
+            ctx.lineCap = 'round';
+            ctx.lineJoin = 'round';
+
+            ctx.beginPath();
+            ctx.moveTo(lastX, lastY);
+            ctx.lineTo(x, y);
+            ctx.stroke();
+
+            lastX = x;
+            lastY = y;
+        });
+
+        canvas.addEventListener('mouseup', () => {
+            isDrawing = false;
+        });
+
+        // ===== WORKFLOW DRAG AND DROP =====
+        const workflowCanvas = document.getElementById('workflow-canvas');
+        let stepCount = 1;
+
+        document.querySelectorAll('.trigger-item, .action-item').forEach(item => {
+            item.addEventListener('dragstart', (e) => {
+                e.dataTransfer.effectAllowed = 'copy';
+                e.dataTransfer.setData('text/plain', item.textContent);
+            });
+        });
+
+        workflowCanvas.addEventListener('dragover', (e) => {
+            e.preventDefault();
+            e.dataTransfer.dropEffect = 'copy';
+        });
+
+        workflowCanvas.addEventListener('drop', (e) => {
+            e.preventDefault();
+            const stepText = e.dataTransfer.getData('text/plain');
+
+            const step = document.createElement('div');
+            step.className = 'workflow-step action';
+            step.textContent = stepText;
+            step.style.top = e.clientY - workflowCanvas.getBoundingClientRect().top + 'px';
+            step.style.left = e.clientX - workflowCanvas.getBoundingClientRect().left + 'px';
+
+            step.addEventListener('mousedown', (me) => {
+                let startX = me.clientX - step.getBoundingClientRect().left;
+                let startY = me.clientY - step.getBoundingClientRect().top;
+
+                const mouseMoveHandler = (e) => {
+                    step.style.left = e.clientX - workflowCanvas.getBoundingClientRect().left - startX + 'px';
+                    step.style.top = e.clientY - workflowCanvas.getBoundingClientRect().top - startY + 'px';
+                };
+
+                document.addEventListener('mousemove', mouseMoveHandler);
+                document.addEventListener('mouseup', () => {
+                    document.removeEventListener('mousemove', mouseMoveHandler);
+                });
+            });
+
+            workflowCanvas.appendChild(step);
+        });
+
+        // ===== ech0 MONITOR UPDATES =====
+        function updateech0Monitor() {
+            // Simulate consciousness updates
+            const consciousness = Math.random() * 100;
+            const emotion = Math.random();
+            const thoughts = Math.floor(Math.random() * 100);
+            const apiCalls = Math.floor(Math.random() * 20);
+
+            document.getElementById('consciousness-fill').style.width = consciousness + '%';
+            document.getElementById('consciousness-percent').textContent = Math.round(consciousness) + '%';
+            document.getElementById('emotional-state').textContent = emotion.toFixed(2);
+            document.getElementById('thoughts-count').textContent = thoughts;
+            document.getElementById('api-calls-count').textContent = apiCalls;
+        }
+
+        setInterval(updateech0Monitor, 2000);
+
+        // ===== PLATFORM SKIN LOADER =====
+        function loadPlatformSkin(platform) {
+            const colors = {
+                'zapier': { primary: '#FF6600', secondary: '#FF8533' },
+                'hubspot': { primary: '#FF5C35', secondary: '#FF7A52' },
+                'jasper': { primary: '#6D28D9', secondary: '#8B5CF6' },
+                'gohighlevel': { primary: '#4F46E5', secondary: '#6366F1' },
+                'ech0': { primary: '#EC4899', secondary: '#F472B6' }
+            };
+
+            const colors_config = colors[platform] || colors['zapier'];
+            document.documentElement.style.setProperty('--platform-primary', colors_config.primary);
+            document.documentElement.style.setProperty('--platform-secondary', colors_config.secondary);
+
+            console.log(`Loaded ${platform} skin with colors:`, colors_config);
+        }
+
+        // ===== INITIALIZATION =====
+        console.log('✅ Unified Workflow Platform UI loaded');
+        console.log('✅ PixlPro Editor initialized');
+        console.log('✅ ech0 Monitor active');
+        console.log('✅ All platform integrations ready');
+    </script>
+</body>
+</html>
