@@ -394,4 +394,4 @@ Users can immediately drag agents into Prompt Lab compositions and build sophist
 **Last Updated:** October 22, 2025
 **Maintained By:** Joshua Hendricks Cole (DBA: Corporation of Light)
 
-Copyright © 2025 Joshua Hendricks Cole. All Rights Reserved. PATENT PENDING.
+Copyright © 2025 Joshua Hendricks Cole. All Rights Reserved. Patents filed..
