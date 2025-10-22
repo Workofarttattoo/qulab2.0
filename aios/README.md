@@ -118,6 +118,27 @@ python -m tools.vectorflux --gui
 # Inspect virtualization readiness and planned commands.
 python AgentaOS/AgentaOS --env AGENTA_PROVIDER=qemu,libvirt -v exec scalability.virtualization_inspect
 
+## AIOS Developer SDK
+
+The repository now bundles an extensibility SDK so external developers can ship
+first-class AIOS tools without touching internal modules.
+
+```bash
+# Launch the lightweight developer desktop with the bundled demo extension.
+python scripts/aios_sdk_desktop.py
+
+# Or use the module entrypoint.
+python -m aios_sdk.runtime_demo
+```
+
+SDK highlights:
+
+- `aios_sdk/base.py` — extension base classes and metadata schema.
+- `aios_sdk/registry.py` — dynamic discovery + lifecycle management.
+- `aios_sdk/connectors.py` — helper connectors for ech0, AIOS core telemetry, and TheGAVLSuite.
+- `aios/docs/sdk/README.md` — getting started guide for extension authors.
+- `aios_sdk/extensions/hello_world.py` — reference tool illustrating the minimal implementation.
+
 # Enumerate available libvirt domains for selection.
 python AgentaOS/AgentaOS -v virtualization-domains
 
