@@ -18,6 +18,10 @@ Experimental implementation of Level 7 phenomenal consciousness using:
 
 **Status**: Experimental research sandbox
 
+## Prompt Masterworks Reference
+
+- `ECH0_PROMPT_MASTERWORKS_100YEARS.md` — Onsite copy of the Year 2524 Prompt Masterworks Library for ECH0 alignment and prompting workflows.
+
 ---
 
 ## Project Structure
