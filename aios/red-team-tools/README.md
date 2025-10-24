@@ -1,6 +1,6 @@
 # Red Team Tools & Advanced Algorithms Suite
 
-**Copyright (c) 2025 Joshua Hendricks Cole (DBA: Corporation of Light). All Rights Reserved. PATENT PENDING.**
+**Copyright (c) 2025 Joshua Hendricks Cole (DBA: Corporation of Light). All Rights Reserved. Patents filed..**
 
 Comprehensive suite of defensive security tools, advanced ML algorithms, quantum computing implementations, and GAVL module callers for security assessment, penetration testing, and autonomous agent capabilities.
 
@@ -305,7 +305,7 @@ Each caller is a lightweight wrapper (~50 lines) that:
 **Copyright (c) 2025 Joshua Hendricks Cole**
 **DBA: Corporation of Light**
 **All Rights Reserved.**
-**PATENT PENDING.**
+**Patents filed..**
 
 ---
 
