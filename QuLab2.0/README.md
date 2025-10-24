@@ -40,24 +40,56 @@ cd qulab2.0
 
 ### CLI Usage
 
+**Get started with comprehensive workflow guidance:**
+
 ```bash
-# Compare all protocols at 10 km
-python -m qulab.cli_teleport_discovery protocol-compare --distance-km 10
+# See the recommended discovery workflow
+python -m qulab.cli_teleport_discovery workflow
 
-# Optimize protocol parameters
-python -m qulab.cli_teleport_discovery optimize-protocol --method grover --distance-km 50
+# Check system health and dependencies
+python -m qulab.cli_teleport_discovery health
+```
 
-# Assess hardware requirements
-python -m qulab.cli_teleport_discovery hardware-assess --distance-km 100 --num-qubits 1
+**Core commands with examples:**
 
-# Compare all optimization methods
-python -m qulab.cli_teleport_discovery compare-optimizers --distance-km 50
+```bash
+# Compare all protocols at 10 km (local network)
+python -m qulab.cli_teleport_discovery protocol-compare --distance 10
 
-# Channel analysis
-python -m qulab.cli_teleport_discovery channel-analyze --channel-type fiber_optic --distance-km 100
+# Compare at 100 km with detailed error breakdown (verbose mode)
+python -m qulab.cli_teleport_discovery protocol-compare --distance 100 --verbose
 
-# Run full demo
+# Optimize protocol parameters using Grover search
+python -m qulab.cli_teleport_discovery optimize-protocol --distance 50 --method grover
+
+# Compare all optimization methods (Grover vs VQE vs QAOA)
+python -m qulab.cli_teleport_discovery compare-optimizers --distance 50
+
+# Assess hardware requirements for 100 km, 2 qubits, 95% fidelity
+python -m qulab.cli_teleport_discovery hardware-assess --distance 100 --num-qubits 2 --target-fidelity 0.95
+
+# Analyze fiber optic channel performance
+python -m qulab.cli_teleport_discovery channel-analyze --channel-type fiber_optic --distance 100
+
+# Validate Bell state protocol at 10 km with 50,000 Monte Carlo runs
+python -m qulab.cli_teleport_discovery validate-protocol --protocol bell_state --distance 10 --monte-carlo-runs 50000
+
+# List available quantum hardware backends
+python -m qulab.cli_teleport_discovery hardware-backends
+
+# Run comprehensive demonstrations
 python -m qulab.cli_teleport_discovery demo
+python -m qulab.cli_teleport_discovery hardware-demo
+python -m qulab.cli_teleport_discovery validation-demo
+
+# Save results to JSON for further analysis
+python -m qulab.cli_teleport_discovery protocol-compare --distance 50 --output results.json
+```
+
+**Complete help for any command:**
+
+```bash
+python -m qulab.cli_teleport_discovery <command> --help
 ```
 
 ### Python API
@@ -86,6 +118,79 @@ analysis = ScalingStudiesSuite.comprehensive_analysis(
 
 print(f"Optimal fidelity: {optimization['result'].optimal_fidelity:.4f}")
 print(f"Protocol: {analysis['distance'].protocol_type}")
+```
+
+### REST API
+
+**Start the API server:**
+
+```bash
+python -m qulab.api_server
+# Server runs at http://localhost:8000
+```
+
+**Access interactive API documentation:**
+
+- Swagger UI: http://localhost:8000/docs
+- ReDoc: http://localhost:8000/redoc
+- OpenAPI spec: http://localhost:8000/openapi.json
+
+**Example API calls:**
+
+```bash
+# Check API health
+curl http://localhost:8000/health | jq
+
+# Get API info
+curl http://localhost:8000/info | jq
+
+# Compare protocols via REST API
+curl -X POST http://localhost:8000/protocols/compare \
+  -H "Content-Type: application/json" \
+  -d '{"distance_km": 50, "bell_pair_fidelity": 0.99, "gate_fidelity": 0.99}'
+
+# Analyze channel performance
+curl -X POST http://localhost:8000/channels/analyze \
+  -H "Content-Type: application/json" \
+  -d '{"distance_km": 100, "channel_type": "fiber_optic", "noise_model": "amplitude_damping"}'
+
+# Assess hardware requirements
+curl -X POST http://localhost:8000/hardware/assess \
+  -H "Content-Type: application/json" \
+  -d '{"distance_km": 100, "num_qubits": 2, "target_fidelity": 0.95}'
+
+# Optimize protocol parameters
+curl -X POST http://localhost:8000/protocols/optimize \
+  -H "Content-Type: application/json" \
+  -d '{"distance_km": 50, "num_qubits": 1, "target_fidelity": 0.95, "method": "grover"}'
+
+# List quantum hardware backends
+curl http://localhost:8000/hardware/backends | jq
+
+# Validate protocol with statistical analysis
+curl -X POST http://localhost:8000/validation/validate \
+  -H "Content-Type: application/json" \
+  -d '{"protocol": "bell_state", "distance_km": 10, "monte_carlo_runs": 10000}'
+```
+
+**Python client example:**
+
+```python
+import httpx
+
+async with httpx.AsyncClient() as client:
+    response = await client.post(
+        "http://localhost:8000/protocols/compare",
+        json={
+            "distance_km": 50,
+            "bell_pair_fidelity": 0.99,
+            "gate_fidelity": 0.99,
+            "verbose": True
+        }
+    )
+    results = response.json()
+    print(f"Best protocol: {results['recommendation']}")
+    print(f"Available backends: {list(results['protocols'].keys())}")
 ```
 
 ### Web Dashboard
