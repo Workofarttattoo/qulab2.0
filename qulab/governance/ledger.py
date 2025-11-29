@@ -1,4 +1,6 @@
 """
+Copyright (c) 2025 Joshua Hendricks Cole (DBA: Corporation of Light). All Rights Reserved. PATENT PENDING.
+
 Beta-Bernoulli evidence ledger for tracking teleportation fidelity.
 
 Implements a Bayesian evidence accumulation system using Beta-Bernoulli

@@ -1,4 +1,6 @@
 """
+Copyright (c) 2025 Joshua Hendricks Cole (DBA: Corporation of Light). All Rights Reserved. PATENT PENDING.
+
 Monte Carlo forecasting for teleportation fidelity.
 
 Implements Monte Carlo methods for forecasting future teleportation
@@ -13,7 +15,7 @@ from dataclasses import dataclass, replace
 from typing import List, Dict, Optional, Tuple, Sequence, Union
 import numpy as np
 from scipy import stats
-from pydantic import BaseModel, Field
+from pydantic import BaseModel, Field, ConfigDict
 from datetime import datetime, timedelta
 import logging
 
@@ -25,15 +27,14 @@ logger = logging.getLogger(__name__)
 class ForecastResult(BaseModel):
     """Result of Monte Carlo forecasting."""
 
+    model_config = ConfigDict(arbitrary_types_allowed=True)
+
     forecast_horizon: int = Field(..., description="Number of future time steps")
     mean_forecast: List[float] = Field(..., description="Mean forecast values")
     std_forecast: List[float] = Field(..., description="Standard deviation of forecasts")
     confidence_intervals: Dict[str, List[Tuple[float, float]]] = Field(..., description="Confidence intervals")
     forecast_samples: List[List[float]] = Field(..., description="Monte Carlo samples")
     forecast_dates: List[datetime] = Field(..., description="Forecast dates")
-
-    class Config:
-        arbitrary_types_allowed = True
 
 
 @dataclass

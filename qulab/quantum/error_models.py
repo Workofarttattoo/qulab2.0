@@ -1,4 +1,6 @@
 """
+Copyright (c) 2025 Joshua Hendricks Cole (DBA: Corporation of Light). All Rights Reserved. PATENT PENDING.
+
 Quantum error models and noise simulation.
 
 Implements various quantum error models including depolarizing noise,
@@ -16,14 +18,14 @@ from qiskit import QuantumCircuit
 from qiskit_aer import AerSimulator
 from qiskit_aer.noise import (
     NoiseModel,
-    depolarizing_error, 
-    amplitude_damping_error, 
+    depolarizing_error,
+    amplitude_damping_error,
     phase_damping_error,
     pauli_error,
     thermal_relaxation_error
 )
 from qiskit.quantum_info import Kraus
-from pydantic import BaseModel, Field
+from pydantic import BaseModel, Field, ConfigDict
 import logging
 
 logger = logging.getLogger(__name__)
@@ -31,7 +33,9 @@ logger = logging.getLogger(__name__)
 
 class NoiseModelConfig(BaseModel):
     """Configuration for quantum noise models."""
-    
+
+    model_config = ConfigDict(arbitrary_types_allowed=True)
+
     depolarizing_prob: float = Field(0.0, ge=0.0, le=1.0, description="Depolarizing error probability")
     amplitude_damping_gamma: float = Field(0.0, ge=0.0, le=1.0, description="Amplitude damping rate")
     phase_damping_gamma: float = Field(0.0, ge=0.0, le=1.0, description="Phase damping rate")
@@ -39,9 +43,6 @@ class NoiseModelConfig(BaseModel):
     t2: float = Field(50e-6, gt=0.0, description="T2 dephasing time in seconds")
     gate_time: float = Field(1e-6, gt=0.0, description="Gate time in seconds")
     readout_error: float = Field(0.0, ge=0.0, le=1.0, description="Readout error probability")
-    
-    class Config:
-        arbitrary_types_allowed = True
 
 
 class DepolarizingChannel:

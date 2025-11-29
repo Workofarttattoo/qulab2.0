@@ -1,11 +1,13 @@
 """
+Copyright (c) 2025 Joshua Hendricks Cole (DBA: Corporation of Light). All Rights Reserved. PATENT PENDING.
+
 Quantum teleportation protocol implementation.
 
 Implements the standard quantum teleportation protocol as described in:
-Bennett, C. H., et al. (1993). Teleporting an unknown quantum state via dual 
+Bennett, C. H., et al. (1993). Teleporting an unknown quantum state via dual
 classical and Einstein-Podolsky-Rosen channels. Physical Review Letters, 70(13), 1895.
 
-The protocol teleports an unknown quantum state |ψ⟩ = α|0⟩ + β|1⟩ from Alice to Bob
+The protocol teleports an unknown quantum state |psi> = alpha|0> + beta|1> from Alice to Bob
 using a shared Bell pair and classical communication.
 """
 

@@ -1,4 +1,6 @@
 """
+Copyright (c) 2025 Joshua Hendricks Cole (DBA: Corporation of Light). All Rights Reserved. PATENT PENDING.
+
 Unit tests for quantum teleportation protocol.
 
 Tests teleportation fidelity, circuit construction, and measurement
@@ -202,7 +204,7 @@ class TestTeleportationProtocol:
         result = protocol.teleport(alpha=0.6, beta=0.8, shots=100)
         
         # Test that result can be converted to dict
-        result_dict = result.dict()
+        result_dict = result.model_dump()
         assert isinstance(result_dict, dict)
         assert "fidelity" in result_dict
         assert "success_probability" in result_dict

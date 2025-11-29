@@ -1,4 +1,6 @@
 """
+Copyright (c) 2025 Joshua Hendricks Cole (DBA: Corporation of Light). All Rights Reserved. PATENT PENDING.
+
 Bloch sphere representation and phase gate operations.
 
 Implements Bloch sphere visualization and phase gate operations for quantum states.
@@ -12,28 +14,27 @@ from qiskit.circuit import Parameter
 import matplotlib.pyplot as plt
 from mpl_toolkits.mplot3d import Axes3D
 import plotly.graph_objects as go
-from pydantic import BaseModel, Field
+from pydantic import BaseModel, Field, ConfigDict
 
 
 class BlochSphere(BaseModel):
     """
     Bloch sphere representation of quantum states.
-    
-    A quantum state |ψ⟩ = α|0⟩ + β|1⟩ can be represented on the Bloch sphere
+
+    A quantum state |psi> = alpha|0> + beta|1> can be represented on the Bloch sphere
     with coordinates (x, y, z) where:
-    - x = 2*Re(α*β*)
-    - y = 2*Im(α*β*)  
-    - z = |α|² - |β|²
-    
-    The state is normalized: x² + y² + z² = 1
+    - x = 2*Re(alpha*beta*)
+    - y = 2*Im(alpha*beta*)
+    - z = |alpha|^2 - |beta|^2
+
+    The state is normalized: x^2 + y^2 + z^2 = 1
     """
-    
+
+    model_config = ConfigDict(arbitrary_types_allowed=True)
+
     x: float = Field(..., description="X coordinate on Bloch sphere")
-    y: float = Field(..., description="Y coordinate on Bloch sphere") 
+    y: float = Field(..., description="Y coordinate on Bloch sphere")
     z: float = Field(..., description="Z coordinate on Bloch sphere")
-    
-    class Config:
-        arbitrary_types_allowed = True
     
     def __init__(self, x: float = 0.0, y: float = 0.0, z: float = 1.0, **data):
         super().__init__(x=x, y=y, z=z, **data)

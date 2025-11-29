@@ -1,4 +1,6 @@
 """
+Copyright (c) 2025 Joshua Hendricks Cole (DBA: Corporation of Light). All Rights Reserved. PATENT PENDING.
+
 Quantum state tomography and fidelity calculation.
 
 Implements quantum state tomography for reconstructing unknown quantum states
@@ -15,7 +17,7 @@ from qiskit import QuantumCircuit, QuantumRegister, ClassicalRegister
 from qiskit.quantum_info import Statevector, DensityMatrix, state_fidelity
 from qiskit_aer import AerSimulator
 from scipy.optimize import minimize
-from pydantic import BaseModel, Field
+from pydantic import BaseModel, Field, ConfigDict
 import logging
 
 logger = logging.getLogger(__name__)
@@ -23,14 +25,13 @@ logger = logging.getLogger(__name__)
 
 class TomographyResult(BaseModel):
     """Result of quantum state tomography."""
-    
+
+    model_config = ConfigDict(arbitrary_types_allowed=True)
+
     reconstructed_state: np.ndarray = Field(..., description="Reconstructed density matrix")
     fidelity: float = Field(..., description="Fidelity of reconstruction")
     measurement_counts: Dict[str, Dict[str, int]] = Field(..., description="Measurement counts by basis")
     confidence_interval: Tuple[float, float] = Field(..., description="95% confidence interval for fidelity")
-    
-    class Config:
-        arbitrary_types_allowed = True
 
 
 class StateTomography:

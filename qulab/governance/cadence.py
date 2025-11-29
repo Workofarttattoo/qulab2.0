@@ -1,4 +1,6 @@
 """
+Copyright (c) 2025 Joshua Hendricks Cole (DBA: Corporation of Light). All Rights Reserved. PATENT PENDING.
+
 Cadence planning for optimal measurement scheduling.
 
 Implements optimal measurement scheduling based on evidence accumulation
@@ -12,7 +14,7 @@ References:
 from typing import List, Dict, Optional, Tuple
 import numpy as np
 from scipy.optimize import minimize_scalar, minimize
-from pydantic import BaseModel, Field
+from pydantic import BaseModel, Field, ConfigDict
 from datetime import datetime, timedelta
 import logging
 
@@ -24,15 +26,14 @@ logger = logging.getLogger(__name__)
 
 class CadencePlan(BaseModel):
     """Optimal cadence plan for measurements."""
-    
+
+    model_config = ConfigDict(arbitrary_types_allowed=True)
+
     measurement_times: List[datetime] = Field(..., description="Scheduled measurement times")
     expected_uncertainty: List[float] = Field(..., description="Expected uncertainty at each measurement")
     information_gain: List[float] = Field(..., description="Expected information gain")
     total_cost: float = Field(..., description="Total cost of measurement plan")
     optimization_objective: str = Field(..., description="Optimization objective used")
-    
-    class Config:
-        arbitrary_types_allowed = True
 
 
 class CadencePlanner:

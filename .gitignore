@@ -90,3 +90,19 @@ results/
 *.swo
 *~
 .#*
+
+# Experimental/Research folders (not production)
+biological_quantum/
+VR_BRAIN_PROTOTYPE/
+MEMORY_PLAYBACK_SYSTEM/
+ULTRA_BUDGET_POC/
+arxiv_knowledge/
+arxiv_submission/
+
+# ECH0 task files
+ECH0_*.txt
+ECH0_*.json
+ech0_*.py
+
+# Plots output
+plots/
